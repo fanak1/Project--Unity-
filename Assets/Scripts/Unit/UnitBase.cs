@@ -11,7 +11,9 @@ public class UnitBase : MonoBehaviour {
     }
 
 
+    public Faction _faction { get; private set; }
 
+    public Faction SetFaction(Faction faction) => _faction = faction;
 
     public Stats _stats { get; private set; }
 

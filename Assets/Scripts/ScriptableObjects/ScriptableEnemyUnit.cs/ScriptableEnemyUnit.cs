@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ScriptableEnemyUnit : ScriptableEntity
 {
-    public Faction faction = Faction.Enemy;
+    [SerializeField]
+    public EnemyType enemyType { private set; get; }
 }
 
 public enum EnemyType {
