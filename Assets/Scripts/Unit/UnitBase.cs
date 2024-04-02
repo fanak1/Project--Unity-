@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class UnitBase : MonoBehaviour {
+public abstract class UnitBase : MonoBehaviour {
 
     private void Awake() {
         SetUpEvent();
@@ -25,19 +25,19 @@ public class UnitBase : MonoBehaviour {
 
 
     //Function to called when the projectile succesfully collide with an object
-    public void Hitting(UnitBase target, int dmg) {
+    public virtual void Hitting(UnitBase target, int dmg) {
         OnDealDamage.Invoke(target, dmg); // Invoke the functions when successfully deal damage to a target
         OnHitting.Invoke(target); // Invoke the functions when successfully hitting a target
     }
 
     //Function to called when the projectile succesfully collide with this object
-    public void Hit(UnitBase source, int dmg) {
+    public virtual void Hit(UnitBase source, int dmg) {
         OnTakeDamage.Invoke(dmg);
         OnHit.Invoke(source);
     }
 
 
-    public void TakeDamage(int dmg) {
+    public virtual void TakeDamage(int dmg) {
         _stats.hp -= dmg;
         if(_stats.hp <= 0) {
             //Dead event
