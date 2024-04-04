@@ -6,7 +6,8 @@ public abstract class ProjectileBase : MonoBehaviour
 {
     public UnitBase source; //Source of projectile
 
-    public Vector3 destination;
+    public Vector3 position; //position to begin firing projectile
+    public Vector3 destination; //destination of projectile aim
 
     public int bulletIndex;
 
@@ -17,8 +18,9 @@ public abstract class ProjectileBase : MonoBehaviour
 
     public abstract void Damage(); //Detemine the scale of damage depend on source
 
-    public void SetSourceAndDestination(UnitBase source, Vector3 destination) { //Set Source and Destination when Instantiate
-        this.source = source;
+    public void SetSourceAndDestination(UnitBase source, Vector3 position, Vector3 destination) { //Set Source and Destination when Instantiate
+        this.source = source; 
+        this.position = position;
         this.destination = destination;
     }
 

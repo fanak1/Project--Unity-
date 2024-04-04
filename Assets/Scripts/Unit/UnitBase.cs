@@ -6,22 +6,19 @@ using UnityEngine.Events;
 
 public abstract class UnitBase : MonoBehaviour {
 
+    public ProjectileHolder projectileHolder;
+
     private void Awake() {
-        SetUpEvent();
+        SetUpEvent(); //Init all event on awake
     }
 
+    private void Start() {
+        projectileHolder = GetComponent<ProjectileHolder>();
+    }
 
-    public Faction _faction { get; private set; }
+    public Faction faction;
 
-    public Faction SetFaction(Faction faction) => _faction = faction;
-
-    public Stats _stats { get; private set; }
-
-    //Set Stat when Instantiate
-    public Stats SetStats(Stats stats) => _stats = stats;
-
-
-
+    public Stats stats;
 
 
     //Function to called when the projectile succesfully collide with an object
@@ -38,14 +35,11 @@ public abstract class UnitBase : MonoBehaviour {
 
 
     public virtual void TakeDamage(int dmg) {
-        _stats.hp -= dmg;
-        if(_stats.hp <= 0) {
+        stats.hp -= dmg;
+        if(stats.hp <= 0) {
             //Dead event
         }
     }
-
-
-
 
     public UnityEvent<UnitBase, int> OnDealDamage; //Use when succesfully deal damage to an object
 
