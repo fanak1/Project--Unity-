@@ -22,30 +22,30 @@ public abstract class UnitBase : MonoBehaviour {
 
 
     //Function to called when the projectile succesfully collide with an object
-    public virtual void Hitting(UnitBase target, int dmg) {
+    public virtual void Hitting(UnitBase target, float dmg) {
         OnDealDamage.Invoke(target, dmg); // Invoke the functions when successfully deal damage to a target
         OnHitting.Invoke(target); // Invoke the functions when successfully hitting a target
     }
 
     //Function to called when the projectile succesfully collide with this object
-    public virtual void Hit(UnitBase source, int dmg) {
+    public virtual void Hit(UnitBase source, float dmg) {
         OnTakeDamage.Invoke(dmg);
         OnHit.Invoke(source);
     }
 
 
-    public virtual void TakeDamage(int dmg) {
-        stats.hp -= dmg;
+    public virtual void TakeDamage(float dmg) {
+        stats.hp -= (int)dmg;
         if(stats.hp <= 0) {
             //Dead event
         }
     }
 
-    public UnityEvent<UnitBase, int> OnDealDamage; //Use when succesfully deal damage to an object
+    public UnityEvent<UnitBase, float> OnDealDamage; //Use when succesfully deal damage to an object
 
     public UnityEvent<UnitBase> OnHitting; // Use when successfully hitting an object
 
-    public UnityEvent<int> OnTakeDamage; // Use when take damage
+    public UnityEvent<float> OnTakeDamage; // Use when take damage
 
     public UnityEvent<UnitBase> OnHit; //Use when being hit
 
@@ -53,13 +53,13 @@ public abstract class UnitBase : MonoBehaviour {
     // Create the UnityEvent when the object is awake
     private void SetUpEvent() {
         if (OnDealDamage == null) {
-            OnDealDamage = new UnityEvent<UnitBase, int>();
+            OnDealDamage = new UnityEvent<UnitBase, float>();
         }
         if (OnHitting == null) {
             OnHitting = new UnityEvent<UnitBase>();
         }
         if (OnTakeDamage == null) {
-            OnTakeDamage = new UnityEvent<int>();
+            OnTakeDamage = new UnityEvent<float>();
         }
         if (OnHit == null) {
             OnHit = new UnityEvent<UnitBase>();

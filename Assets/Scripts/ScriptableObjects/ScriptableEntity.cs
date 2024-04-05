@@ -8,7 +8,7 @@ public abstract class ScriptableEntity : ScriptableObject {
     public Faction faction;
 
     [SerializeField]
-    public Stats stats { private set; get; } //For customize the stats of this Entity
+    private Stats stats; //For customize the stats of this Entity
     public Stats base_stats => stats; //base stats
 
     [SerializeField]
@@ -16,7 +16,7 @@ public abstract class ScriptableEntity : ScriptableObject {
 }
 
 [Serializable]
-public class Stats {
+public struct Stats {
     public int hp;
     public int mp;
     public int atk;

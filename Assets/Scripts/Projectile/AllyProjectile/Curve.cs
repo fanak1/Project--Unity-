@@ -25,7 +25,7 @@ public class Curve : ProjectileBase
         
     }
 
-    public override void Damage() {
-        
+    public override float Damage() {
+        return 0;
     }
 }

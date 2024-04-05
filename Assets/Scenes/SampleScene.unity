@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 001ca7d2b2d52e24eba38842dd6a0e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  cam: {fileID: 519420031}
 --- !u!114 &954882210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,7 +360,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c71ac8189966a164ebb08b0d328cdbd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileList: []
+  projectileList:
+  - {fileID: 11400000, guid: 8f917a677dbae3e4fbc398cfd1765d7c, type: 2}
 --- !u!1 &1407316730
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,29 +13,33 @@ public class PlayerController : MonoBehaviour
 
     float spd; //Spd of object
 
-    Vector3 mousePos; //Mouse position in screen
+    Vector2 mousePos; //Mouse position in screen
     public Camera cam; //to get mouse input in screen cam
 
     private void Start() {
-        playerUnit = GetComponent<PlayerUnit>();
-        projectileHolder = GetComponent<ProjectileHolder>();
+        playerUnit = GetComponent<PlayerUnit>(); //UnitBase of Player
+        projectileHolder = GetComponent<ProjectileHolder>(); //ProjectileHolder
     }
 
     void Update() {
         MoveController();
+        ShootController();
     }
 
-    void MoveController() {
+    void MoveController() { //Movement of player
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
 
         transform.Translate(new Vector3(horizontal, vertical, 0) * playerUnit.stats.spd * Time.deltaTime);
     }
 
-    void ShootController() {
-        mousePos = cam.ScreenToWorldPoint(mousePos);
-        if(Input.GetMouseButton(0)) {
+    void ShootController() { //Shooting (left, right)
+        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        if(Input.GetMouseButtonDown(0)) { //Left-mouse
             projectileHolder.Shoot(0, transform.position, mousePos);
+        }
+        if (Input.GetMouseButtonDown(1)) { //Right-mouse
+            projectileHolder.Shoot(1, transform.position, mousePos);
         }
     }
 
