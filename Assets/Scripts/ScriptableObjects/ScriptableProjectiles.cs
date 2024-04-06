@@ -23,11 +23,16 @@ public class ScriptableProjectiles : ScriptableObject
     }
 
     public void SetStatForProjectile(ProjectileAttribute projectileAttribute) { //Function to set stat of projectile manually
+        this.projectileAttribute = projectileAttribute;
         prefabs.SetProjectileAttribute(projectileAttribute);
     }
 
     public void SetStatForProjectile() { //Function to set stat of projectile on default
         prefabs.SetProjectileAttribute(projectileAttribute);
+    }
+
+    public bool ShootInterval(float time) { //Interval each shoot time of this Projectile
+        return time > prefabs._projectileAttribute.interval;
     }
 }
 
@@ -38,4 +43,5 @@ public struct ProjectileAttribute {
     public int numberOfBullet; //Number of bullet per shot
     public int manaSpend; //Number of mana spend per shot
     public float deviation; //Deviation of each bullet per shot
+    public float interval; //Interval of each shoot (aka attack speed)
 }

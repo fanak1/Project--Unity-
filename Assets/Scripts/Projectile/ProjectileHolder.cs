@@ -9,16 +9,31 @@ public class ProjectileHolder : MonoBehaviour
 
     private UnitBase source; //Source of this ProjectileHolder
 
+    private float time;
+
     private void Start() {
         source = GetComponent<UnitBase>();
     }
 
+    private void Update() {
+        if (time > 50f) time = 40f;
+        time += Time.deltaTime;
+    }
+
     public void Shoot(int projectileIndex, Vector3 position, Vector3 destination) { //Funciton to Shoot
-        projectileList[projectileIndex].Shoot(source, position, destination);
+        if(ShootInterval(projectileIndex)) {
+            projectileList[projectileIndex].Shoot(source, position, destination);
+            time = 0f;
+        }
+        
     }
 
     public void AddProjectile(ScriptableProjectiles projectile) { //Add a projectile to list
         projectileList.Add(projectile);
+    }
+
+    private bool ShootInterval(int projectileIndex) {
+        return projectileList[projectileIndex].ShootInterval(time);
     }
 
 }

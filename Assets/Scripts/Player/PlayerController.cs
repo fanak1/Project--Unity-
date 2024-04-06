@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
     private PlayerUnit playerUnit; //For stat like spd etc;
     private ProjectileHolder projectileHolder; //For projectile
 
-
     float horizontal; //Horizontal Input
     float vertical; //Vertical Input
 
@@ -35,10 +34,10 @@ public class PlayerController : MonoBehaviour
 
     void ShootController() { //Shooting (left, right)
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        if(Input.GetMouseButtonDown(0)) { //Left-mouse
+        if(Input.GetMouseButton(0)) { //Left-mouse
             projectileHolder.Shoot(0, transform.position, mousePos);
         }
-        if (Input.GetMouseButtonDown(1)) { //Right-mouse
+        if (Input.GetMouseButton(1)) { //Right-mouse
             projectileHolder.Shoot(1, transform.position, mousePos);
         }
     }
