@@ -21,7 +21,7 @@ public class Spread : ProjectileBase
     }
 
     public override float Damage() { //The scale of this bullet damage
-        return Mathf.Sqrt(source.stats.atk);
+        return source.stats.atk * 0.4f; //Base Atk * 40%
     }
 
     public override void Trajectory() { //How the bullet travel

@@ -28,4 +28,6 @@ public class Curve : ProjectileBase
     public override float Damage() {
         return 0;
     }
+
+    
 }

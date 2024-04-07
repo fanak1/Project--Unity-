@@ -32,7 +32,7 @@ public class ProjectileHolder : MonoBehaviour
         projectileList.Add(projectile);
     }
 
-    private bool ShootInterval(int projectileIndex) {
+    private bool ShootInterval(int projectileIndex) { //Interval of each shoot
         return projectileList[projectileIndex].ShootInterval(time);
     }
 

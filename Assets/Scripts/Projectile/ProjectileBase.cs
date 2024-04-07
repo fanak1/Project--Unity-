@@ -13,10 +13,10 @@ public abstract class ProjectileBase : MonoBehaviour
 
     public ProjectileAttribute _projectileAttribute;
 
-
+    private bool collided = false; //Check if target Collide with another, if collided, then dont collide with another
 
     public virtual void Start() {
-
+        collided = false;
     }
 
     public virtual void Update() {
@@ -37,18 +37,25 @@ public abstract class ProjectileBase : MonoBehaviour
 
     private bool CheckOpponent(GameObject collider) { //Check if we hit opponent instead of wall...
         if(!source.CompareTag(collider.tag)) {
-            if (!collider.CompareTag("Player") || !collider.CompareTag("Enemy")) return false;
+            Debug.Log(source.tag);
+            if (!collider.CompareTag("Player") && !collider.CompareTag("Enemy")) return false;
             return true;
         }
         return false;
     }
 
-    public virtual void OnCollisionEnter2D(Collision2D c) { //Collision handler
-        if(CheckOpponent(c.gameObject)) {
+    public virtual void OnTriggerEnter2D(Collider2D c) {
+        //Debug.Log("Collided");
+        
+        if (c.gameObject.CompareTag(source.tag)) return;
+        if(CheckOpponent(c.gameObject) && !collided) {
+            if (!collided) collided = true;
             UnitBase cUnit = c.gameObject.GetComponent<UnitBase>();
             if(cUnit != null) {
-                cUnit.Hit(source, Damage());
+                Debug.Log(source.stats.atk);
+                cUnit.damagePosition = transform.position;
                 source.Hitting(cUnit, Damage());
+                cUnit.Hit(source, Damage());
                 Destroy(this.gameObject);
             }
         } else {
