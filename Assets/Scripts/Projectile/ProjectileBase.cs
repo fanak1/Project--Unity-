@@ -53,9 +53,11 @@ public abstract class ProjectileBase : MonoBehaviour
             UnitBase cUnit = c.gameObject.GetComponent<UnitBase>();
             if(cUnit != null) {
                 Debug.Log(source.stats.atk);
+
                 cUnit.damagePosition = transform.position;
+
                 source.Hitting(cUnit, Damage());
-                cUnit.Hit(source, Damage());
+                
                 Destroy(this.gameObject);
             }
         } else {

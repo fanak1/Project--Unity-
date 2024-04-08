@@ -156,7 +156,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileHolder: {fileID: 0}
-  damagePopUps: {fileID: 4802245932234042993, guid: 0dc5598d5604c5946a85500eb0e513ac, type: 3}
+  normalDamagePopUps: {fileID: 4802245932234042993, guid: 0dc5598d5604c5946a85500eb0e513ac, type: 3}
+  critDamagePopUps: {fileID: 4802245932234042993, guid: 0b6884f5b6a2b5246956cb99244d9eff, type: 3}
   damagePosition: {x: 0, y: 0, z: 0}
   faction: 0
   stats:
@@ -165,6 +166,10 @@ MonoBehaviour:
     atk: 0
     spd: 0
     def: 0
+  damageScaleBonus:
+    damageBonus: 0
+    critRate: 5
+    critDamage: 50
 --- !u!50 &1509235
 Rigidbody2D:
   serializedVersion: 4
@@ -519,7 +524,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileHolder: {fileID: 0}
-  damagePopUps: {fileID: 4802245932234042993, guid: 0dc5598d5604c5946a85500eb0e513ac, type: 3}
+  normalDamagePopUps: {fileID: 4802245932234042993, guid: 0dc5598d5604c5946a85500eb0e513ac, type: 3}
+  critDamagePopUps: {fileID: 4802245932234042993, guid: 0b6884f5b6a2b5246956cb99244d9eff, type: 3}
   damagePosition: {x: 0, y: 0, z: 0}
   faction: 0
   stats:
@@ -528,6 +534,10 @@ MonoBehaviour:
     atk: 100
     spd: 15
     def: 90
+  damageScaleBonus:
+    damageBonus: 0
+    critRate: 5
+    critDamage: 50
 --- !u!212 &954882211
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1071,7 +1081,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileHolder: {fileID: 0}
-  damagePopUps: {fileID: 4802245932234042993, guid: 0dc5598d5604c5946a85500eb0e513ac, type: 3}
+  normalDamagePopUps: {fileID: 4802245932234042993, guid: 0dc5598d5604c5946a85500eb0e513ac, type: 3}
+  critDamagePopUps: {fileID: 4802245932234042993, guid: 0b6884f5b6a2b5246956cb99244d9eff, type: 3}
   damagePosition: {x: 0, y: 0, z: 0}
   faction: 0
   stats:
@@ -1080,6 +1091,10 @@ MonoBehaviour:
     atk: 0
     spd: 0
     def: 100
+  damageScaleBonus:
+    damageBonus: 0
+    critRate: 5
+    critDamage: 50
 --- !u!1 &1919083980
 GameObject:
   m_ObjectHideFlags: 0

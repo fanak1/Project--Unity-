@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         transform.Translate(new Vector3(horizontal, vertical, 0) * playerUnit.stats.spd * Time.deltaTime);
 
         if (Input.GetKeyDown(KeyCode.K)) {
-            playerUnit.TakeDamage(null, 200);
+            playerUnit.TakeDamage(null, 200, true);
         }
     }
 
