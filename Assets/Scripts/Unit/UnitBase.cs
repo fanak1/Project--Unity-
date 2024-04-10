@@ -10,6 +10,7 @@ public abstract class UnitBase : MonoBehaviour {
 
     [SerializeField] private DamagePopUps normalDamagePopUps; //DamagePopUp
     [SerializeField] private DamagePopUps critDamagePopUps; //Crit
+
                                                                                    
     public Vector3 damagePosition; //Positiion where Damage Pop Up
 
@@ -55,6 +56,8 @@ public abstract class UnitBase : MonoBehaviour {
 
     public event Action<UnitBase, float> OnTakeDamage; // Use when take damage
 
+    public event Action OnDead;
+
     //public event Action<UnitBase, float> OnHit; //Use when being hit -----Mainternance
 
     
@@ -62,6 +65,10 @@ public abstract class UnitBase : MonoBehaviour {
     private void SetUpEvent() {
 
         //OnHit += TakeDamage; //Add TakeDamage to OnTakeDamage event
+
+        //LifeStreal
+
+        //OnDealDamage += LifeSteal;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------
@@ -80,6 +87,8 @@ public abstract class UnitBase : MonoBehaviour {
 
         if (stats.hp <= 0) {
             //Dead event
+            OnDead?.Invoke();
+            Destroy(gameObject);
         }
     }
 
@@ -112,6 +121,15 @@ public abstract class UnitBase : MonoBehaviour {
         } else {
             return dmg * (1 + damageScaleBonus.damageBonus/100);
         }
+    }
+
+    protected virtual void LifeSteal(UnitBase target, float dmg) {
+        float damageDeal = target.ReduceDamage(dmg);
+        stats.hp += (int)Heal(damageDeal);
+    }
+
+    protected virtual float Heal(float value) {
+        return value;
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------

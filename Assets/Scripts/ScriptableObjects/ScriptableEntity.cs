@@ -12,7 +12,21 @@ public abstract class ScriptableEntity : ScriptableObject {
     public Stats base_stats => stats; //base stats
 
     [SerializeField]
-    public UnitBase prefabs { private set; get; } //Prefabs of this entity
+    public UnitBase prefabs; //Prefabs of this entity
+
+    public void SetStatsForEntity() => prefabs.stats = base_stats;
+
+    public void SetStatsForEntity(Stats stats) => prefabs.stats = stats;
+
+    private void InitUnit() {
+        SetStatsForEntity();
+        prefabs.faction = faction;
+    }
+
+    public virtual void Spawn(Vector3 position) {
+        InitUnit();
+        Instantiate(prefabs, position, Quaternion.identity);
+    }
 }
 
 [Serializable]

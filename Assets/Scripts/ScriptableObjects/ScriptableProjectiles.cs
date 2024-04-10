@@ -10,7 +10,7 @@ public class ScriptableProjectiles : ScriptableObject
     [SerializeField] private ProjectileAttribute projectileAttribute; //For custiomize projectile
 
     public ProjectileAttribute baseAttribute => projectileAttribute; //Base attribute
-
+        
     public ProjectileBase prefabs; //Monobehaviour 
 
     public void Shoot(UnitBase source, Vector3 position, Vector3 destination) { //Function to fire projectile
@@ -44,4 +44,11 @@ public struct ProjectileAttribute {
     public int manaSpend; //Number of mana spend per shot
     public float deviation; //Deviation of each bullet per shot
     public float interval; //Interval of each shoot (aka attack speed)
+}
+
+[Serializable]
+public enum ProjectileCodeName {
+    Spread = 0,
+    Pierce = 1,
+    Rapid = 2
 }
