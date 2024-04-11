@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class StageManager : MonoBehaviour {
+public class StageManager : PersistentSingleton<StageManager> {
     public StageState state;
+
+    [SerializeField] private List<StageState> stateList; //List of event in this stage;
+
+    [SerializeField] private int stateIndex;
 
     [SerializeField] private List<ScriptableRounds> roundList; //list of round in this stage
 
@@ -12,25 +16,44 @@ public class StageManager : MonoBehaviour {
 
     [SerializeField] private SpawnManager[] spawnList; //GameObject we create in Scene
 
-    private int numberEnemyLeft; //number enemy we have to clear each round
+    [SerializeField] private int numberEnemyLeft; //number enemy we have to clear each round
 
     private bool stateInit = false; //For prevent init loop
 
-    private void FinishAndSwitchState(StageState state) { //Swtich stage
+
+
+    //Event ------------------------------------------------------------------------------------------------------------------------------------
+
+    public event Action<int> OnRoundFinish; //On round "number" finish. ex: OnRoundFinish(1) is called when round 1 is finish
+
+    public event Action OnCipherBegin;
+
+    public event Action OnCipherFinish; //On answer the question
+
+    public event Action<int> OnRewardFinish; //On reward of round "number" finish
+
+    public event Action OnStageFinish; //On Clear Stage
+
+
+    //------------------------------------------------------------------------------------------------------------------------------------------
+
+    private void FinishAndSwitchState() { //Swtich stage
         stateInit = false;
-        this.state = state;
+        stateIndex++;
+        this.state = stateList[stateIndex];
     }
 
     public void DecreaseEnemyOnDead() { //Decrease count for each enemy die
-        this.numberEnemyLeft--;
+        Debug.Log("die");
+        numberEnemyLeft -= 1;
     }
 
     private void SpawnEnemy(ScriptableEnemyUnit enemy, SpawnManager spawn) { //Spawn enemy at the spawn
-        enemy.prefabs.OnDead += DecreaseEnemyOnDead;
-        spawn.Spawn(enemy);
+        var obj = spawn.Spawn(enemy);
+        obj.OnDead += DecreaseEnemyOnDead;
     }
 
-    private void RoundState() {
+    private void RoundState() { //Round state - 0
 
         if (!stateInit) {
 
@@ -45,32 +68,88 @@ public class StageManager : MonoBehaviour {
             int firstSpawn = UnityEngine.Random.Range(0, numberEnemyLeft + 1); //number of enemy we spawn in first spawnpoint
             int secondSpawn = numberEnemyLeft - firstSpawn; //number of enemy we spawn in second spawnpoint
 
-            int spawnFirst = UnityEngine.Random.Range(0, spawnList.Length+1); //where the first spawnpoint 
-            int spawnSecond = 0;
+            int spawnFirst = UnityEngine.Random.Range(0, spawnList.Length); //where the first spawnpoint 
+            int spawnSecond;
             do {
-                spawnSecond = UnityEngine.Random.Range(0, spawnList.Length+1);
-            } while (spawnSecond != spawnFirst); //Find the second spawnpoint that distinguish with the first one
+                spawnSecond = UnityEngine.Random.Range(0, spawnList.Length);
+            } while (spawnSecond == spawnFirst); //Find the second spawnpoint that distinguish with the first one
 
             for (int i = 0; i < firstSpawn; i++) { //Spawn enemy in first spawnpoint
                 int enemyIndex = UnityEngine.Random.Range(0, enemyList.Count);
                 SpawnEnemy(enemyList[enemyIndex], spawnList[spawnFirst]);
+                
             }
 
             for(int i=0; i< secondSpawn; i++) { //Spawn enemy in second spawn point
                 int enemyIndex = UnityEngine.Random.Range(0, enemyList.Count);
                 SpawnEnemy(enemyList[enemyIndex], spawnList[spawnSecond]);
+
             }
             
         }
-        if(numberEnemyLeft < 0) { //When we cleared this round
+        
+        if(numberEnemyLeft <= 0) { //When we cleared this round
+
+            OnRoundFinish?.Invoke(roundIndex);
+            FinishAndSwitchState();
             roundIndex++;
-            FinishAndSwitchState(StageState.Cipher);
+        }
+    }
+
+    private void CipherState() {
+        if (!stateInit) { 
+            OnCipherBegin?.Invoke();
+            stateInit = true;
+        }
+    }
+
+    public void CipherStateEnd() {
+        OnCipherFinish?.Invoke();
+        FinishAndSwitchState();
+    }
+
+    private void RewardState() {
+
+    }
+
+    private void FinishState() {
+        if (!stateInit) {
+            Debug.Log("done");
+            stateInit = true;
+        }
+        
+    }
+
+
+    internal virtual void Start() {
+        roundIndex = 0;
+        stateIndex = 0;
+
+    }
+
+    internal virtual void Update() {
+        switch (state) {
+            case StageState.Round:
+                RoundState();
+                break;
+            case StageState.Cipher:
+                CipherState();
+                break;
+            case StageState.Reward:
+                RewardState();
+                break;
+            case StageState.Finish:
+                FinishState();
+                break;
+            default:
+                break;
         }
     }
 }
 
 [Serializable]
 public enum StageState {
+    Ready = -1,
     Round = 0,
     Cipher = 1,
     Reward = 2,

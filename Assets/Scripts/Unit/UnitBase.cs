@@ -16,14 +16,7 @@ public abstract class UnitBase : MonoBehaviour {
 
     //private Transform hpBar;//HP
 
-    protected virtual void Awake() {
-        SetUpEvent(); //Init all event on awake
-    }
-
-    protected virtual void Start() {
-        damagePosition = transform.position;
-        projectileHolder = GetComponent<ProjectileHolder>();
-    }
+    
 
     public Faction faction;
 
@@ -69,9 +62,31 @@ public abstract class UnitBase : MonoBehaviour {
         //LifeStreal
 
         //OnDealDamage += LifeSteal;
+
+        OnDead += Destroy;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    //Monobehaviour field
+
+    protected virtual void Awake() {
+        SetUpEvent(); //Init all event on awake
+    }
+
+    protected virtual void Start() {
+        damagePosition = transform.position;
+        projectileHolder = GetComponent<ProjectileHolder>();
+    }
+
+    internal virtual void Update() {
+        if (stats.hp <= 0) {
+            //Dead event
+            OnDead?.Invoke();
+            //Destroy(gameObject);
+        }
+    }
 
 
 
@@ -85,11 +100,6 @@ public abstract class UnitBase : MonoBehaviour {
 
         OnTakeDamage?.Invoke(source, damageTaken);
 
-        if (stats.hp <= 0) {
-            //Dead event
-            OnDead?.Invoke();
-            Destroy(gameObject);
-        }
     }
 
     internal virtual void ReduceHealth(float dmgTaken) {
@@ -130,6 +140,10 @@ public abstract class UnitBase : MonoBehaviour {
 
     protected virtual float Heal(float value) {
         return value;
+    }
+
+    private void Destroy() {
+        Destroy(gameObject);
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------

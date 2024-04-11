@@ -14,11 +14,11 @@ public class SpawnManager : MonoBehaviour {
         spawnRangeX = boxCollider.bounds.size.x;
         spawnRangeY = boxCollider.bounds.size.y;
     }
-    public void Spawn(ScriptableEnemyUnit enemy) { //Function to spawn 1 enemy with random position in range
+    public UnitBase Spawn(ScriptableEnemyUnit enemy) { //Function to spawn 1 enemy with random position in range
         float offsetX = Random.Range(-spawnRangeX, spawnRangeX);
         float offsetY = Random.Range(-spawnRangeY, spawnRangeY);
         Vector3 position = transform.position + Vector3.right * offsetX + Vector3.up * offsetY;
-        enemy.Spawn(position);
+        return enemy.Spawn(position);
     }
 
     public void Spawn(ScriptableEnemyUnit[] enemy) { //Function to spawn list of enemy with random position in range

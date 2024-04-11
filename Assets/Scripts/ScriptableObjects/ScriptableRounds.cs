@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[CreateAssetMenu(fileName = "NewRound", menuName = "Round")]
 public class ScriptableRounds : ScriptableObject
 {
     [SerializeField]
-    public RoundInformation info { private set; get; } //Info of Stage
+    public RoundInformation info;
 
     [SerializeField]
-    public List<EnemyCodeName> enemyList { private set; get; }
+    public List<EnemyCodeName> enemyList;
 
     public List<ScriptableEnemyUnit> LoadEnemyForRound() {
         List<ScriptableEnemyUnit> list = new List<ScriptableEnemyUnit>();

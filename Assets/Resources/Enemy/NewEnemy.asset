@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   faction: 2
   stats:
-    hp: 0
+    hp: 100
     mp: 0
     atk: 0
     spd: 0
-    def: 0
+    def: 100
   prefabs: {fileID: 6338987417139645941, guid: 79165d7ec54d4f74ea2a52cc078e900f, type: 3}
   enemyType: 0
   enemyCodeName: 0

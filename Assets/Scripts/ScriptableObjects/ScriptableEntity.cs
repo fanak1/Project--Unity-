@@ -23,9 +23,10 @@ public abstract class ScriptableEntity : ScriptableObject {
         prefabs.faction = faction;
     }
 
-    public virtual void Spawn(Vector3 position) {
+    public virtual UnitBase Spawn(Vector3 position) {
         InitUnit();
-        Instantiate(prefabs, position, Quaternion.identity);
+        var obj = Instantiate(prefabs, position, Quaternion.identity);
+        return obj;
     }
 }
 
