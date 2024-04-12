@@ -4,10 +4,7 @@ using UnityEngine;
 
 public abstract class AlbilitiesBase : MonoBehaviour
 {
-    public Animation animation;
-
-    public Renderer renderer;
-
-    public abstract void DoAnimation();
+    public UnitBase source;
+    public abstract void Action(UnitBase unit, float amount);
 
 }

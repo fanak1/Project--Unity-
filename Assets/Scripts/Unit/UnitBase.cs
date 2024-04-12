@@ -90,6 +90,22 @@ public abstract class UnitBase : MonoBehaviour {
 
 
 
+    //Stats ------------------------------------------------------------------------------------------------------------------------------------
+
+    public void IncreaseStats(Stats stats) {
+        this.stats.hp += stats.hp;
+        this.stats.def += stats.def;
+        this.stats.mp += stats.mp;
+        this.stats.atk += stats.atk;
+        this.stats.spd += stats.spd;
+    }
+
+
+
+    //-------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
     // Battle event like TakeDamage, Heal, ReduceDef, Increase atk...
 
     internal virtual void TakeDamage(UnitBase source, float dmg, bool crit) { //Function to take damage

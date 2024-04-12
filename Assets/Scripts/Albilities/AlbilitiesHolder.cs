@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class AlbilitiesHolder : MonoBehaviour
 {
-    public ScriptableAlbilities[] Albilities;
+    public List<ScriptableAlbilities> list;
 
-    public void Update() {
+    private UnitBase source;
 
+    private void Start() {
+        source = GetComponent<UnitBase>();
+
+        foreach(ScriptableAlbilities a in list) {
+            a.AttachTo(source);
+        }
+    }
+
+    public void AddAbility(ScriptableAlbilities a) {
+        list.Add(a);
+        a.AttachTo(source);
     }
 }

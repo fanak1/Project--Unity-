@@ -1,24 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public abstract class ScriptableAlbilities : ScriptableObject {
 
-    public enum Action {
-        Heal,
-        DealDamage,
-        Move
+[CreateAssetMenu(fileName = "NewAbility", menuName = "Abilities")]
+public class ScriptableAlbilities : ScriptableObject {
+
+    [SerializeField] private AlbilitiesBase albility;
+
+    [SerializeField] private Event onEvent;
+
+    
+
+    [SerializeField] private Stats amountIncrease;
+
+    public string description;
+
+    public Rarity rarity;
+
+    public void AttachTo(UnitBase target) {
+        switch (onEvent) {
+            case Event.OnHitting:
+                target.OnHitting += albility.Action;
+                break;
+            case Event.OnDealDamage:
+                target.OnDealDamage += albility.Action;
+                break;
+            case Event.OnDamageTaken:
+                target.OnTakeDamage += albility.Action;
+                break;
+            case Event.IncreaseStat:
+                target.IncreaseStats(amountIncrease); 
+                break;
+            default:
+                break;
+        } 
     }
-    public enum OnEvent {
-        OnButtonDown,
-        OnHit,
-        OnShoot,
-        OnDead
-    }
 
-    [SerializeField]
-    private OnEvent onEvent;
+    
+}
 
-    public Action action { private set; get; }
+[Serializable]
+public enum Event {
+    OnHitting,
+    OnDealDamage,
+    OnDamageTaken,
+    IncreaseStat
+}
 
+public enum Rarity {
+    Normal,
+    Rare,
+    Epic,
+    Legendary
 }

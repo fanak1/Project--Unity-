@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Threading;
 
 public class StageManager : PersistentSingleton<StageManager> {
     public StageState state;
@@ -18,6 +19,8 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     [SerializeField] private int numberEnemyLeft; //number enemy we have to clear each round
 
+    [SerializeField] private ScriptableAlbilities[] rewardAbilities; 
+
     private bool stateInit = false; //For prevent init loop
 
 
@@ -30,7 +33,9 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     public event Action OnCipherFinish; //On answer the question
 
-    public event Action<int> OnRewardFinish; //On reward of round "number" finish
+    public event Action OnRewardBegin;
+
+    public event Action OnRewardFinish; //On reward of round "number" finish
 
     public event Action OnStageFinish; //On Clear Stage
 
@@ -48,9 +53,16 @@ public class StageManager : PersistentSingleton<StageManager> {
         numberEnemyLeft -= 1;
     }
 
-    private void SpawnEnemy(ScriptableEnemyUnit enemy, SpawnManager spawn) { //Spawn enemy at the spawn
-        var obj = spawn.Spawn(enemy);
-        obj.OnDead += DecreaseEnemyOnDead;
+    private IEnumerator SpawnEnemy(List<ScriptableEnemyUnit> enemy, SpawnManager spawn) { //Spawn enemy at the spawn
+
+        StartCoroutine(spawn.BeginSpawn());
+
+        yield return new WaitForSeconds(1f);
+        
+        var obj = spawn.SpawnWithDelay(enemy);
+        foreach(var e in obj) { 
+            e.OnDead += DecreaseEnemyOnDead;
+        }
     }
 
     private void RoundState() { //Round state - 0
@@ -65,7 +77,7 @@ public class StageManager : PersistentSingleton<StageManager> {
 
             numberEnemyLeft = roundList[roundIndex].info.numberOfEnemy; //number enemy we have to clear to win
 
-            int firstSpawn = UnityEngine.Random.Range(0, numberEnemyLeft + 1); //number of enemy we spawn in first spawnpoint
+            int firstSpawn = UnityEngine.Random.Range(0, (numberEnemyLeft + 1) / 2); //number of enemy we spawn in first spawnpoint
             int secondSpawn = numberEnemyLeft - firstSpawn; //number of enemy we spawn in second spawnpoint
 
             int spawnFirst = UnityEngine.Random.Range(0, spawnList.Length); //where the first spawnpoint 
@@ -74,17 +86,22 @@ public class StageManager : PersistentSingleton<StageManager> {
                 spawnSecond = UnityEngine.Random.Range(0, spawnList.Length);
             } while (spawnSecond == spawnFirst); //Find the second spawnpoint that distinguish with the first one
 
+            List<ScriptableEnemyUnit> enemyList1 = new List<ScriptableEnemyUnit>();
+            List<ScriptableEnemyUnit> enemyList2 = new List<ScriptableEnemyUnit>();
+
             for (int i = 0; i < firstSpawn; i++) { //Spawn enemy in first spawnpoint
                 int enemyIndex = UnityEngine.Random.Range(0, enemyList.Count);
-                SpawnEnemy(enemyList[enemyIndex], spawnList[spawnFirst]);
+                enemyList1.Add(enemyList[enemyIndex]);
                 
             }
 
             for(int i=0; i< secondSpawn; i++) { //Spawn enemy in second spawn point
                 int enemyIndex = UnityEngine.Random.Range(0, enemyList.Count);
-                SpawnEnemy(enemyList[enemyIndex], spawnList[spawnSecond]);
+                enemyList2.Add(enemyList[enemyIndex]);
 
             }
+            StartCoroutine(SpawnEnemy(enemyList1, spawnList[spawnFirst]));
+            StartCoroutine(SpawnEnemy(enemyList2, spawnList[spawnSecond]));
             
         }
         
@@ -109,7 +126,15 @@ public class StageManager : PersistentSingleton<StageManager> {
     }
 
     private void RewardState() {
+        if (!stateInit) {
+            OnRewardBegin?.Invoke();
+            stateInit = true;
+        }
+    }
 
+    public void RewardStateEnd() {
+        OnRewardFinish?.Invoke();
+        FinishAndSwitchState();
     }
 
     private void FinishState() {
