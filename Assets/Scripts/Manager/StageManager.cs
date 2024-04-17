@@ -5,21 +5,24 @@ using System;
 using System.Threading;
 
 public class StageManager : PersistentSingleton<StageManager> {
+
     public StageState state;
 
-    [SerializeField] private List<StageState> stateList; //List of event in this stage;
-
-    [SerializeField] private int stateIndex;
-
-    [SerializeField] private List<ScriptableRounds> roundList; //list of round in this stage
+    [SerializeField] private ScriptableStage stage;
 
     [SerializeField] private int roundIndex; //Index of round
 
-    [SerializeField] private SpawnManager[] spawnList; //GameObject we create in Scene
+    [SerializeField] private int stateIndex; //Index of state
+
+    [SerializeField] private SpawnPoint[] spawnList; //GameObject we create in Scene
 
     [SerializeField] private int numberEnemyLeft; //number enemy we have to clear each round
 
-    [SerializeField] private ScriptableAlbilities[] rewardAbilities; 
+    private List<StageState> stateList;
+
+    private List<ScriptableRounds> roundList;
+
+
 
     private bool stateInit = false; //For prevent init loop
 
@@ -53,7 +56,7 @@ public class StageManager : PersistentSingleton<StageManager> {
         numberEnemyLeft -= 1;
     }
 
-    private IEnumerator SpawnEnemy(List<ScriptableEnemyUnit> enemy, SpawnManager spawn) { //Spawn enemy at the spawn
+    private IEnumerator SpawnEnemy(List<ScriptableEnemyUnit> enemy, SpawnPoint spawn) { //Spawn enemy at the spawn
 
         StartCoroutine(spawn.BeginSpawn());
 
@@ -62,6 +65,16 @@ public class StageManager : PersistentSingleton<StageManager> {
         var obj = spawn.SpawnWithDelay(enemy);
         foreach(var e in obj) { 
             e.OnDead += DecreaseEnemyOnDead;
+        }
+    }
+
+
+    private void ReadyState() {
+        if (!stateInit) {
+            stateInit = true; //Call when done animation of Stage Informing
+        } else {
+            stateInit = false;
+            this.state = stateList[stateIndex];
         }
     }
 
@@ -141,19 +154,38 @@ public class StageManager : PersistentSingleton<StageManager> {
         if (!stateInit) {
             Debug.Log("done");
             stateInit = true;
+            OnStageFinish?.Invoke();
         }
         
+    }
+
+    public void ChangeStage(ScriptableStage stage) {
+        this.stage = stage;
+        this.Start();
+    }
+
+    public void Ready() {
+        state = StageState.Ready;
     }
 
 
     internal virtual void Start() {
         roundIndex = 0;
         stateIndex = 0;
+        stateInit = false;
 
+        stateList = stage.GetStateList();
+
+        roundList = stage.GetRoundList();
+
+        state = StageState.Unready;
     }
 
     internal virtual void Update() {
         switch (state) {
+            case StageState.Ready:
+                ReadyState();
+                break;
             case StageState.Round:
                 RoundState();
                 break;
@@ -172,11 +204,3 @@ public class StageManager : PersistentSingleton<StageManager> {
     }
 }
 
-[Serializable]
-public enum StageState {
-    Ready = -1,
-    Round = 0,
-    Cipher = 1,
-    Reward = 2,
-    Finish = 3
-}

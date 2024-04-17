@@ -184,4 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40a005ec5a721244b1a85b0d999ffef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dmg: 0
+  dmg: 53
+  gravity: -2
+  preVelocity: 1
+  direct: 0

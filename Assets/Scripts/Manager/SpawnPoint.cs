@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
 
-public class SpawnManager : MonoBehaviour {
+public class SpawnPoint : MonoBehaviour {
 
     [SerializeField] private float spawnRangeX;
     [SerializeField] private float spawnRangeY;

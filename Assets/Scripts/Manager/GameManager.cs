@@ -16,6 +16,11 @@ public class GameManager : PersistentSingleton<GameManager>
 
     private Difficulty difficulty;
 
+    public List<ScriptableStage> stageList; //Will have to generate stageList for GameManager (Can be random or scripted)
+
+    private int stageIndex;
+
+
     private void Start() {
         stageManager = stageManagerGameObject.GetComponent<StageManager>();
         cipherManager = cipherManagerGameObject.GetComponent<CipherManager>();
@@ -24,6 +29,8 @@ public class GameManager : PersistentSingleton<GameManager>
         playerAlbilitiesHolder = GameObject.FindGameObjectWithTag("Player").GetComponent<AlbilitiesHolder>();
 
         InitiateManager();
+
+        NewStage();
     }
 
     public void BeginCipherUI() {
@@ -50,6 +57,46 @@ public class GameManager : PersistentSingleton<GameManager>
         stageManager.OnRewardBegin += BeginRewardUI;
         rewardManager.OnRewardFinish += GainReward;
 
+        stageManager.OnStageFinish += StageClear;
+
     }
 
+    private void NewStage() {
+
+        //LoadNewStage();
+
+        //GenerateRewardForNewStage();
+
+        //Delay
+
+        //if Done then
+
+        //stageManager.Ready();
+
+        if(stageIndex >= stageList.Count) {
+            Debug.Log("Done All");
+            return;
+        }
+
+        LoadNewStage(stageList[stageIndex]);
+
+        stageManager.Ready();
+
+        stageIndex++;
+    }
+
+    private void GenerateRewardForNewStage() {
+        //Give Reward Manager a List of Ability
+    }
+
+    private void LoadNewStage(ScriptableStage stage) {
+        //Give Stage Manager a Scriptable Stage
+
+        stageManager.ChangeStage(stage);
+    }
+
+    public void StageClear() { // Let OnStageClear of stage manager += StageClear to call when stage is cleared
+        //StartCoroutine(NewStage);
+        NewStage();
+    }
 }

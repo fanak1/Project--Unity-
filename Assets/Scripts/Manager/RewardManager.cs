@@ -14,6 +14,8 @@ public class RewardManager : PersistentSingleton<RewardManager>
 
     [SerializeField] private GameObject ui;
 
+    private List<ScriptableAlbilities> show;
+
 
     //Event ------------------------------------------------------------------------------------------
 
@@ -28,25 +30,34 @@ public class RewardManager : PersistentSingleton<RewardManager>
         }
     }
 
-    public void Choose(int index) {
-        OnRewardFinish?.Invoke(abilities[index]);
+    public void Choose(int index) { //Choose in abilities in UI
+        OnRewardFinish?.Invoke(show[index]);
         ui.SetActive(false);
     }
 
-    public void InitReward() { 
+    public void InitReward() { //Init reward
+        show = GenerateAlbilities(abilities, objects.Length);
         ui.SetActive(true);
         for (int i = 0; i < objects.Length; i++) {
-            objectsText[i].SetText(abilities[i].description);
+            objectsText[i].SetText(show[i].description);
         }
     }
 
-    private List<ScriptableAlbilities> GenerateAlbilities(int amount) {
+    private List<ScriptableAlbilities> GenerateAlbilities(List<ScriptableAlbilities> myList, int amount) { //Generate random amounts of albilities from a List<ability> 
+
+        List<ScriptableAlbilities> copy = new List<ScriptableAlbilities>(myList);
         List<ScriptableAlbilities> list = new List<ScriptableAlbilities>();
-        foreach (ScriptableAlbilities a in  abilities) {
-            if(a.rarity == Rarity.Normal) {
-                list.Add(a);
-            }
+
+        for(int i=0; i<amount; i++) {
+            int random = UnityEngine.Random.Range(0, copy.Count);
+            list.Add(copy[random]);
+            copy.RemoveAt(random);
         }
+
         return list;
     }
+
+    //public List<ScriptableAlbilities> GenerateAlbilitiesWithRarity();
+
+    public void GenerateAbilitiesList(List<ScriptableAlbilities> list) => abilities = list; //Generate new ability list for stages
 }
