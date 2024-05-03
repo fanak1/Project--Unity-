@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using MoreMountains.Tools;
 
 public abstract class UnitBase : MonoBehaviour {
 
@@ -10,7 +11,7 @@ public abstract class UnitBase : MonoBehaviour {
 
     [SerializeField] private DamagePopUps normalDamagePopUps; //DamagePopUp
     [SerializeField] private DamagePopUps critDamagePopUps; //Crit
-
+    [SerializeField] private MMHealthBar mmHealthBar; //healthbar
                                                                                    
     public Vector3 damagePosition; //Positiion where Damage Pop Up
 
@@ -23,6 +24,10 @@ public abstract class UnitBase : MonoBehaviour {
     public Stats stats;
 
     public DamageScaleBonus damageScaleBonus = new DamageScaleBonus(0, 5f, 50f);
+
+
+    private float maxHP;
+    private float nowHP;
 
 
     //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -78,10 +83,13 @@ public abstract class UnitBase : MonoBehaviour {
     protected virtual void Start() {
         damagePosition = transform.position;
         projectileHolder = GetComponent<ProjectileHolder>();
+        mmHealthBar = GetComponent<MMHealthBar>();
+
+        Initialize();
     }
 
     internal virtual void Update() {
-        if (stats.hp <= 0) {
+        if (nowHP <= 0) {
             //Dead event
             OnDead?.Invoke();
             //Destroy(gameObject);
@@ -119,7 +127,9 @@ public abstract class UnitBase : MonoBehaviour {
     }
 
     internal virtual void ReduceHealth(float dmgTaken) {
-        stats.hp -= (int)dmgTaken;
+        //stats.hp -= (int)dmgTaken;
+        nowHP -= dmgTaken;
+        mmHealthBar.UpdateBar(nowHP, 0, maxHP, true);
     }
 
     protected virtual float ReduceDamage(float dmg) {
@@ -158,7 +168,13 @@ public abstract class UnitBase : MonoBehaviour {
         return value;
     }
 
-    private void Destroy() {
+    protected virtual void IncreaseHP(int hp) {
+        stats.hp += hp;
+        maxHP = hp;
+        mmHealthBar.UpdateBar(nowHP, 0f, maxHP, true); //Change HP Bar
+    }
+
+    internal virtual void Destroy() {
         Destroy(gameObject);
     }
 
@@ -178,6 +194,13 @@ public abstract class UnitBase : MonoBehaviour {
             Instantiate(critDamagePopUps, damagePosition + Vector3.right * radX + Vector3.up * radY, Quaternion.identity);
         }
         
+    }
+
+
+    internal virtual void Initialize() {
+        maxHP = stats.hp;
+        nowHP = maxHP;
+        mmHealthBar.UpdateBar(nowHP, 0f, maxHP, true); //Change HP Bar
     }
 }
 

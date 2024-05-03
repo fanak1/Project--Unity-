@@ -16,7 +16,9 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     [SerializeField] private SpawnPoint[] spawnList; //GameObject we create in Scene
 
-    [SerializeField] private int numberEnemyLeft; //number enemy we have to clear each round
+    [SerializeField] private SpawnPoint spawn;
+
+    public static int numberEnemyLeft; //number enemy we have to clear each round
 
     private List<StageState> stateList;
 
@@ -56,16 +58,22 @@ public class StageManager : PersistentSingleton<StageManager> {
         numberEnemyLeft -= 1;
     }
 
-    private IEnumerator SpawnEnemy(List<ScriptableEnemyUnit> enemy, SpawnPoint spawn) { //Spawn enemy at the spawn
+    //private IEnumerator SpawnEnemy(List<ScriptableEnemyUnit> enemy, SpawnPoint spawn) { //Spawn enemy at the spawn
 
-        StartCoroutine(spawn.BeginSpawn());
+    //    StartCoroutine(spawn.BeginSpawn());
 
-        yield return new WaitForSeconds(1f);
+    //    yield return new WaitForSeconds(1f);
         
-        var obj = spawn.SpawnWithDelay(enemy);
-        foreach(var e in obj) { 
-            e.OnDead += DecreaseEnemyOnDead;
-        }
+    //    var obj = spawn.SpawnWithDelay(enemy);
+    //    foreach(var e in obj) { 
+    //        e.OnDead += DecreaseEnemyOnDead;
+    //    }
+    //}
+
+    private void SpawnEnemy(List<ScriptableEnemyUnit> enemy, Vector3 spawnRange, Vector3 offset) {
+        spawn.SetSpawnRange(spawnRange);
+        var spawnTemp = Instantiate(spawn, transform.position + offset, Quaternion.identity);
+        spawnTemp.SetEnemy(enemy);
     }
 
 
@@ -113,8 +121,11 @@ public class StageManager : PersistentSingleton<StageManager> {
                 enemyList2.Add(enemyList[enemyIndex]);
 
             }
-            StartCoroutine(SpawnEnemy(enemyList1, spawnList[spawnFirst]));
-            StartCoroutine(SpawnEnemy(enemyList2, spawnList[spawnSecond]));
+            //StartCoroutine(SpawnEnemy(enemyList1, spawnList[spawnFirst]));
+            //StartCoroutine(SpawnEnemy(enemyList2, spawnList[spawnSecond]));
+
+            SpawnEnemy(enemyList1, new Vector3(3, 3, 0), new Vector3(1, 1, 0));
+            SpawnEnemy(enemyList2, new Vector3(3, 3, 0), new Vector3(-1, 1, 0));
             
         }
         
@@ -202,5 +213,12 @@ public class StageManager : PersistentSingleton<StageManager> {
                 break;
         }
     }
+}
+
+public enum SpawnDirection {
+    Left = 0,
+    Right = 2,
+    Up = 1,
+    Down = 3
 }
 

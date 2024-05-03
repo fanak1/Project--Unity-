@@ -9,4 +9,9 @@ public class EnemyBase : UnitBase
         base.Start();
     }
 
+    internal override void Destroy() {
+        StageManager.numberEnemyLeft--;
+        base.Destroy();
+    }
+
 }

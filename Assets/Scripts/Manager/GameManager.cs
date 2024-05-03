@@ -14,6 +14,8 @@ public class GameManager : PersistentSingleton<GameManager>
     private RewardManager rewardManager;
     private AlbilitiesHolder playerAlbilitiesHolder;
 
+    public ExitDoor exitDoor;
+
     private Difficulty difficulty;
 
     public List<ScriptableStage> stageList; //Will have to generate stageList for GameManager (Can be random or scripted)
@@ -29,6 +31,8 @@ public class GameManager : PersistentSingleton<GameManager>
         playerAlbilitiesHolder = GameObject.FindGameObjectWithTag("Player").GetComponent<AlbilitiesHolder>();
 
         InitiateManager();
+
+        Debug.Log("Start");
 
         NewStage();
     }
@@ -89,7 +93,7 @@ public class GameManager : PersistentSingleton<GameManager>
         //Give Reward Manager a List of Ability
     }
 
-    private void LoadNewStage(ScriptableStage stage) {
+    public void LoadNewStage(ScriptableStage stage) {
         //Give Stage Manager a Scriptable Stage
 
         stageManager.ChangeStage(stage);
@@ -97,6 +101,12 @@ public class GameManager : PersistentSingleton<GameManager>
 
     public void StageClear() { // Let OnStageClear of stage manager += StageClear to call when stage is cleared
         //StartCoroutine(NewStage);
-        NewStage();
+        var exit = Instantiate(exitDoor, transform.position, Quaternion.identity);
+        exit.OnDoorEnter += NewStage;
+        exit.OnDoorEnter += LoadScene;
+    }
+
+    public void LoadScene() {
+        SceneManager.LoadScene(0);
     }
 }

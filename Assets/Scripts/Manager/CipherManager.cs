@@ -6,18 +6,9 @@ using TMPro;
 
 public class CipherManager : PersistentSingleton<CipherManager> {
 
-
-    [SerializeField] private GameObject[] options;
-
-    [SerializeField] private GameObject question;
-
-    private TextMeshProUGUI questionText;
-
-    private TextMeshProUGUI[] optionText;
-
     private ScriptableCipher cipher;
 
-    [SerializeField] private GameObject ui;
+    [SerializeField] private Cipher cipherUI;
 
     // Event --------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -27,22 +18,14 @@ public class CipherManager : PersistentSingleton<CipherManager> {
     public event Action OnCipherFinish;
 
     private void Start() {
-        optionText = new TextMeshProUGUI[options.Length];
-        for (int i = 0; i < options.Length; i++) {
-            optionText[i] = options[i].GetComponent<TextMeshProUGUI>();
-        }
-        questionText = question.GetComponent<TextMeshProUGUI>();
+        
 
     }
     public void InitiateQuestion(Difficulty d) {
-        ui.SetActive(true);
+        cipherUI.gameObject.SetActive(true);
         cipher = GenerateCipher(d);
         Debug.Log(cipher.question);
-        questionText.SetText(cipher.question);
-
-        for (int i = 0; i < cipher.answers.Length; i++) {
-            optionText[i].SetText(cipher.answers[i]);
-        }
+        cipherUI.DisplayCipher(cipher);
     }
 
     public void Choose(int answer) { 
@@ -56,7 +39,7 @@ public class CipherManager : PersistentSingleton<CipherManager> {
         }
         Debug.Log("good");
         OnCipherFinish?.Invoke();
-        ui.gameObject.SetActive(false);
+        cipherUI.gameObject.SetActive(false);
     }
         
         
