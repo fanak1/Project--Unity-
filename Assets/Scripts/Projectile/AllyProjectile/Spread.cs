@@ -16,7 +16,6 @@ public class Spread : ProjectileBase
         float angle = Mathf.Atan2(ray.y, ray.x) * Mathf.Rad2Deg;
         float trueOffset = offset * (60/_projectileAttribute.numberOfBullet) * Random.Range(-bulletIndex - offset, bulletIndex + offset);
         transform.rotation = Quaternion.AngleAxis(angle + trueOffset, Vector3.forward);
-        Debug.Log(transform.rotation);
         base.Start();
     }
 

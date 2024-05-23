@@ -21,6 +21,7 @@ public class ExitDoor : MonoBehaviour
         if (playerIn && Input.GetKeyDown(KeyCode.K)){
             Debug.Log("K presed");
             OnDoorEnter?.Invoke();
+            Destroy(gameObject);
         }
     }
 

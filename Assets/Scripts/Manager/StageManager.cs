@@ -24,11 +24,11 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     private List<ScriptableRounds> roundList;
 
-
-
     private bool stateInit = false; //For prevent init loop
 
+    private bool loop = true;
 
+    [SerializeField] private StateInforming stateInforming;
 
     //Event ------------------------------------------------------------------------------------------------------------------------------------
 
@@ -47,10 +47,49 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     //------------------------------------------------------------------------------------------------------------------------------------------
 
-    private void FinishAndSwitchState() { //Swtich stage
+    public void FinishStateInforming() {
+        Time.timeScale = 1;
+        stateInforming.gameObject.SetActive(false);
         stateInit = false;
+        loop = true;
+
+    }
+
+    private void FinishAndSwitchState() { //Swtich stage
+        Time.timeScale = 0;
+        loop = false;
+        
         stateIndex++;
         this.state = stateList[stateIndex];
+
+        BeginStateInforming();
+    }
+
+    private void BeginStateInforming() {
+        string stateInfo = "";
+
+        switch (state) {
+            case StageState.Ready:
+                stateInfo = "Ready";
+                break;
+            case StageState.Round:
+                stateInfo = "Round Start";
+                break;
+            case StageState.Cipher:
+                stateInfo = "Question Begin";
+                break;
+            case StageState.Reward:
+                stateInfo = "Reward";
+                break;
+            case StageState.Finish:
+                stateInfo = "Finish";
+                break;
+            default:
+                break;
+        }
+
+        stateInforming.gameObject.SetActive(true);
+        stateInforming.Display(stateInfo);
     }
 
     public void DecreaseEnemyOnDead() { //Decrease count for each enemy die
@@ -79,10 +118,11 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     private void ReadyState() {
         if (!stateInit) {
-            stateInit = true; //Call when done animation of Stage Informing
+            stateInit = true; //Only call this code when done animation of Stage Informing
+            FinishAndSwitchState();
         } else {
-            stateInit = false;
-            this.state = stateList[stateIndex];
+            //stateInit = false;
+            
         }
     }
 
@@ -181,8 +221,10 @@ public class StageManager : PersistentSingleton<StageManager> {
 
 
     internal virtual void Start() {
+        stateInforming.OnDisplayEnd += FinishStateInforming;
+
         roundIndex = 0;
-        stateIndex = 0;
+        stateIndex = -1;
         stateInit = false;
 
         stateList = stage.GetStateList();
@@ -193,6 +235,7 @@ public class StageManager : PersistentSingleton<StageManager> {
     }
 
     internal virtual void Update() {
+        if (!loop) return;
         switch (state) {
             case StageState.Ready:
                 ReadyState();

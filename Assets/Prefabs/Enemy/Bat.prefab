@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6338987417139645941}
   - component: {fileID: 6321273323743331341}
   m_Layer: 0
-  m_Name: Enemy (1)
+  m_Name: Bat
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
     mp: 0
     atk: 0
     spd: 0
-    def: 0
+    def: 100
   damageScaleBonus:
     damageBonus: 0
     critRate: 5
@@ -204,7 +204,7 @@ MonoBehaviour:
   TimeScale: 0
   HealthBarPrefab: {fileID: 0}
   TargetProgressBar: {fileID: 0}
-  Size: {x: 1, y: 0.2}
+  Size: {x: 0.2, y: 0.04}
   BackgroundPadding: {x: 0.01, y: 0.01}
   InitialRotationAngles: {x: 0, y: 0, z: 0}
   ForegroundColor:

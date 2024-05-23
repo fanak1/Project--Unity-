@@ -20,7 +20,7 @@ public class GameManager : PersistentSingleton<GameManager>
 
     public List<ScriptableStage> stageList; //Will have to generate stageList for GameManager (Can be random or scripted)
 
-    private int stageIndex;
+    public int stageIndex;
 
 
     private void Start() {
@@ -32,7 +32,7 @@ public class GameManager : PersistentSingleton<GameManager>
 
         InitiateManager();
 
-        Debug.Log("Start");
+        Debug.Log("New Stage: " + stageIndex);
 
         NewStage();
     }
@@ -76,11 +76,7 @@ public class GameManager : PersistentSingleton<GameManager>
         //if Done then
 
         //stageManager.Ready();
-
-        if(stageIndex >= stageList.Count) {
-            Debug.Log("Done All");
-            return;
-        }
+        Debug.Log("Stage: " + stageIndex);
 
         LoadNewStage(stageList[stageIndex]);
 
@@ -102,11 +98,27 @@ public class GameManager : PersistentSingleton<GameManager>
     public void StageClear() { // Let OnStageClear of stage manager += StageClear to call when stage is cleared
         //StartCoroutine(NewStage);
         var exit = Instantiate(exitDoor, transform.position, Quaternion.identity);
-        exit.OnDoorEnter += NewStage;
-        exit.OnDoorEnter += LoadScene;
+        exit.OnDoorEnter += NextStage;
     }
 
     public void LoadScene() {
         SceneManager.LoadScene(0);
+    }
+
+    public void NextStage() {
+        if (stageIndex >= stageList.Count) {
+            Debug.Log("Done All");
+            return;
+        } else {
+            Debug.Log("Stage: " + stageIndex);
+            NewStage();
+            LoadScene();
+        }
+    }
+
+    public void LoadStage(ScriptableStage stage) {
+        LoadNewStage(stage);
+        stageManager.Ready();
+        LoadScene();
     }
 }

@@ -6,13 +6,9 @@ using TMPro;
 
 public class RewardManager : PersistentSingleton<RewardManager>
 {
-    [SerializeField] private GameObject[] objects;
-
-    [SerializeField] private TextMeshProUGUI[] objectsText;
-
     [SerializeField] private List<ScriptableAlbilities> abilities;
 
-    [SerializeField] private GameObject ui;
+    [SerializeField] private Reward rewardUI;
 
     private List<ScriptableAlbilities> show;
 
@@ -24,23 +20,18 @@ public class RewardManager : PersistentSingleton<RewardManager>
     //-------------------------------------------------------------------------------------------------
 
     private void Start() {
-        objectsText = new TextMeshProUGUI[objects.Length];
-        for (int i = 0; i < objects.Length; i++) {
-            objectsText[i] = objects[i].GetComponent<TextMeshProUGUI>();
-        }
+        
     }
 
     public void Choose(int index) { //Choose in abilities in UI
         OnRewardFinish?.Invoke(show[index]);
-        ui.SetActive(false);
+        rewardUI.gameObject.SetActive(false);
     }
 
     public void InitReward() { //Init reward
-        show = GenerateAlbilities(abilities, objects.Length);
-        ui.SetActive(true);
-        for (int i = 0; i < objects.Length; i++) {
-            objectsText[i].SetText(show[i].description);
-        }
+        show = GenerateAlbilities(abilities, 3);
+        rewardUI.gameObject.SetActive(true);
+        rewardUI.DisplayReward(show);
     }
 
     private List<ScriptableAlbilities> GenerateAlbilities(List<ScriptableAlbilities> myList, int amount) { //Generate random amounts of albilities from a List<ability> 
