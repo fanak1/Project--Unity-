@@ -9,6 +9,8 @@ public class ScriptableProjectiles : ScriptableObject
 
     [SerializeField] private ProjectileAttribute projectileAttribute; //For custiomize projectile
 
+    public ProjectileCodeName projectileCodeName;
+
     public ProjectileAttribute baseAttribute => projectileAttribute; //Base attribute
         
     public ProjectileBase prefabs; //Monobehaviour 

@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffd9148c3e805684e9b52215ce4f8548, type: 3}
-  m_Name: NewRound
+  m_Script: {fileID: 11500000, guid: 54f809c0640dd7b418ef04e23971167d, type: 3}
+  m_Name: sd
   m_EditorClassIdentifier: 
-  info:
-    roundValue: 12
-    round: 0
-    gold: 0
-    numberOfEnemy: 5
-  enemyList: 00000000
+  faction: 0
+  stats:
+    hp: 100
+    mp: 100
+    atk: 120
+    spd: 10
+    def: 100
+  prefabs: {fileID: 2801681540067548546, guid: 7554a2ce3607b714399bd4285b56097f, type: 3}

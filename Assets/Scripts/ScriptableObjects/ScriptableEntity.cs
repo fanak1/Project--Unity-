@@ -16,9 +16,14 @@ public abstract class ScriptableEntity : ScriptableObject {
 
     public void SetStatsForEntity() => prefabs.stats = base_stats;
 
-    public void SetStatsForEntity(Stats stats) => prefabs.stats = stats;
+    public void SetStatsForEntity(Stats stats) {
+        this.stats = stats;
+        prefabs.stats = stats;
+    }
 
-    private void InitUnit() {
+    public void BaseStatsChange(Stats stats) => this.stats = stats;
+
+    internal void InitUnit() {
         SetStatsForEntity();
         prefabs.faction = faction;
     }

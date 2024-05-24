@@ -56,6 +56,8 @@ public abstract class UnitBase : MonoBehaviour {
 
     public event Action OnDead;
 
+    public event Action<Stats> OnBaseStatsIncrease;
+
     //public event Action<UnitBase, float> OnHit; //Use when being hit -----Mainternance
 
     
@@ -100,15 +102,20 @@ public abstract class UnitBase : MonoBehaviour {
 
     //Stats ------------------------------------------------------------------------------------------------------------------------------------
 
-    public void IncreaseStats(Stats stats) {
+    public Stats IncreaseStats(Stats stats) {
         this.stats.hp += stats.hp;
         this.stats.def += stats.def;
         this.stats.mp += stats.mp;
         this.stats.atk += stats.atk;
         this.stats.spd += stats.spd;
+        return this.stats;
     }
 
-
+    public void IncreaseBaseStats(Stats stats) {
+        Stats newStats = IncreaseStats(stats);
+        
+        OnBaseStatsIncrease?.Invoke(newStats);
+    }
 
     //-------------------------------------------------------------------------------------------------------------------------------------------
 

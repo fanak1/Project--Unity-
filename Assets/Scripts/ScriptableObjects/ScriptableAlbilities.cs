@@ -31,7 +31,7 @@ public class ScriptableAlbilities : ScriptableObject {
                 target.OnTakeDamage += albility.Action;
                 break;
             case Event.IncreaseStat:
-                target.IncreaseStats(amountIncrease); 
+                target.IncreaseBaseStats(amountIncrease); 
                 break;
             default:
                 break;

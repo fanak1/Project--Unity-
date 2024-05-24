@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void ShootController() { //Shooting (left, right)
-        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if(Input.GetMouseButton(0)) { //Left-mouse
             projectileHolder.Shoot(0, transform.position, mousePos);
         }

@@ -36,4 +36,17 @@ public class ProjectileHolder : MonoBehaviour
         return projectileList[projectileIndex].ShootInterval(time);
     }
 
+    public void ModifyProjectile(ProjectileCodeName codeName, ProjectileAttribute projectileAttribute) {// Maybe only use for Player xD
+        int index = -1;
+        for(int i = 0; i<projectileList.Count; i++) {
+            if (projectileList[i].projectileCodeName == codeName) {
+                index = i;
+                break;
+            }
+        }
+        if(index >=0) {
+            projectileList[index].SetStatForProjectile(projectileAttribute);
+        }
+    }
+
 }
