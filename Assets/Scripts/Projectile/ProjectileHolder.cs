@@ -11,7 +11,7 @@ public class ProjectileHolder : MonoBehaviour
 
     private float time;
 
-    private void Start() {
+    private void Awake() {
         source = GetComponent<UnitBase>();
     }
 

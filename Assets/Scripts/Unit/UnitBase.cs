@@ -8,6 +8,7 @@ using MoreMountains.Tools;
 public abstract class UnitBase : MonoBehaviour {
 
     public ProjectileHolder projectileHolder; //For projectile shoot
+    public AlbilitiesHolder abilityHolder;
 
     [SerializeField] private DamagePopUps normalDamagePopUps; //DamagePopUp
     [SerializeField] private DamagePopUps critDamagePopUps; //Crit
@@ -41,12 +42,14 @@ public abstract class UnitBase : MonoBehaviour {
         DealDamage(target, dmg);
     }
 
-    
+
     /* Mainternance
     public virtual void Hit(UnitBase source, float dmg) { //source of dmg, how many dmg, and location where to display dmg popup
         OnHit?.Invoke(source, dmg);
     }
     */
+
+    public event Action<UnitBase> OnFinishInit; //Use when finish init projectile holder, abilities holder ... for unitbase
 
     public event Action<UnitBase, float> OnDealDamage; //Use when succesfully deal damage to an object
 
@@ -57,6 +60,10 @@ public abstract class UnitBase : MonoBehaviour {
     public event Action OnDead;
 
     public event Action<Stats> OnBaseStatsIncrease;
+
+    public event Action<ScriptableProjectiles> OnProjectileAdded;
+
+    public event Action<ScriptableAlbilities> OnAbilityAdded; 
 
     //public event Action<UnitBase, float> OnHit; //Use when being hit -----Mainternance
 
@@ -85,9 +92,12 @@ public abstract class UnitBase : MonoBehaviour {
     protected virtual void Start() {
         damagePosition = transform.position;
         projectileHolder = GetComponent<ProjectileHolder>();
+        abilityHolder = GetComponent<AlbilitiesHolder>();
         mmHealthBar = GetComponent<MMHealthBar>();
 
         Initialize();
+
+        OnFinishInit?.Invoke(this);
     }
 
     internal virtual void Update() {
@@ -113,8 +123,17 @@ public abstract class UnitBase : MonoBehaviour {
 
     public void IncreaseBaseStats(Stats stats) {
         Stats newStats = IncreaseStats(stats);
-        
         OnBaseStatsIncrease?.Invoke(newStats);
+    }
+
+    public void AddProjectile(ScriptableProjectiles projectile) {
+        projectileHolder.AddProjectile(projectile);
+        OnProjectileAdded?.Invoke(projectile);
+    }
+
+    public void AddAbility(ScriptableAlbilities ability) {
+        abilityHolder.AddAbility(ability);
+        OnAbilityAdded?.Invoke(ability);
     }
 
     //-------------------------------------------------------------------------------------------------------------------------------------------
@@ -208,6 +227,18 @@ public abstract class UnitBase : MonoBehaviour {
         maxHP = stats.hp;
         nowHP = maxHP;
         mmHealthBar.UpdateBar(nowHP, 0f, maxHP, true); //Change HP Bar
+    }
+
+    public virtual void InitProjecitle(List<ScriptableProjectiles> scriptableProjectiles) {
+        foreach(ScriptableProjectiles p in scriptableProjectiles){
+            projectileHolder.AddProjectile(p);
+        }
+    }
+
+    public virtual void InitAbility(List<ScriptableAlbilities> scriptableAlbilities) {
+        foreach(ScriptableAlbilities a in scriptableAlbilities) {
+            abilityHolder.AddAbility(a);
+        }
     }
 }
 

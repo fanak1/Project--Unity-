@@ -196,11 +196,11 @@ MonoBehaviour:
   damagePosition: {x: 0, y: 0, z: 0}
   faction: 0
   stats:
-    hp: 200
-    mp: 200
-    atk: 100
-    spd: 15
-    def: 90
+    hp: 100
+    mp: 100
+    atk: 120
+    spd: 10
+    def: 100
   damageScaleBonus:
     damageBonus: 0
     critRate: 5
@@ -230,8 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c71ac8189966a164ebb08b0d328cdbd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileList:
-  - {fileID: 11400000, guid: 8f917a677dbae3e4fbc398cfd1765d7c, type: 2}
+  projectileList: []
 --- !u!114 &4761979753878171674
 MonoBehaviour:
   m_ObjectHideFlags: 0

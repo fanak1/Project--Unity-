@@ -8,7 +8,7 @@ public class AlbilitiesHolder : MonoBehaviour
 
     private UnitBase source;
 
-    private void Start() {
+    private void Awake() {
         source = GetComponent<UnitBase>();
 
         foreach(ScriptableAlbilities a in list) {
@@ -17,6 +17,7 @@ public class AlbilitiesHolder : MonoBehaviour
     }
 
     public void AddAbility(ScriptableAlbilities a) {
+        Debug.Log(source);
         list.Add(a);
         a.AttachTo(source);
     }

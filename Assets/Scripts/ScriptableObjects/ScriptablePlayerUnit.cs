@@ -6,8 +6,7 @@ using UnityEngine;
 public class ScriptablePlayerUnit : ScriptableEntity
 {
     public override UnitBase Spawn(Vector3 position) {
-        base.InitUnit();
-        var obj = Instantiate(prefabs, position, Quaternion.identity);
+        UnitBase obj = base.Spawn(position);
         obj.OnBaseStatsIncrease += BaseStatsChange;
         return obj;
     }

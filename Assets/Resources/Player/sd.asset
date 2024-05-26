@@ -16,7 +16,12 @@ MonoBehaviour:
   stats:
     hp: 100
     mp: 100
-    atk: 120
+    atk: 160
     spd: 10
     def: 100
+  projectiles:
+  - {fileID: 11400000, guid: 8f917a677dbae3e4fbc398cfd1765d7c, type: 2}
+  abilities:
+  - {fileID: 11400000, guid: 0fadda15016a83a449f2e0a2493ade2d, type: 2}
+  - {fileID: 11400000, guid: 0fadda15016a83a449f2e0a2493ade2d, type: 2}
   prefabs: {fileID: 2801681540067548546, guid: 7554a2ce3607b714399bd4285b56097f, type: 3}

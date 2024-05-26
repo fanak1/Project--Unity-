@@ -12,7 +12,7 @@ public class GameManager : PersistentSingleton<GameManager>
     private StageManager stageManager;
     private CipherManager cipherManager;
     private RewardManager rewardManager;
-    private AlbilitiesHolder playerAlbilitiesHolder;
+    private UnitBase playerAlbilitiesHolder;
 
     public ExitDoor exitDoor;
 
@@ -27,8 +27,6 @@ public class GameManager : PersistentSingleton<GameManager>
         stageManager = stageManagerGameObject.GetComponent<StageManager>();
         cipherManager = cipherManagerGameObject.GetComponent<CipherManager>();
         rewardManager = rewardManagerGameObject.GetComponent<RewardManager>();
-
-        playerAlbilitiesHolder = GameObject.FindGameObjectWithTag("Player").GetComponent<AlbilitiesHolder>();
 
         InitiateManager();
 
@@ -50,6 +48,7 @@ public class GameManager : PersistentSingleton<GameManager>
     }
 
     public void GainReward(ScriptableAlbilities a) {
+        playerAlbilitiesHolder = GameObject.FindGameObjectWithTag("Player").GetComponent<UnitBase>();
         playerAlbilitiesHolder.AddAbility(a);
         stageManager.RewardStateEnd();
     }
