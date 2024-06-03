@@ -13,12 +13,12 @@ public abstract class UnitBase : MonoBehaviour {
     [SerializeField] private DamagePopUps normalDamagePopUps; //DamagePopUp
     [SerializeField] private DamagePopUps critDamagePopUps; //Crit
     [SerializeField] private MMHealthBar mmHealthBar; //healthbar
-                                                                                   
+
     public Vector3 damagePosition; //Positiion where Damage Pop Up
 
     //private Transform hpBar;//HP
 
-    
+
 
     public Faction faction;
 
@@ -63,11 +63,11 @@ public abstract class UnitBase : MonoBehaviour {
 
     public event Action<ScriptableProjectiles> OnProjectileAdded;
 
-    public event Action<ScriptableAlbilities> OnAbilityAdded; 
+    public event Action<ScriptableAlbilities> OnAbilityAdded;
 
     //public event Action<UnitBase, float> OnHit; //Use when being hit -----Mainternance
 
-    
+
     // Create the UnityEvent when the object is awake
     private void SetUpEvent() {
 
@@ -166,7 +166,7 @@ public abstract class UnitBase : MonoBehaviour {
     internal virtual void DealDamage(UnitBase target, float damage) {
         float randomCrit = UnityEngine.Random.Range(0f, 1f);
         bool crit;
-        if(randomCrit < damageScaleBonus.critRate/100) {
+        if (randomCrit < damageScaleBonus.critRate / 100) {
             crit = true;
         } else {
             crit = false;
@@ -179,9 +179,9 @@ public abstract class UnitBase : MonoBehaviour {
 
     protected virtual float DamageScale(float dmg, bool crit) {
         if (crit) {
-            return dmg * (1 + damageScaleBonus.damageBonus/100) * (1 + damageScaleBonus.critDamage/100);
+            return dmg * (1 + damageScaleBonus.damageBonus / 100) * (1 + damageScaleBonus.critDamage / 100);
         } else {
-            return dmg * (1 + damageScaleBonus.damageBonus/100);
+            return dmg * (1 + damageScaleBonus.damageBonus / 100);
         }
     }
 
@@ -219,7 +219,7 @@ public abstract class UnitBase : MonoBehaviour {
             critDamagePopUps.dmg = (int)dmg;
             Instantiate(critDamagePopUps, damagePosition + Vector3.right * radX + Vector3.up * radY, Quaternion.identity);
         }
-        
+
     }
 
 
@@ -230,16 +230,27 @@ public abstract class UnitBase : MonoBehaviour {
     }
 
     public virtual void InitProjecitle(List<ScriptableProjectiles> scriptableProjectiles) {
-        foreach(ScriptableProjectiles p in scriptableProjectiles){
+        foreach (ScriptableProjectiles p in scriptableProjectiles) {
             projectileHolder.AddProjectile(p);
         }
     }
 
     public virtual void InitAbility(List<ScriptableAlbilities> scriptableAlbilities) {
-        foreach(ScriptableAlbilities a in scriptableAlbilities) {
+        foreach (ScriptableAlbilities a in scriptableAlbilities) {
             abilityHolder.AddAbility(a);
         }
     }
+
+    public virtual Stats ShowStats() => this.stats;
+
+    public virtual List<ScriptableAlbilities> ShowAbilities() {
+        if (abilityHolder != null) {
+            return this.abilityHolder.list;
+        } else {
+            return null;
+        }
+    }
+
 }
 
 [Serializable]

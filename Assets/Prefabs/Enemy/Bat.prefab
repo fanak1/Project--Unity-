@@ -14,6 +14,9 @@ GameObject:
   - component: {fileID: 9141384353391542933}
   - component: {fileID: 6338987417139645941}
   - component: {fileID: 6321273323743331341}
+  - component: {fileID: 1343442166935072885}
+  - component: {fileID: 5942539452941873626}
+  - component: {fileID: 4324167894759413301}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Enemy
@@ -141,14 +144,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8523200066697869874}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -159,7 +162,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &6338987417139645941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileHolder: {fileID: 0}
+  abilityHolder: {fileID: 0}
   normalDamagePopUps: {fileID: 4802245932234042993, guid: 0dc5598d5604c5946a85500eb0e513ac, type: 3}
   critDamagePopUps: {fileID: 4802245932234042993, guid: 0b6884f5b6a2b5246956cb99244d9eff, type: 3}
   mmHealthBar: {fileID: 0}
@@ -372,3 +376,44 @@ MonoBehaviour:
   TestMaxHealth: 100
   TestCurrentHealth: 25
   TestUpdateHealthButton: 0
+--- !u!114 &1343442166935072885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8523200066697869874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c830a24047695c468143db7123fe61f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveInterval: 2
+  shootPercentage: 0.5
+  moveDuration: 2
+--- !u!114 &5942539452941873626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8523200066697869874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71ac8189966a164ebb08b0d328cdbd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileList: []
+--- !u!114 &4324167894759413301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8523200066697869874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5af9b5c482cca1945a51e09a27c4ae86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list: []

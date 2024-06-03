@@ -28,6 +28,13 @@ public class ProjectileHolder : MonoBehaviour
         
     }
 
+    public void RandomShoot(Vector3 position, Vector3 destination) { 
+        if (projectileList.Count > 0) {
+            int projectileIndex = Random.Range(0, projectileList.Count);
+            Shoot(projectileIndex, position, destination);
+        }
+    }
+
     public void AddProjectile(ScriptableProjectiles projectile) { //Add a projectile to list
         projectileList.Add(projectile);
     }

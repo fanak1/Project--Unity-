@@ -14,6 +14,8 @@ public class GameManager : PersistentSingleton<GameManager>
     private RewardManager rewardManager;
     private UnitBase playerAlbilitiesHolder;
 
+    public GameObject inventoryTest;
+
     public ExitDoor exitDoor;
 
     private Difficulty difficulty;
@@ -33,6 +35,12 @@ public class GameManager : PersistentSingleton<GameManager>
         Debug.Log("New Stage: " + stageIndex);
 
         NewStage();
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            inventoryTest.SetActive(true);
+        }
     }
 
     public void BeginCipherUI() {

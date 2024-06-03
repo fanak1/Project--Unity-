@@ -46,7 +46,7 @@ public abstract class ProjectileBase : MonoBehaviour
 
     public virtual void OnTriggerEnter2D(Collider2D c) {
         //Debug.Log("Collided");
-        
+        if (source == null) return;
         if (c.gameObject.CompareTag(source.tag)) return;
         if(CheckOpponent(c.gameObject) && !collided) {
             if (!collided) collided = true;
@@ -65,8 +65,12 @@ public abstract class ProjectileBase : MonoBehaviour
         }
     }
 
-   public virtual void DestroyOnOverBounds() {
-        if (Vector3.Distance(this.position, this.transform.position) > 20f) Destroy(gameObject);
+    public virtual void DestroyOnOverBounds() {
+        if (Vector3.Distance(this.position, this.transform.position) > 40f) Destroy(gameObject);
+    }
+
+    private void OnBecameInvisible() {
+        Destroy(gameObject);
     }
 
 }

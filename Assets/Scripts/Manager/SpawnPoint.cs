@@ -15,10 +15,10 @@ public class SpawnPoint : MonoBehaviour {
     [SerializeField] private Animator animator;
 
     private void Start() {
-        transform.localScale = new Vector3(spawnRangeX, spawnRangeY, 1);
-        //boxCollider = GetComponent<BoxCollider2D>();
-        //spawnRangeX = boxCollider.bounds.size.x / 2f;
-        //spawnRangeY = boxCollider.bounds.size.y / 2f;
+        transform.localScale = new Vector3(spawnRangeX * 2f, spawnRangeY * 2f, 1);
+
+        Debug.Log(transform.position);
+        boxCollider = GetComponent<BoxCollider2D>();
         StartCoroutine("BeginSpawn");
     }
     public UnitBase SpawnEnemy(ScriptableEnemyUnit enemy) { //Function to spawn 1 enemy with random position in range
@@ -46,8 +46,8 @@ public class SpawnPoint : MonoBehaviour {
 
 
     public void SetSpawnRange(Vector3 spawnRange) {
-        this.spawnRangeX = Mathf.Abs(spawnRange.x);
-        this.spawnRangeY = Mathf.Abs(spawnRange.y);
+        this.spawnRangeX = Mathf.Abs(spawnRange.x) / 2f;
+        this.spawnRangeY = Mathf.Abs(spawnRange.y) / 2f;
     }
 
     public void SetEnemy(List<ScriptableEnemyUnit> enemyUnits) {
