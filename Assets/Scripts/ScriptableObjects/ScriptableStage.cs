@@ -17,7 +17,7 @@ public class ScriptableStage : ScriptableObject
 
 [Serializable]
 public enum StageState {
-    Unready = 2,
+    Unready = -2,
     Ready = -1,
     Round = 0,
     Cipher = 1,

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1343442166935072885}
   - component: {fileID: 5942539452941873626}
   - component: {fileID: 4324167894759413301}
+  - component: {fileID: 5659136824156353503}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Enemy
@@ -390,7 +391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveInterval: 2
   shootPercentage: 0.5
-  moveDuration: 2
+  moveDuration: 1
 --- !u!114 &5942539452941873626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,3 +418,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   list: []
+--- !u!95 &5659136824156353503
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8523200066697869874}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 423c95f1bbb2729408ef96a5964bc69b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

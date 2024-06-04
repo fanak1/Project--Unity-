@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Threading;
+using TMPro;
 
 public class StageManager : PersistentSingleton<StageManager> {
 
@@ -17,6 +18,8 @@ public class StageManager : PersistentSingleton<StageManager> {
     [SerializeField] private SpawnPoint[] spawnList; //GameObject we create in Scene
 
     [SerializeField] private SpawnPoint spawn;
+
+    [SerializeField] private TextMeshProUGUI roundCount;
 
     public static int numberEnemyLeft; //number enemy we have to clear each round
 
@@ -130,6 +133,8 @@ public class StageManager : PersistentSingleton<StageManager> {
 
         if (!stateInit) {
 
+            roundCount.SetText("Round: " + (roundIndex + 1) + "/" + roundList.Count);
+
             List<ScriptableEnemyUnit> enemyList = new List<ScriptableEnemyUnit>(); //List of enemy in this round
 
             stateInit = true; //Prevent loop init
@@ -212,6 +217,8 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     public void ChangeStage(ScriptableStage stage) {
         this.stage = stage;
+        string roundCount = "Round: 0/" + this.stage.GetRoundList().Count;
+        this.roundCount.SetText(roundCount);
         this.Start();
     }
 

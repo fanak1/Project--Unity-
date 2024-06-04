@@ -24,6 +24,8 @@ public class GameManager : PersistentSingleton<GameManager>
 
     public int stageIndex;
 
+    private bool inventoryOpen = false;
+
 
     private void Start() {
         stageManager = stageManagerGameObject.GetComponent<StageManager>();
@@ -39,7 +41,13 @@ public class GameManager : PersistentSingleton<GameManager>
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            inventoryTest.SetActive(true);
+            if (!inventoryOpen) {
+                inventoryTest.SetActive(true);
+                inventoryOpen = true;
+            } else {
+                inventoryTest.SetActive(false);
+                inventoryOpen = false;
+            }
         }
     }
 
@@ -109,6 +117,8 @@ public class GameManager : PersistentSingleton<GameManager>
     }
 
     public void LoadScene() {
+        inventoryOpen = false;
+        inventoryTest.SetActive(false);
         SceneManager.LoadScene(0);
     }
 

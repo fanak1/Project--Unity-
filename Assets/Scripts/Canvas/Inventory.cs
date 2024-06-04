@@ -105,6 +105,8 @@ public class Inventory : StaticInstance<Inventory>
 
         tabBeingDisplay = tabs[0];
         tabBeingDisplay.SetActive(true);
+
+        gameObject.SetActive(false);
     }
 
     private void OnEnable() {
