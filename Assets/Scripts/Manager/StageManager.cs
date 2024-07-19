@@ -33,6 +33,8 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     [SerializeField] private StateInforming stateInforming;
 
+    [SerializeField] private StageScript stageContent;
+
     //Event ------------------------------------------------------------------------------------------------------------------------------------
 
     public event Action<int> OnRoundFinish; //On round "number" finish. ex: OnRoundFinish(1) is called when round 1 is finish
@@ -116,6 +118,19 @@ public class StageManager : PersistentSingleton<StageManager> {
         spawn.SetSpawnRange(spawnRange);
         var spawnTemp = Instantiate(spawn, transform.position + offset, Quaternion.identity);
         spawnTemp.SetEnemy(enemy);
+    }
+
+    private void SpawnEnemy(List<SpawnPoint> spawn, List<ScriptableEnemyUnit> enemy) {
+        List<ScriptableEnemyUnit> temp = new List<ScriptableEnemyUnit>(enemy);
+        for (int i=0; i<spawn.Count-1; i++) {
+            int random = UnityEngine.Random.Range(0, temp.Count+1);
+            spawn[i].SetEnemy(ListConfiguration<ScriptableEnemyUnit>.TakeRandomFromList(temp, random));
+        }
+        spawn[spawn.Count - 1].SetEnemy(ListConfiguration<ScriptableEnemyUnit>.TakeRandomFromList(temp, temp.Count));
+
+        for(int i=0; i<spawn.Count; i++) {
+            spawn[i].Spawn();
+        }
     }
 
 
@@ -210,6 +225,7 @@ public class StageManager : PersistentSingleton<StageManager> {
         if (!stateInit) {
             Debug.Log("done");
             stateInit = true;
+            stageContent.StageFinish();
             OnStageFinish?.Invoke();
         }
         
@@ -239,6 +255,13 @@ public class StageManager : PersistentSingleton<StageManager> {
         roundList = stage.GetRoundList();
 
         state = StageState.Unready;
+    }
+
+    public void StartStage(StageScript s) {
+        stageContent = s;
+        stage = stageContent.stageContent;
+        Ready();
+        stageContent.StageBegin();
     }
 
     internal virtual void Update() {

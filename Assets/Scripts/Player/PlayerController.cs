@@ -38,9 +38,11 @@ public class PlayerController : MonoBehaviour
         if(Input.GetMouseButton(0)) { //Left-mouse
             projectileHolder.Shoot(0, transform.position, mousePos);
         }
+        /*
         if (Input.GetMouseButton(1)) { //Right-mouse
             projectileHolder.Shoot(1, transform.position, mousePos);
         }
+        */
     }
 
 }

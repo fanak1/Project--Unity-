@@ -26,6 +26,7 @@ public class GameManager : PersistentSingleton<GameManager>
 
     private bool inventoryOpen = false;
 
+    public int concious;
 
     private void Start() {
         stageManager = stageManagerGameObject.GetComponent<StageManager>();
@@ -36,7 +37,7 @@ public class GameManager : PersistentSingleton<GameManager>
 
         Debug.Log("New Stage: " + stageIndex);
 
-        NewStage();
+        //NewStage();
     }
 
     private void Update() {
@@ -78,6 +79,17 @@ public class GameManager : PersistentSingleton<GameManager>
 
         stageManager.OnStageFinish += StageClear;
 
+        cipherManager.OnCorrectAnswer += ChooseRightAnswer;
+        cipherManager.OnWrongAnswer += ChooseWrongAnswer;
+
+    }
+
+    public void ChooseRightAnswer() {
+        concious++;
+    }
+
+    public void ChooseWrongAnswer() {
+        concious--;
     }
 
     private void NewStage() {
@@ -91,7 +103,7 @@ public class GameManager : PersistentSingleton<GameManager>
         //if Done then
 
         //stageManager.Ready();
-        Debug.Log("Stage: " + stageIndex);
+        Debug.Log("Concious: " + concious);
 
         LoadNewStage(stageList[stageIndex]);
 

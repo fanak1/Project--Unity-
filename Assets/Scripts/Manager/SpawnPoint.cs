@@ -33,7 +33,6 @@ public class SpawnPoint : MonoBehaviour {
         List<UnitBase> list = new List<UnitBase>();
         foreach (ScriptableEnemyUnit e in enemy) {
             list.Add(SpawnEnemy(e));
-            
         }
         return list;
     }
@@ -55,6 +54,10 @@ public class SpawnPoint : MonoBehaviour {
         this.listEnemy.Clear();
         this.listEnemy.AddRange(enemyUnits);
         
+    }
+
+    public void Spawn() {
+        StartCoroutine("BeginSpawn");
     }
 
     public IEnumerator BeginSpawn() {
