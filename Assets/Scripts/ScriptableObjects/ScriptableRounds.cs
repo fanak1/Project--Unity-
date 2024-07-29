@@ -31,7 +31,7 @@ public struct RoundInformation { //Information of stage
     public int roundValue; //The value that help random stage 
     public int round; //How many round of stage
     public int gold; //How many gold stage give
-    public int numberOfEnemy; //How many enemy we have to clear to win this round
+    //public int numberOfEnemy; //How many enemy we have to clear to win this round
 }
 
 public enum RoundType {

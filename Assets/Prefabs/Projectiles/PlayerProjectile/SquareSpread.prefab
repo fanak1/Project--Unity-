@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 0}
-  position: {x: 0, y: 0, z: 0}
-  destination: {x: -4.6475773, y: -0.0881058, z: 0}
+  position: {x: 1.4009275, y: -1.1333886, z: 0}
+  destination: {x: 9.474608, y: 0.5578959, z: 0}
   bulletIndex: 3
   _projectileAttribute:
     speed: 50

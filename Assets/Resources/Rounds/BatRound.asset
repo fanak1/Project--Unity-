@@ -16,5 +16,4 @@ MonoBehaviour:
     roundValue: 12
     round: 0
     gold: 0
-    numberOfEnemy: 5
-  enemyList: 00000000
+  enemyList: 00000000000000000000000000000000000000000000000000000000

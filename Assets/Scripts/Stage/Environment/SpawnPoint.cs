@@ -5,8 +5,8 @@ using System.Threading;
 
 public class SpawnPoint : MonoBehaviour {
 
-    public float spawnRangeX;
-    public float spawnRangeY;
+    public float spawnRangeX = 1f;
+    public float spawnRangeY = 1f;
 
     private List<ScriptableEnemyUnit> listEnemy;
 
@@ -15,11 +15,14 @@ public class SpawnPoint : MonoBehaviour {
     [SerializeField] private Animator animator;
 
     private void Start() {
-        transform.localScale = new Vector3(spawnRangeX * 2f, spawnRangeY * 2f, 1);
+        //transform.localScale = new Vector3(spawnRangeX * 2f, spawnRangeY * 2f, 1);
 
         Debug.Log(transform.position);
         boxCollider = GetComponent<BoxCollider2D>();
-        StartCoroutine("BeginSpawn");
+        spawnRangeX = boxCollider.size.x;
+        spawnRangeY = boxCollider.size.y;
+
+        //StartCoroutine("BeginSpawn");
     }
     public UnitBase SpawnEnemy(ScriptableEnemyUnit enemy) { //Function to spawn 1 enemy with random position in range
         float offsetX = Random.Range(-spawnRangeX, spawnRangeX);
@@ -53,11 +56,11 @@ public class SpawnPoint : MonoBehaviour {
         this.listEnemy = new List<ScriptableEnemyUnit>();
         this.listEnemy.Clear();
         this.listEnemy.AddRange(enemyUnits);
-        
     }
 
     public void Spawn() {
-        StartCoroutine("BeginSpawn");
+        if(listEnemy != null)
+            StartCoroutine("BeginSpawn");
     }
 
     public IEnumerator BeginSpawn() {

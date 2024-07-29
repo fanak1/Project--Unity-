@@ -15,9 +15,11 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     [SerializeField] private int stateIndex; //Index of state
 
-    [SerializeField] private SpawnPoint[] spawnList; //GameObject we create in Scene
+   // [SerializeField] private SpawnPoint[] spawnList; //GameObject we create in Scene
 
     [SerializeField] private SpawnPoint spawn;
+
+    [SerializeField] private List<SpawnPoint> spawnList;
 
     [SerializeField] private TextMeshProUGUI roundCount;
 
@@ -53,7 +55,7 @@ public class StageManager : PersistentSingleton<StageManager> {
     //------------------------------------------------------------------------------------------------------------------------------------------
 
     public void FinishStateInforming() {
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         stateInforming.gameObject.SetActive(false);
         stateInit = false;
         loop = true;
@@ -61,7 +63,7 @@ public class StageManager : PersistentSingleton<StageManager> {
     }
 
     private void FinishAndSwitchState() { //Swtich stage
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         loop = false;
         
         stateIndex++;
@@ -122,6 +124,7 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     private void SpawnEnemy(List<SpawnPoint> spawn, List<ScriptableEnemyUnit> enemy) {
         List<ScriptableEnemyUnit> temp = new List<ScriptableEnemyUnit>(enemy);
+        Debug.Log(temp.Count);
         for (int i=0; i<spawn.Count-1; i++) {
             int random = UnityEngine.Random.Range(0, temp.Count+1);
             spawn[i].SetEnemy(ListConfiguration<ScriptableEnemyUnit>.TakeRandomFromList(temp, random));
@@ -150,22 +153,19 @@ public class StageManager : PersistentSingleton<StageManager> {
 
             roundCount.SetText("Round: " + (roundIndex + 1) + "/" + roundList.Count);
 
-            List<ScriptableEnemyUnit> enemyList = new List<ScriptableEnemyUnit>(); //List of enemy in this round
+            List<ScriptableEnemyUnit> enemyList = new List<ScriptableEnemyUnit>(roundList[roundIndex].LoadEnemyForRound()); //List of enemy in this round
 
             stateInit = true; //Prevent loop init
 
-            enemyList = roundList[roundIndex].LoadEnemyForRound(); //Load enemy of this round
+            //Load enemy of this round
 
-            numberEnemyLeft = roundList[roundIndex].info.numberOfEnemy; //number enemy we have to clear to win
+            numberEnemyLeft = enemyList.Count; //number enemy we have to clear to win
 
+            SpawnEnemy(spawnList, enemyList);
+
+            /*
             int firstSpawn = UnityEngine.Random.Range(0, (numberEnemyLeft + 1) / 2); //number of enemy we spawn in first spawnpoint
             int secondSpawn = numberEnemyLeft - firstSpawn; //number of enemy we spawn in second spawnpoint
-
-            int spawnFirst = UnityEngine.Random.Range(0, spawnList.Length); //where the first spawnpoint 
-            int spawnSecond;
-            do {
-                spawnSecond = UnityEngine.Random.Range(0, spawnList.Length);
-            } while (spawnSecond == spawnFirst); //Find the second spawnpoint that distinguish with the first one
 
             List<ScriptableEnemyUnit> enemyList1 = new List<ScriptableEnemyUnit>();
             List<ScriptableEnemyUnit> enemyList2 = new List<ScriptableEnemyUnit>();
@@ -186,6 +186,8 @@ public class StageManager : PersistentSingleton<StageManager> {
 
             SpawnEnemy(enemyList1, new Vector3(3, 3, 0), new Vector3(1, 1, 0));
             SpawnEnemy(enemyList2, new Vector3(3, 3, 0), new Vector3(-1, 1, 0));
+
+            */
             
         }
         
@@ -231,6 +233,18 @@ public class StageManager : PersistentSingleton<StageManager> {
         
     }
 
+    private void ResetStageParameter() {
+        roundIndex = 0;
+        stateIndex = -1;
+        stateInit = false;
+
+        stateList = stage.GetStateList();
+
+        roundList = stage.GetRoundList();
+
+        state = StageState.Unready;
+    }
+
     public void ChangeStage(ScriptableStage stage) {
         this.stage = stage;
         string roundCount = "Round: 0/" + this.stage.GetRoundList().Count;
@@ -246,21 +260,16 @@ public class StageManager : PersistentSingleton<StageManager> {
     internal virtual void Start() {
         stateInforming.OnDisplayEnd += FinishStateInforming;
 
-        roundIndex = 0;
-        stateIndex = -1;
-        stateInit = false;
-
-        stateList = stage.GetStateList();
-
-        roundList = stage.GetRoundList();
-
-        state = StageState.Unready;
+        ResetStageParameter();
     }
+
+
 
     public void StartStage(StageScript s) {
         stageContent = s;
         stage = stageContent.stageContent;
-        Ready();
+        spawnList = stageContent.GetSpawnPoints();
+        ResetStageParameter();
         stageContent.StageBegin();
     }
 
