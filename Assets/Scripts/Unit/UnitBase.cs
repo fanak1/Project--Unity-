@@ -12,7 +12,7 @@ public abstract class UnitBase : MonoBehaviour {
 
     [SerializeField] private DamagePopUps normalDamagePopUps; //DamagePopUp
     [SerializeField] private DamagePopUps critDamagePopUps; //Crit
-    [SerializeField] private MMHealthBar mmHealthBar; //healthbar
+    //[SerializeField] private MMHealthBar mmHealthBar; //healthbar
 
     public Vector3 damagePosition; //Positiion where Damage Pop Up
 
@@ -27,8 +27,8 @@ public abstract class UnitBase : MonoBehaviour {
     public DamageScaleBonus damageScaleBonus = new DamageScaleBonus(0, 5f, 50f);
 
 
-    private float maxHP;
-    private float nowHP;
+    internal float maxHP;
+    internal float nowHP;
 
 
     //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -65,6 +65,8 @@ public abstract class UnitBase : MonoBehaviour {
 
     public event Action<ScriptableAlbilities> OnAbilityAdded;
 
+    public event Action OnAbilityKeyPressed;
+
     //public event Action<UnitBase, float> OnHit; //Use when being hit -----Mainternance
 
 
@@ -93,9 +95,9 @@ public abstract class UnitBase : MonoBehaviour {
         damagePosition = transform.position;
         projectileHolder = GetComponent<ProjectileHolder>();
         abilityHolder = GetComponent<AlbilitiesHolder>();
-        mmHealthBar = GetComponent<MMHealthBar>();
+        
 
-        Initialize();
+        InitializeHP();
 
         OnFinishInit?.Invoke(this);
     }
@@ -106,6 +108,7 @@ public abstract class UnitBase : MonoBehaviour {
             OnDead?.Invoke();
             //Destroy(gameObject);
         }
+        OnAbilityKeyPressed?.Invoke();
     }
 
 
@@ -155,7 +158,7 @@ public abstract class UnitBase : MonoBehaviour {
     internal virtual void ReduceHealth(float dmgTaken) {
         //stats.hp -= (int)dmgTaken;
         nowHP -= dmgTaken;
-        mmHealthBar.UpdateBar(nowHP, 0, maxHP, true);
+        
     }
 
     protected virtual float ReduceDamage(float dmg) {
@@ -194,10 +197,10 @@ public abstract class UnitBase : MonoBehaviour {
         return value;
     }
 
-    protected virtual void IncreaseHP(int hp) {
+    internal virtual void IncreaseHP(int hp) {
         stats.hp += hp;
-        maxHP = hp;
-        mmHealthBar.UpdateBar(nowHP, 0f, maxHP, true); //Change HP Bar
+        maxHP = stats.hp;
+        
     }
 
     internal virtual void Destroy() {
@@ -223,10 +226,10 @@ public abstract class UnitBase : MonoBehaviour {
     }
 
 
-    internal virtual void Initialize() {
+    internal virtual void InitializeHP() {
         maxHP = stats.hp;
         nowHP = maxHP;
-        mmHealthBar.UpdateBar(nowHP, 0f, maxHP, true); //Change HP Bar
+        
     }
 
     public virtual void InitProjecitle(List<ScriptableProjectiles> scriptableProjectiles) {

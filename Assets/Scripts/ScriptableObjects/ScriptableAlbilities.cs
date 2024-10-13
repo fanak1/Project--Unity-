@@ -11,15 +11,16 @@ public class ScriptableAlbilities : ScriptableObject {
 
     [SerializeField] private Event onEvent;
 
-    
-
     [SerializeField] private Stats amountIncrease;
+
+    [SerializeField] private KeyCode button; 
 
     public string description;
 
     public Rarity rarity;
 
     public void AttachTo(UnitBase target) {
+        if (albility != null) albility.source = target;        
         switch (onEvent) {
             case Event.OnHitting:
                 target.OnHitting += albility.Action;
@@ -33,9 +34,18 @@ public class ScriptableAlbilities : ScriptableObject {
             case Event.IncreaseStat:
                 target.IncreaseStats(amountIncrease); 
                 break;
+            case Event.OnButtonClick:
+                target.OnAbilityKeyPressed += PerformAbility;
+                break;
             default:
                 break;
-        } 
+        }
+    }
+
+    public void PerformAbility() {
+        if (Input.GetKeyDown(button)) {
+            albility.ActionPressed(button);
+        }
     }
 
     
@@ -46,7 +56,8 @@ public enum Event {
     OnHitting,
     OnDealDamage,
     OnDamageTaken,
-    IncreaseStat
+    IncreaseStat,
+    OnButtonClick
 }
 
 public enum Rarity {

@@ -24,4 +24,6 @@ MonoBehaviour:
   abilities:
   - {fileID: 11400000, guid: 0fadda15016a83a449f2e0a2493ade2d, type: 2}
   - {fileID: 11400000, guid: 0fadda15016a83a449f2e0a2493ade2d, type: 2}
+  - {fileID: 11400000, guid: affdbbc04fd1422469102046d4dee7fd, type: 2}
+  - {fileID: 11400000, guid: bef178efea3bc6d4eb13250e7b7c5f77, type: 2}
   prefabs: {fileID: 2801681540067548546, guid: 7554a2ce3607b714399bd4285b56097f, type: 3}

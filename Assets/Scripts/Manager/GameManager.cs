@@ -16,7 +16,7 @@ public class GameManager : PersistentSingleton<GameManager>
 
     public GameObject inventoryTest;
 
-    public ExitDoor exitDoor;
+    //public ExitDoor exitDoor;
 
     private Difficulty difficulty;
 
@@ -124,8 +124,8 @@ public class GameManager : PersistentSingleton<GameManager>
 
     public void StageClear() { // Let OnStageClear of stage manager += StageClear to call when stage is cleared
         //StartCoroutine(NewStage);
-        var exit = Instantiate(exitDoor, transform.position, Quaternion.identity);
-        exit.OnDoorEnter += NextStage;
+        //var exit = Instantiate(exitDoor, transform.position, Quaternion.identity);
+        //exit.OnDoorEnter += NextStage;
     }
 
     public void LoadScene() {
