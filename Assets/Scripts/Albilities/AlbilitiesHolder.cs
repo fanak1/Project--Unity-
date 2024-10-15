@@ -6,6 +6,8 @@ public class AlbilitiesHolder : MonoBehaviour
 {
     public List<ScriptableAlbilities> list;
 
+    public List<ScriptableAlbilities> listSkill;
+
     private UnitBase source;
 
     private void Awake() {
@@ -17,8 +19,13 @@ public class AlbilitiesHolder : MonoBehaviour
     }
 
     public void AddAbility(ScriptableAlbilities a) {
-        Debug.Log(source);
-        list.Add(a);
+        //Debug.Log(source);
+        if(a.onEvent != Event.OnButtonClick) {
+            list.Add(a);
+            
+        } else {
+            listSkill.Add(a);
+        }
         a.AttachTo(source);
     }
 }

@@ -9,4 +9,6 @@ public abstract class AlbilitiesBase : MonoBehaviour
 
     public abstract void ActionPressed(KeyCode key);
 
+    public bool usable;
+
 }

@@ -9,11 +9,19 @@ public class ScriptableAlbilities : ScriptableObject {
 
     [SerializeField] private AlbilitiesBase albility;
 
-    [SerializeField] private Event onEvent;
+    public Event onEvent;
 
     [SerializeField] private Stats amountIncrease;
 
-    [SerializeField] private KeyCode button; 
+    [SerializeField] private KeyCode button;
+
+    [SerializeField] private SkillUI skillIconPrefabs;
+
+    private SkillUI skillIcon;
+
+    [SerializeField] private float cooldown = 0f;
+
+    public Action perform;
 
     public string description;
 
@@ -36,16 +44,26 @@ public class ScriptableAlbilities : ScriptableObject {
                 break;
             case Event.OnButtonClick:
                 target.OnAbilityKeyPressed += PerformAbility;
+                skillIcon = InitSkillIcon();
                 break;
             default:
                 break;
         }
     }
 
-    public void PerformAbility() {
-        if (Input.GetKeyDown(button)) {
+    virtual public void PerformAbility() {
+        if (Input.GetKeyDown(button) && skillIcon.usable) {
             albility.ActionPressed(button);
+            skillIcon.UseSkill();
+            Debug.Log(skillIcon);
         }
+    }
+
+    virtual public SkillUI InitSkillIcon() {
+        var sIcon = Instantiate(skillIconPrefabs);
+        sIcon.transform.SetParent(SkillContainerDD.Instance.transform);
+        sIcon.Init(cooldown, button.ToString());
+        return sIcon;
     }
 
     

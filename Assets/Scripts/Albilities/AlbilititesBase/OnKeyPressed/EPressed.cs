@@ -9,6 +9,6 @@ public class EPressed : AlbilitiesBase
     }
 
     public override void ActionPressed(KeyCode key) {
-        Debug.Log(key + " is Pressed");
+        DebugMessege.Instance.Messege(key + " is Pressed");
     }
 }

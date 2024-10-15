@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c8f35cd76529ec4781f21813e51dd6a, type: 3}
-  m_Name: NewAbility
+  m_Name: DuplicateTemplate
   m_EditorClassIdentifier: 
   albility: {fileID: 3344619375668017674, guid: 539db6406ef83f24c8b3a8780c0c045f, type: 3}
   onEvent: 4
@@ -21,5 +21,7 @@ MonoBehaviour:
     spd: 0
     def: 0
   button: 108
+  skillIconPrefabs: {fileID: 875143567584612355, guid: 41576a3cefd3349449fa1dec46327304, type: 3}
+  cooldown: 7
   description: 
   rarity: 0
