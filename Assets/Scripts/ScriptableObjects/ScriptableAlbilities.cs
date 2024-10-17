@@ -7,7 +7,7 @@ using System;
 [CreateAssetMenu(fileName = "NewAbility", menuName = "Abilities")]
 public class ScriptableAlbilities : ScriptableObject {
 
-    [SerializeField] private AlbilitiesBase albility;
+    [SerializeField] private AlbilitiesBase albilityEffect;
 
     public Event onEvent;
 
@@ -21,52 +21,17 @@ public class ScriptableAlbilities : ScriptableObject {
 
     [SerializeField] private float cooldown = 0f;
 
-    public Action perform;
-
     public string description;
 
     public Rarity rarity;
 
-    public void AttachTo(UnitBase target) {
-        if (albility != null) albility.source = target;        
-        switch (onEvent) {
-            case Event.OnHitting:
-                target.OnHitting += albility.Action;
-                break;
-            case Event.OnDealDamage:
-                target.OnDealDamage += albility.Action;
-                break;
-            case Event.OnDamageTaken:
-                target.OnTakeDamage += albility.Action;
-                break;
-            case Event.IncreaseStat:
-                target.IncreaseStats(amountIncrease); 
-                break;
-            case Event.OnButtonClick:
-                target.OnAbilityKeyPressed += PerformAbility;
-                skillIcon = InitSkillIcon();
-                break;
-            default:
-                break;
-        }
-    }
 
-    virtual public void PerformAbility() {
-        if (Input.GetKeyDown(button) && skillIcon.usable) {
-            albility.ActionPressed(button);
-            skillIcon.UseSkill();
-            Debug.Log(skillIcon);
-        }
+    public Abilities Create() {
+        var go = new GameObject("Ability");
+        var p = go.AddComponent<Abilities>();
+        p.Init(amountIncrease, onEvent, skillIconPrefabs, button, cooldown, rarity, description);
+        return p;
     }
-
-    virtual public SkillUI InitSkillIcon() {
-        var sIcon = Instantiate(skillIconPrefabs);
-        sIcon.transform.SetParent(SkillContainerDD.Instance.transform);
-        sIcon.Init(cooldown, button.ToString());
-        return sIcon;
-    }
-
-    
 }
 
 [Serializable]

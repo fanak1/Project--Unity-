@@ -15,26 +15,14 @@ public class ScriptableProjectiles : ScriptableObject
         
     public ProjectileBase prefabs; //Monobehaviour 
 
-    public void Shoot(UnitBase source, Vector3 position, Vector3 destination) { //Function to fire projectile
-        SetStatForProjectile();
-        prefabs.SetSourceAndDestination(source, position, destination);
-        for(int i=0; i<projectileAttribute.numberOfBullet; i++) {
-            prefabs.bulletIndex = i;
-            Instantiate(prefabs, source.transform.position, Quaternion.identity);
-        }
-    }
+    public Projectiles projectiles;
 
-    public void SetStatForProjectile(ProjectileAttribute projectileAttribute) { //Function to set stat of projectile manually
-        this.projectileAttribute = projectileAttribute;
-        prefabs.SetProjectileAttribute(projectileAttribute);
-    }
 
-    public void SetStatForProjectile() { //Function to set stat of projectile on default
-        prefabs.SetProjectileAttribute(projectileAttribute);
-    }
-
-    public bool ShootInterval(float time) { //Interval each shoot time of this Projectile
-        return time > prefabs._projectileAttribute.interval;
+    public Projectiles Create() {
+        var go = new GameObject("Projectile");
+        var p = go.AddComponent<Projectiles>();
+        p.Init(projectileAttribute, prefabs);
+        return p;
     }
 }
 

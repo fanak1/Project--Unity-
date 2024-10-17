@@ -34,8 +34,13 @@ public class SpawnPoint : MonoBehaviour {
     public List<UnitBase> SpawnEnemy(List<ScriptableEnemyUnit> enemy) { //Function to spawn list of enemy with random position in range
         Debug.Log(enemy.Count);
         List<UnitBase> list = new List<UnitBase>();
+        int i = 0;
         foreach (ScriptableEnemyUnit e in enemy) {
-            list.Add(SpawnEnemy(e));
+            var go = SpawnEnemy(e);
+            go.transform.name = e.name + " " + i;
+            list.Add(go);
+
+            i++;
         }
         return list;
     }

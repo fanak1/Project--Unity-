@@ -7,7 +7,5 @@ public class AlbilitiesOnButton : ScriptableAlbilities
 {
     public KeyCode keycode;
 
-    public override void PerformAbility() {
-        
-    }
+    
 }
