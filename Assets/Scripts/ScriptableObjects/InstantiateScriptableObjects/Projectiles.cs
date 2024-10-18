@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectiles : MonoBehaviour
 {
     public GameObject source;
-    [SerializeField] private ProjectileAttribute projectileAttribute; //For custiomize projectile
+    [SerializeField] private ProjectileAttribute projectileAttribute;//For custiomize projectile
     public ProjectileBase prefabs; //Monobehaviour 
 
     public void Shoot(UnitBase source, Vector3 position, Vector3 destination) { //Function to fire projectile
@@ -38,6 +38,10 @@ public class Projectiles : MonoBehaviour
     public void Init(ProjectileAttribute projectileAttribute, ProjectileBase prefabs) {
         this.projectileAttribute = projectileAttribute;
         this.prefabs = prefabs;
+    }
+
+    public ProjectileAttribute GetAttribute() {
+        return this.projectileAttribute;
     }
 
 }

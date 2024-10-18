@@ -69,4 +69,13 @@ public class ProjectileHolder : MonoBehaviour
         }
     }
 
+    public bool EnoughMana(int index, float mana) {
+        if (mana < projectiles[index].GetAttribute().manaSpend) return false;
+        return true;
+    }
+
+    public float MPCost(int index) {
+        return projectiles[index].GetAttribute().manaSpend;
+    }
+
 }

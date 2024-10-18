@@ -30,6 +30,12 @@ public abstract class UnitBase : MonoBehaviour {
     internal float maxHP;
     internal float nowHP;
 
+    internal float maxMP;
+    internal float nowMP;
+
+    internal float regenMP = 50f;
+    internal float regenHP = 20f;
+
 
     //--------------------------------------------------------------------------------------------------------------------------------------------
     //Events
@@ -98,6 +104,7 @@ public abstract class UnitBase : MonoBehaviour {
         
 
         InitializeHP();
+        InitializeMP();
 
         OnFinishInit?.Invoke(this);
     }
@@ -109,6 +116,8 @@ public abstract class UnitBase : MonoBehaviour {
             //Destroy(gameObject);
         }
         OnAbilityKeyPressed?.Invoke();
+
+        RegenMP(regenMP);
     }
 
 
@@ -157,8 +166,11 @@ public abstract class UnitBase : MonoBehaviour {
 
     internal virtual void ReduceHealth(float dmgTaken) {
         //stats.hp -= (int)dmgTaken;
-        nowHP -= dmgTaken;
-        
+        nowHP -= dmgTaken;  
+    }
+
+    internal virtual void ReduceMP(float mpTaken) {
+        nowMP -= mpTaken;
     }
 
     protected virtual float ReduceDamage(float dmg) {
@@ -197,10 +209,21 @@ public abstract class UnitBase : MonoBehaviour {
         return value;
     }
 
-    internal virtual void IncreaseHP(int hp) {
+    internal virtual void IncreaseMaxHP(int hp) {
         stats.hp += hp;
         maxHP = stats.hp;
         
+    }
+
+    internal virtual void IncreaseMaxMP(int mp) {
+        stats.mp += mp;
+        maxMP = stats.mp;
+    }
+
+    internal virtual void RegenMP(float regenSpeed) {
+        if(nowMP < maxMP) {
+            nowMP += regenSpeed * Time.deltaTime;
+        }
     }
 
     internal virtual void Destroy() {
@@ -230,6 +253,11 @@ public abstract class UnitBase : MonoBehaviour {
         maxHP = stats.hp;
         nowHP = maxHP;
         
+    }
+
+    internal virtual void InitializeMP() {
+        maxMP = stats.mp;
+        nowMP = maxMP;
     }
 
     public virtual void InitProjecitle(List<ScriptableProjectiles> scriptableProjectiles) {

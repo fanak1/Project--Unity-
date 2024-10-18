@@ -18,12 +18,13 @@ public class GaugeBar : MonoBehaviour
     private float decreaseSpeed = 50f;
     private float increaseSpeed = 20f;
     private float delay = 1f;
+    private float scale = 1f;
 
     private Coroutine decreaseDelayCoroutine;
     private bool delayCoroutineEnd;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         rectTransform = GetComponent<RectTransform>();
 
@@ -31,7 +32,7 @@ public class GaugeBar : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if(valueSlider.value < increaseDelaySlider.value) {
             valueSlider.value += Time.deltaTime * increaseSpeed;
@@ -61,33 +62,40 @@ public class GaugeBar : MonoBehaviour
 
     public void Decrease(float value) {
         decreaseDelayCoroutine = ResetCoroutine(decreaseDelayCoroutine);
-        valueSlider.value -= value;
-        increaseDelaySlider.value -= value;
+        valueSlider.value -= value * scale;
+        increaseDelaySlider.value -= value * scale;
     }
 
     public void IncreaseWithInterval(float value, float speed = 20f) {
-        increaseDelaySlider.value += value;
-        increaseSpeed = speed;
+        increaseDelaySlider.value += value * scale;
+        increaseSpeed = speed * scale;
     }
 
     public void Increase(float value) {
-        valueSlider.value += value;
+        valueSlider.value += value * scale;
     }
 
     public void SetValue(float value) {
-        increaseDelaySlider.value = value;
-        decreaseDelaySlider.value = value;
-        valueSlider.value = value;
+        increaseDelaySlider.value = value * scale;
+        decreaseDelaySlider.value = value * scale;
+        valueSlider.value = value * scale;
     }
 
     public void SetMaxValue(float value, bool resetBar = true) {
-        rectTransform.sizeDelta = new Vector2(value, 30);
-        increaseDelaySlider.maxValue = value;
-        decreaseDelaySlider.maxValue = value;
-        valueSlider.maxValue = value;
+        rectTransform.sizeDelta = new Vector2(value * scale, 30);
+        increaseDelaySlider.maxValue = value * scale;
+        decreaseDelaySlider.maxValue = value * scale;
+        valueSlider.maxValue = value * scale;
 
         if(resetBar) SetValue(value); 
     }
 
-    
+    public void Init(float maxValue, float scale=1f) {
+        this.scale = scale;
+        SetMaxValue(maxValue);
+    }
+
+    public bool DelayEnd() => this.delayCoroutineEnd;
+
+
 }

@@ -24,8 +24,8 @@ public class EnemyBase : UnitBase
         mmHealthBar.UpdateBar(nowHP, 0, maxHP, true);
     }
 
-    internal override void IncreaseHP(int hp) {
-        base.IncreaseHP(hp);
+    internal override void IncreaseMaxHP(int hp) {
+        base.IncreaseMaxHP(hp);
         mmHealthBar.UpdateBar(nowHP, 0f, maxHP, true); //Change HP Bar
     }
 
