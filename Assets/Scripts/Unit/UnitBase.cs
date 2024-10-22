@@ -71,7 +71,7 @@ public abstract class UnitBase : MonoBehaviour {
 
     public event Action<ScriptableAlbilities> OnAbilityAdded;
 
-    public event Action OnAbilityKeyPressed;
+    //public event Action OnAbilityKeyPressed;
 
     //public event Action<UnitBase, float> OnHit; //Use when being hit -----Mainternance
 
@@ -85,7 +85,7 @@ public abstract class UnitBase : MonoBehaviour {
 
         //OnDealDamage += LifeSteal;
 
-        OnDead += Destroy;
+        //OnDead += Destroy;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------
@@ -113,9 +113,10 @@ public abstract class UnitBase : MonoBehaviour {
         if (nowHP <= 0) {
             //Dead event
             OnDead?.Invoke();
+            Destroy(gameObject);
             //Destroy(gameObject);
         }
-        OnAbilityKeyPressed?.Invoke();
+        //OnAbilityKeyPressed?.Invoke();
 
         RegenMP(regenMP);
     }

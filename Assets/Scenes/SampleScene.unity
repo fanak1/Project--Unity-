@@ -4570,6 +4570,7 @@ MonoBehaviour:
   decreaseDelaySlider: {fileID: 1841421656}
   valueSlider: {fileID: 107326950}
   canRegen: 1
+  regenCooldown: 2
 --- !u!114 &1278403723
 MonoBehaviour:
   m_ObjectHideFlags: 0

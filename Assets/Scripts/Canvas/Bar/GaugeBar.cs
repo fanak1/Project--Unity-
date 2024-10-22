@@ -6,16 +6,16 @@ using UnityEngine.UI;
 public class GaugeBar : MonoBehaviour
 {
     private RectTransform rectTransform;
-    [SerializeField] private Slider increaseDelaySlider;
-    [SerializeField] private Slider decreaseDelaySlider;
-    [SerializeField] private Slider valueSlider;
+    [SerializeField] internal Slider increaseDelaySlider;
+    [SerializeField] internal Slider decreaseDelaySlider;
+    [SerializeField] internal Slider valueSlider;
 
 
     /* when the valueBar decrease, decreaseBar will delay a short time b4 change its bar to valueBar
      * when the valueBar have to increase in interval of time, increaseBar will increase to target value instantly.
      */
 
-    private float decreaseSpeed = 50f;
+    private float decreaseSpeed = 200f;
     private float increaseSpeed = 20f;
     private float delay = 1f;
     private float scale = 1f;
@@ -75,9 +75,11 @@ public class GaugeBar : MonoBehaviour
         valueSlider.value += value * scale;
     }
 
-    public void SetValue(float value) {
-        increaseDelaySlider.value = value * scale;
-        decreaseDelaySlider.value = value * scale;
+    public void SetValue(float value, bool resetBar = false) {
+        if(resetBar) {
+            increaseDelaySlider.value = value * scale;
+            decreaseDelaySlider.value = value * scale;
+        }
         valueSlider.value = value * scale;
     }
 

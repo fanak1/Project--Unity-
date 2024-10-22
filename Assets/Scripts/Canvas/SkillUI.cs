@@ -36,7 +36,7 @@ public class SkillUI : MonoBehaviour
         cooldownSlider.value = cooldownSlider.maxValue;
         while(time < cooldown) {
             time += Time.deltaTime;
-            cooldownSlider.value -= Time.deltaTime;
+            cooldownSlider.value = Mathf.Lerp(cooldownSlider.maxValue, 0, time / cooldown);
             yield return null;
         }
         cooldownSlider.value = 0;

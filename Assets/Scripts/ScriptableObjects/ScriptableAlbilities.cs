@@ -7,7 +7,7 @@ using System;
 [CreateAssetMenu(fileName = "NewAbility", menuName = "Abilities")]
 public class ScriptableAlbilities : ScriptableObject {
 
-    [SerializeField] private AlbilitiesBase albilityEffect;
+    [SerializeField] private Abilities ability;
 
     public Event onEvent;
 
@@ -21,15 +21,25 @@ public class ScriptableAlbilities : ScriptableObject {
 
     [SerializeField] private float cooldown = 0f;
 
+    [SerializeField] private AbilityStat stat;
+
     public string description;
 
     public Rarity rarity;
 
 
     public Abilities Create() {
-        var go = new GameObject("Ability");
-        var p = go.AddComponent<Abilities>();
-        p.Init(amountIncrease, onEvent, skillIconPrefabs, button, cooldown, rarity, description);
+        Abilities p;
+        if(ability != null) {
+            p = Instantiate(ability);
+
+        } else {
+            var go = new GameObject("Ability");
+            p = go.AddComponent<Abilities>();
+        }
+        
+        
+        p.Init(amountIncrease, onEvent, skillIconPrefabs, button, cooldown, rarity, description, stat);
         return p;
     }
 }
@@ -48,4 +58,10 @@ public enum Rarity {
     Rare,
     Epic,
     Legendary
+}
+
+[Serializable]
+public struct AbilityStat {
+    public int manaSpend;
+    public int amount;
 }

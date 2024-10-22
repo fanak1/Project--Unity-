@@ -22,6 +22,8 @@ public class Abilities : MonoBehaviour
 
     public Rarity rarity;
 
+    public AbilityStat stat;
+
     private SkillUI skillIcon;
 
 
@@ -41,7 +43,7 @@ public class Abilities : MonoBehaviour
                 target.IncreaseStats(amountIncrease);
                 break;
             case Event.OnButtonClick:
-                target.OnAbilityKeyPressed += PerformAbility;
+                //target.OnAbilityKeyPressed += PerformAbility;
                 skillIcon = InitSkillIcon();
                 break;
             default:
@@ -60,21 +62,36 @@ public class Abilities : MonoBehaviour
     }
 
     virtual public SkillUI InitSkillIcon() {
-        var sIcon = Instantiate(skillIconPrefabs);
-        sIcon.transform.SetParent(SkillContainerDD.Instance.transform);
-        sIcon.Init(cooldown, button.ToString());
-        return sIcon;
+        if (skillIconPrefabs != null) {
+
+            var sIcon = Instantiate(skillIconPrefabs);
+            sIcon.transform.SetParent(SkillContainerDD.Instance.transform);
+            sIcon.Init(this.cooldown, button.ToString());
+            return sIcon;
+        }
+        return null;
     }
 
-    virtual public void Action(UnitBase b, float amount) {
+    virtual public void Action(UnitBase target, float amount) {
 
     }
 
     virtual public void ActionPressed(KeyCode key) {
-        DebugMessege.Instance.Messege(key + " is Pressed");
+        if (skillIcon.usable) {
+            DebugMessege.Instance.Messege(key + " is Pressed");
+            if(skillIcon != null) skillIcon.UseSkill();
+        }
+            
     }
 
-    virtual public void Init(Stats amountIncrease, Event onEvent, SkillUI skillIconPrefabs, KeyCode button, float cooldown, Rarity rarity, string description) {
+    virtual public bool EnoughMana(float mana) {
+        if (mana < stat.manaSpend) return false;
+        return true;
+    }
+
+    virtual public bool Usable() => skillIcon.usable;
+
+    virtual public void Init(Stats amountIncrease, Event onEvent, SkillUI skillIconPrefabs, KeyCode button, float cooldown, Rarity rarity, string description, AbilityStat stat) {
         this.amountIncrease = amountIncrease;
         this.onEvent = onEvent;
         this.skillIconPrefabs = skillIconPrefabs;
@@ -82,6 +99,7 @@ public class Abilities : MonoBehaviour
         this.cooldown = cooldown;
         this.rarity = rarity;
         this.description = description;
+        this.stat = stat;
     }
 
     virtual public void Init(UnitBase b) {

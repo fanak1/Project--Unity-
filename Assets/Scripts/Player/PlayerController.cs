@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     void Update() {
         MoveController();
         ShootController();
+        AbilityController();
     }
 
     void MoveController() { //Movement of player
@@ -53,7 +54,15 @@ public class PlayerController : MonoBehaviour
     }
 
     void AbilityController() {
-        
+        foreach (Abilities a in abilityHolder.active) {
+            if (Input.GetKeyDown(a.button)) {
+                if(abilityHolder.EnoughMana(a, playerUnit.nowMP) && abilityHolder.Usable(a)) {
+                    abilityHolder.PerformAbility(a.button);
+                    playerUnit.ReduceMP(abilityHolder.MPCost(a));
+                }
+            }
+
+        }
     }
 
 }

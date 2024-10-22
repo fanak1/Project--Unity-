@@ -28,6 +28,7 @@ public class PlayerUnit : UnitBase
     internal override void ReduceMP(float mpTaken) {
         base.ReduceMP(mpTaken);
         manaBar.Decrease(mpTaken);
+        manaBar.RegenCooldown();
     }
 
 
