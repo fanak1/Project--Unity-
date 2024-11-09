@@ -8,12 +8,37 @@ public class Projectiles : MonoBehaviour
     [SerializeField] private ProjectileAttribute projectileAttribute;//For custiomize projectile
     public ProjectileBase prefabs; //Monobehaviour 
 
-    public void Shoot(UnitBase source, Vector3 position, Vector3 destination) { //Function to fire projectile
-        SetStatForProjectile();
+    private Queue<ProjectileBase> bulletPooling = new Queue<ProjectileBase>();
+
+    private ProjectileBase Create(ProjectileBase prefabs, UnitBase source, int bulletIndex, Vector3 position, Vector3 destination) {
+        prefabs.SetProjectileAttribute(projectileAttribute);
         prefabs.SetSourceAndDestination(source, position, destination);
+        prefabs.bulletIndex = bulletIndex;
+        var p = Instantiate(prefabs, source.transform.position, Quaternion.identity);
+        p.OnDisable += ReturnToPool;
+        return p;
+    }
+
+    private ProjectileBase ShootProjectile(UnitBase source, int bulletIndex, Vector3 position, Vector3 destination) {
+        ProjectileBase p;
+        if(bulletPooling.Count <= 0) {
+            p = Create(prefabs, source, bulletIndex, position, destination);
+        } else {
+            p = bulletPooling.Dequeue();
+            p.SetSourceAndDestination(source, position, destination);
+            p.bulletIndex = bulletIndex;
+            p.gameObject.SetActive(true);
+        }
+        return p;
+    }
+
+    public void ReturnToPool(ProjectileBase p) {
+        bulletPooling.Enqueue(p);
+    }
+
+    public void Shoot(UnitBase source, Vector3 position, Vector3 destination) { //Function to fire projectile
         for (int i = 0; i < projectileAttribute.numberOfBullet; i++) {
-            prefabs.bulletIndex = i;
-            Instantiate(prefabs, source.transform.position, Quaternion.identity);
+            var p = ShootProjectile(source, i, position, destination);
         }
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,41 +9,64 @@ public class PlayerController : MonoBehaviour
     private ProjectileHolder projectileHolder; //For projectile
     private AlbilitiesHolder abilityHolder;
 
-    float horizontal; //Horizontal Input
-    float vertical; //Vertical Input
+    private NavMeshAgent navMeshAgent;
+
 
     float spd; //Spd of object
 
 
     Vector2 mousePos; //Mouse position in screen
+    Vector2 moveToTarget;
+    Vector3 moveToTarget3;
     public Camera cam; //to get mouse input in screen cam
+
+    bool isMoving = false;
+    bool createParticle = false;
 
     private void Start() {
         playerUnit = GetComponent<PlayerUnit>(); //UnitBase of Player
         projectileHolder = GetComponent<ProjectileHolder>(); //ProjectileHolder
         abilityHolder = GetComponent<AlbilitiesHolder>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = playerUnit.stats.spd;
+        navMeshAgent.updateRotation = false;
+        navMeshAgent.updateUpAxis = false;
     }
 
     void Update() {
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
         MoveController();
         ShootController();
         AbilityController();
+
+        if(Vector2.Distance(transform.position, moveToTarget) > 0.1f && isMoving) {
+            Debug.Log(navMeshAgent.SetDestination(moveToTarget3));
+        } else {
+            isMoving = false;
+        }
+        
     }
 
     void MoveController() { //Movement of player
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
-
-        transform.Translate(new Vector3(horizontal, vertical, 0) * playerUnit.stats.spd * Time.deltaTime);
-
+        if (Input.GetMouseButton(1)) {
+            isMoving = true;
+            moveToTarget = mousePos;
+            moveToTarget3 = (Vector3)moveToTarget + new Vector3(0, 0, transform.position.z);
+            if (!createParticle) {
+                ClosingCircle.Create(moveToTarget);
+                createParticle = true;
+            }
+        }
+        if (Input.GetMouseButtonUp(1)) createParticle = false;
     }
 
     void ShootController() { //Shooting (left, right)
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if(Input.GetMouseButton(0)) { //Left-mouse
+        
+        if(Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.A)) { //Left-mouse
             if(projectileHolder.EnoughMana(0, playerUnit.nowMP)) {
                 projectileHolder.Shoot(0, transform.position, mousePos);
-                playerUnit.ReduceMP(projectileHolder.MPCost(0));
+                
             }
                 
         }

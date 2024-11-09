@@ -20,7 +20,7 @@ public class Firepoint : MonoBehaviour
 
     void LookAround() {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Debug.Log("Mouse: " + mousePos + "; RbPos: " + transform.position);
+        
         Vector3 lookDir = mousePos - transform.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
         Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);

@@ -100,7 +100,7 @@ public class StageManager : PersistentSingleton<StageManager> {
     }
 
     public void DecreaseEnemyOnDead() { //Decrease count for each enemy die
-        Debug.Log("die");
+        
         numberEnemyLeft -= 1;
     }
 
@@ -124,7 +124,7 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     private void SpawnEnemy(List<SpawnPoint> spawn, List<ScriptableEnemyUnit> enemy) {
         List<ScriptableEnemyUnit> temp = new List<ScriptableEnemyUnit>(enemy);
-        Debug.Log(temp.Count);
+        
         for (int i=0; i<spawn.Count-1; i++) {
             int random = UnityEngine.Random.Range(0, temp.Count+1);
             spawn[i].SetEnemy(ListConfiguration<ScriptableEnemyUnit>.TakeRandomFromList(temp, random));
@@ -225,7 +225,7 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     private void FinishState() {
         if (!stateInit) {
-            Debug.Log("done");
+            
             stateInit = true;
             stageContent.StageFinish();
             OnStageFinish?.Invoke();

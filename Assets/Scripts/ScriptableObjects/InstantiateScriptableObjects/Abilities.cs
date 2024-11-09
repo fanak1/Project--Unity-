@@ -24,7 +24,7 @@ public class Abilities : MonoBehaviour
 
     public AbilityStat stat;
 
-    private SkillUI skillIcon;
+    internal SkillUI skillIcon;
 
 
     public void AttachTo(UnitBase target) {
@@ -54,10 +54,9 @@ public class Abilities : MonoBehaviour
     
 
     virtual public void PerformAbility() {
-        if (Input.GetKeyDown(button) && skillIcon.usable) {
+        if (skillIcon.usable) {
             ActionPressed(button);
-            skillIcon.UseSkill();
-            Debug.Log(skillIcon);
+            
         }
     }
 
@@ -76,9 +75,14 @@ public class Abilities : MonoBehaviour
 
     }
 
+    virtual public void Action() {
+
+    }
+
     virtual public void ActionPressed(KeyCode key) {
         if (skillIcon.usable) {
             DebugMessege.Instance.Messege(key + " is Pressed");
+            Action();
             if(skillIcon != null) skillIcon.UseSkill();
         }
             

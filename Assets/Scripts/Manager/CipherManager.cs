@@ -24,7 +24,7 @@ public class CipherManager : PersistentSingleton<CipherManager> {
     public void InitiateQuestion(Difficulty d) {
         cipherUI.gameObject.SetActive(true);
         cipher = GenerateCipher(d);
-        Debug.Log(cipher.question);
+        
         cipherUI.DisplayCipher(cipher);
     }
 
@@ -37,7 +37,7 @@ public class CipherManager : PersistentSingleton<CipherManager> {
             OnWrongAnswer?.Invoke();
             
         }
-        Debug.Log("good");
+        
         OnCipherFinish?.Invoke();
         cipherUI.gameObject.SetActive(false);
     }

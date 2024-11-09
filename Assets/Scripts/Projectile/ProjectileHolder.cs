@@ -37,6 +37,7 @@ public class ProjectileHolder : MonoBehaviour
         if(ShootInterval(projectileIndex)) {
             projectiles[projectileIndex].Shoot(source, position, destination);
             time = 0f;
+            source.ReduceMP(MPCost(0));
         }
         
     }

@@ -35,7 +35,6 @@ public class GameManager : PersistentSingleton<GameManager>
 
         InitiateManager();
 
-        Debug.Log("New Stage: " + stageIndex);
 
         //NewStage();
     }
@@ -103,7 +102,7 @@ public class GameManager : PersistentSingleton<GameManager>
         //if Done then
 
         //stageManager.Ready();
-        Debug.Log("Concious: " + concious);
+       
 
         LoadNewStage(stageList[stageIndex]);
 
@@ -136,10 +135,9 @@ public class GameManager : PersistentSingleton<GameManager>
 
     public void NextStage() {
         if (stageIndex >= stageList.Count) {
-            Debug.Log("Done All");
+            
             return;
         } else {
-            Debug.Log("Stage: " + stageIndex);
             NewStage();
             LoadScene();
         }

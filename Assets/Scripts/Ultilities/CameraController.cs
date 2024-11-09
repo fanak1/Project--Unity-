@@ -9,12 +9,17 @@ public class CameraController : StaticInstance<CameraController> {
 
     private Vector3 nextPoint;
 
+    private Camera cam;
+
     private float time;
+
+    private Coroutine coroutine;
 
     // Start is called before the first frame update
     void Start() {
         nextPoint = transform.position;
         time = 0f;
+        cam = GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -46,6 +51,25 @@ public class CameraController : StaticInstance<CameraController> {
         nextPoint = tempPosition;
         if (nextPoint != transform.position) {
             cameraState = CameraState.Moving;
+        }
+    }
+
+    public void SetCameraSize(float size) {
+        StartSetSize(size);
+    }
+
+    private void StartSetSize(float size) {
+        if(coroutine != null) StopCoroutine(coroutine);
+        coroutine = StartCoroutine(SetSize(size));
+    }
+
+    private IEnumerator SetSize(float size) {
+        float scale = 0f;
+        float ogSize = cam.orthographicSize;
+        while(scale < 1f) {
+            cam.orthographicSize = Mathf.Lerp(ogSize, size, scale);
+            scale += Time.deltaTime;
+            yield return null;
         }
     }
 }

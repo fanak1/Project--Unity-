@@ -113,7 +113,7 @@ public abstract class UnitBase : MonoBehaviour {
         if (nowHP <= 0) {
             //Dead event
             OnDead?.Invoke();
-            Destroy(gameObject);
+            Destroy();
             //Destroy(gameObject);
         }
         //OnAbilityKeyPressed?.Invoke();

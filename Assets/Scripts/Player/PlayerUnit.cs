@@ -12,7 +12,7 @@ public class PlayerUnit : UnitBase
         healthBar = GameObject.FindGameObjectWithTag("HealthBarUI").GetComponent<HealthBar>();
         manaBar = GameObject.FindGameObjectWithTag("ManaBarUI").GetComponent<ManaBar>();
         base.Start();
-        
+        transform.position -= new Vector3(0, 0, transform.position.z);
     }
 
     internal override void Destroy() {

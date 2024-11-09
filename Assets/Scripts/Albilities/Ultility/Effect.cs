@@ -7,8 +7,6 @@ public abstract class Effect : MonoBehaviour
 
     public UnitBase source, target;
 
-    public static List<UnitBase> underEffect = new List<UnitBase>();
-
     private float countdown;
 
     public float value;
@@ -35,12 +33,12 @@ public abstract class Effect : MonoBehaviour
 
 
     protected virtual void EndEffect() {
-        underEffect.Remove(target);
+        //underEffect.Remove(target);
     }
 
     protected virtual void Die() {
         EndEffect();
-        Destroy(this.gameObject);
+        if(this != null) Destroy(this.gameObject);
     }
 
     protected virtual void EffectPersistent(Effect d) {
@@ -69,7 +67,7 @@ public abstract class Effect : MonoBehaviour
         this.target = target;
 
         gameObject.transform.parent = target.gameObject.transform;
-        underEffect.Add(this.target);
+        //underEffect.Add(this.target);
         this.target.OnDead += ActionOnDie;
         this.target.OnDead += Die;
 
@@ -80,11 +78,14 @@ public abstract class Effect : MonoBehaviour
     }
 
     public void Init(float countdown, UnitBase target, UnitBase source, float value = 0f) {
-        this.countdown = countdown;
-        this.value = value;
+        if (target != null && source != null) {
+            this.countdown = countdown;
+            this.value = value;
 
-        if (AttachTo(target, source)) ResetEffect();
+            if (AttachTo(target, source)) ResetEffect();
+        }
     }
+        
 
     private IEnumerator EffectCountdown() {
         yield return new WaitForSeconds(countdown);

@@ -16,8 +16,9 @@ MonoBehaviour:
     speed: 20
     accel: 0.2
     numberOfBullet: 4
-    manaSpend: 1
+    manaSpend: 0
     deviation: 1
     interval: 0
   projectileCodeName: 0
   prefabs: {fileID: 3073157629829013096, guid: cf8ba4af08b31914fb5b4a7a2a115c3d, type: 3}
+  projectiles: {fileID: 0}

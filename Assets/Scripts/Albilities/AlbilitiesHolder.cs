@@ -32,7 +32,7 @@ public class AlbilitiesHolder : MonoBehaviour
     }
 
     public void AddAbility(ScriptableAlbilities a) {
-        //Debug.Log(source);
+        
         var ability = a.Create();
         if(a.onEvent != Event.OnButtonClick) {
             list.Add(a);
@@ -47,7 +47,7 @@ public class AlbilitiesHolder : MonoBehaviour
     private void Attach(Abilities a) {
         a.AttachTo(source);
         if(a.onEvent == Event.OnButtonClick) {
-            Debug.Log(abilityKey);
+            
             abilityKey.Add(a.button, a);
             
         }

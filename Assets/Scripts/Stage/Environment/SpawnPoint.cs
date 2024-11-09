@@ -17,7 +17,7 @@ public class SpawnPoint : MonoBehaviour {
     private void Start() {
         //transform.localScale = new Vector3(spawnRangeX * 2f, spawnRangeY * 2f, 1);
 
-        Debug.Log(transform.position);
+        
         boxCollider = GetComponent<BoxCollider2D>();
         spawnRangeX = boxCollider.size.x;
         spawnRangeY = boxCollider.size.y;
@@ -32,7 +32,7 @@ public class SpawnPoint : MonoBehaviour {
     }
 
     public List<UnitBase> SpawnEnemy(List<ScriptableEnemyUnit> enemy) { //Function to spawn list of enemy with random position in range
-        Debug.Log(enemy.Count);
+        
         List<UnitBase> list = new List<UnitBase>();
         int i = 0;
         foreach (ScriptableEnemyUnit e in enemy) {

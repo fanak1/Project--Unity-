@@ -22,7 +22,7 @@ public abstract class StageScript : MonoBehaviour
     public void StageStart() {
         CloseDoor();
         
-        trigger.gameObject.SetActive(false);
+        //trigger.gameObject.SetActive(false);
         StageManager.Instance.StartStage(this);
     }
     
@@ -34,7 +34,7 @@ public abstract class StageScript : MonoBehaviour
     public void StageFinish() {
         OpenDoor();
         trigger.Clear();
-        trigger.gameObject.SetActive(true);
+        //trigger.gameObject.SetActive(true);
     }
 
     private void CloseDoor() {
