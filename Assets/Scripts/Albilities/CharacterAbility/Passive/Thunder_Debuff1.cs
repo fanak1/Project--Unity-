@@ -28,10 +28,16 @@ public class Thunder_Debuff1 : Effect {
             {
                 // Apply explosion effect to the other enemy (for example, reduce health)
                 Vector3 p2 = otherEnemy.transform.position;
-                LightningEffect.Create(p1, p2);
-                source.DealDamage(otherEnemy, this.value);
+                var effect = LightningEffect.Create();
+                effect.OnEffectHit += EffectHit;
+                effect.StartRender(this.target, otherEnemy);
             }
         }
+    }
+
+    public void EffectHit(UnitBase enemy) {
+        if(enemy != null)
+        source.DealDamage(enemy, this.value);
     }
 
 }

@@ -229,6 +229,7 @@ public abstract class UnitBase : MonoBehaviour {
 
     internal virtual void Destroy() {
         Destroy(gameObject);
+        Debug.Log(gameObject + "mark for destruction");
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
