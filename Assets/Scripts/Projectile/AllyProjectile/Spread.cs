@@ -5,8 +5,7 @@ using UnityEngine;
 public class Spread : ProjectileBase
 {
     private float offset;
-    private float spd;
-    private float accel;
+    
 
     public override void Start() { //Init the speed, deviation, and rotation of projecile
         accel = _projectileAttribute.accel;

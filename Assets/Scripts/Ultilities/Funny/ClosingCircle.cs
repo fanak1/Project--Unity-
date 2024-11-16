@@ -12,7 +12,6 @@ public class ClosingCircle : MonoBehaviour
 
     private void Start() {
         animator = GetComponent<Animator>();
-        Debug.Log(animator);
         Invoke("Disable", 1f);
     }
 

@@ -28,3 +28,5 @@ MonoBehaviour:
     amount: 40
   description: 
   rarity: 0
+  skillType: 1
+  characterCode: 1

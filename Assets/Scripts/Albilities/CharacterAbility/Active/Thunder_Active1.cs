@@ -14,8 +14,6 @@ public class Thunder_Active1 : Abilities
                 
                  effect.OnEffectHit += EffectHit;
                  effect.StartRender(source, enemy);
-                
-                
             }
             
 

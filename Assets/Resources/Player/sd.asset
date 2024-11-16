@@ -19,14 +19,10 @@ MonoBehaviour:
     atk: 10
     spd: 10
     def: 100
+  characterCode: 1
   projectiles:
   - {fileID: 11400000, guid: 8f917a677dbae3e4fbc398cfd1765d7c, type: 2}
   abilities:
-  - {fileID: 11400000, guid: 0fadda15016a83a449f2e0a2493ade2d, type: 2}
-  - {fileID: 11400000, guid: 0fadda15016a83a449f2e0a2493ade2d, type: 2}
-  - {fileID: 11400000, guid: affdbbc04fd1422469102046d4dee7fd, type: 2}
   - {fileID: 11400000, guid: bef178efea3bc6d4eb13250e7b7c5f77, type: 2}
   - {fileID: 11400000, guid: 305af3d000a0aaf4597239c0bca1016e, type: 2}
-  - {fileID: 11400000, guid: 0fadda15016a83a449f2e0a2493ade2d, type: 2}
-  - {fileID: 11400000, guid: 0fadda15016a83a449f2e0a2493ade2d, type: 2}
   prefabs: {fileID: 2801681540067548546, guid: 7554a2ce3607b714399bd4285b56097f, type: 3}

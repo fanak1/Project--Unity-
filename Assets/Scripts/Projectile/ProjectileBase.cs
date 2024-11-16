@@ -16,18 +16,30 @@ public abstract class ProjectileBase : MonoBehaviour
 
     private bool collided = false; //Check if target Collide with another, if collided, then dont collide with another
 
+    private bool playCollidedAnimation = false;
+
     public Action<ProjectileBase> OnDisable;
+
+    private Animator animator;
+
+    internal float spd;
+    internal float accel;
 
     public virtual void Start() {
         collided = false;
+        animator = GetComponent<Animator>();
+        playCollidedAnimation = false;
+        if (animator != null) animator.SetTrigger("Init");
     }
 
     public virtual void OnEnable() {
         transform.position = position;
         collided = false;
+        playCollidedAnimation = false;
+        if (animator != null) animator.SetTrigger("Init");
     }
 
-    public virtual void Update() {
+    public virtual void FixedUpdate() {
         Trajectory();
         DestroyOnOverBounds();
     }
@@ -58,52 +70,67 @@ public abstract class ProjectileBase : MonoBehaviour
         if (c.gameObject.CompareTag(source.tag)) return;
         if(CheckOpponent(c.gameObject) && !collided) {
             if (!collided) collided = true;
+            Collided();
             UnitBase cUnit = c.gameObject.GetComponent<UnitBase>();
             if(cUnit != null) {
-                
-
                 cUnit.damagePosition = transform.position;
 
                 source.Hitting(cUnit, Damage());
-
-                Disable();
             }
         } else {
-            Disable();
+
         }
     }
 
     public virtual void DestroyOnOverBounds() {
-        if (Vector3.Distance(this.position, this.transform.position) > 40f) Disable();
-    }
-
-    public void OnHit(RaycastHit2D hit) {
-        if (source == null) return;
-        if (hit.collider.gameObject.CompareTag(source.tag)) return;
-        if (CheckOpponent(hit.collider.gameObject) && !collided) {
-            if (!collided) collided = true;
-            UnitBase cUnit = hit.collider.gameObject.GetComponent<UnitBase>();
-            if (cUnit != null) {
-
-
-                cUnit.damagePosition = transform.position;
-
-                source.Hitting(cUnit, Damage());
-
-                Disable();
-            }
-        } else {
-            Disable();
-        }
+        if (Vector2.Distance(this.position, this.transform.position) > 200f) Collided();
     }
 
     private void OnBecameInvisible() {
-        Disable();
+        Collided();
     }
 
     private void Disable() {
         OnDisable?.Invoke(this);
         gameObject.SetActive(false);
+    }
+
+    private void Collided() {
+        if(!gameObject.activeInHierarchy) return;
+        accel = 0;
+        spd = 0;
+        if (animator != null) {
+            if(!playCollidedAnimation) {
+                playCollidedAnimation = true;
+                StartCoroutine(PlayCollidedAnimation());
+            }
+            
+        } else Disable();
+    }
+
+
+    private IEnumerator PlayCollidedAnimation() {
+        animator.SetTrigger("Collide");
+
+        AnimatorClipInfo[] clipInfo;
+        while (true) {
+            clipInfo = animator.GetCurrentAnimatorClipInfo(0);
+            if (clipInfo.Length <= 0) {
+                Debug.LogWarning("No animation clip is currently playing.");
+                yield return null;
+            } else {
+                break;
+            }
+        }
+        float duration = clipInfo[0].clip.length;
+
+        yield return CollidedAnimation(duration);
+    }
+
+    private IEnumerator CollidedAnimation(float duration) {
+        yield return new WaitForSeconds(duration);
+
+        Disable();
     }
 
 }

@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.5784, y: 0.9853, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 168611d48e1f1874e99269a073b91cb1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,11 +100,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 0}
-  position: {x: 1.4009275, y: -1.1333886, z: 0}
-  destination: {x: 9.474608, y: 0.5578959, z: 0}
+  position: {x: -9.1640625, y: -15.977657, z: 8.916674}
+  destination: {x: 16.08734, y: 12.327747, z: 0}
   bulletIndex: 3
   _projectileAttribute:
-    speed: 10
+    speed: 50
     accel: 0.2
     numberOfBullet: 4
     manaSpend: 1

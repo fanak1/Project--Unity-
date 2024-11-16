@@ -21,10 +21,12 @@ MonoBehaviour:
     spd: 0
     def: 0
   button: 101
-  skillIconPrefabs: {fileID: 875143567584612355, guid: 41576a3cefd3349449fa1dec46327304, type: 3}
+  skillIconPrefabs: {fileID: 875143567584612355, guid: c6cb268cb46967a4f9c02722b4f1b136, type: 3}
   cooldown: 7
   stat:
     manaSpend: 10
     amount: 150
   description: 
   rarity: 0
+  skillType: 3
+  characterCode: 1

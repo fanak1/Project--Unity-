@@ -99,8 +99,8 @@ public abstract class RenderSpriteBetweenTwoPoint : MonoBehaviour {
         Debug.Log("End");
 
         animator.SetTrigger("End");
-        if(target != null)
-            OnEffectHit?.Invoke(target);
+        OnEffectHit?.Invoke(target);
+        
     }
 
 }

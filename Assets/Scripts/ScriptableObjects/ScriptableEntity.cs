@@ -11,6 +11,8 @@ public abstract class ScriptableEntity : ScriptableObject {
     private Stats stats; //For customize the stats of this Entity
     public Stats base_stats => stats; //base stats
 
+    public CharacterCode characterCode;
+
     [SerializeField]
     private List<ScriptableProjectiles> projectiles; //Storage of projectiles
 
@@ -48,6 +50,7 @@ public abstract class ScriptableEntity : ScriptableObject {
     internal void InitUnit() {
         SetStatsForEntity();
         prefabs.faction = faction;
+        prefabs.characterCode = characterCode;
     }
 
     public virtual UnitBase Spawn(Vector3 position) {

@@ -26,6 +26,8 @@ public class Abilities : MonoBehaviour
 
     internal SkillUI skillIcon;
 
+    public SkillType skillType;
+
 
     public void AttachTo(UnitBase target) {
         Init(target);
@@ -51,6 +53,29 @@ public class Abilities : MonoBehaviour
         }
     }
 
+
+    public void Detach(UnitBase target) {
+        switch (onEvent) {
+            case Event.OnHitting:
+                target.OnHitting -= Action;
+                break;
+            case Event.OnDealDamage:
+                target.OnDealDamage -= Action;
+                break;
+            case Event.OnDamageTaken:
+                target.OnTakeDamage -= Action;
+                break;
+            case Event.IncreaseStat:
+                target.DecreaseStats(amountIncrease);
+                break;
+            case Event.OnButtonClick:
+                //target.OnAbilityKeyPressed += PerformAbility;
+                Destroy(skillIcon.gameObject);
+                break;
+            default:
+                break;
+        }
+    }
     
 
     virtual public void PerformAbility() {
@@ -58,6 +83,17 @@ public class Abilities : MonoBehaviour
             ActionPressed(button);
             
         }
+    }
+
+    public void StackIncreaseStats(Stats increase, int ratio = 1) {
+
+        if(ratio > 0) source.IncreaseStats(increase);
+        else source.DecreaseStats(increase);
+        amountIncrease.hp += ratio * increase.hp;
+        amountIncrease.mp += ratio * increase.mp;
+        amountIncrease.def += ratio * increase.def;
+        amountIncrease.spd += ratio * increase.spd;
+        amountIncrease.atk += ratio * increase.atk;
     }
 
     virtual public SkillUI InitSkillIcon() {
@@ -85,7 +121,6 @@ public class Abilities : MonoBehaviour
             Action();
             if(skillIcon != null) skillIcon.UseSkill();
         }
-            
     }
 
     virtual public bool EnoughMana(float mana) {
@@ -95,7 +130,7 @@ public class Abilities : MonoBehaviour
 
     virtual public bool Usable() => skillIcon.usable;
 
-    virtual public void Init(Stats amountIncrease, Event onEvent, SkillUI skillIconPrefabs, KeyCode button, float cooldown, Rarity rarity, string description, AbilityStat stat) {
+    virtual public void Init(Stats amountIncrease, Event onEvent, SkillUI skillIconPrefabs, KeyCode button, float cooldown, Rarity rarity, string description, AbilityStat stat, SkillType skillType) {
         this.amountIncrease = amountIncrease;
         this.onEvent = onEvent;
         this.skillIconPrefabs = skillIconPrefabs;
@@ -104,6 +139,7 @@ public class Abilities : MonoBehaviour
         this.rarity = rarity;
         this.description = description;
         this.stat = stat;
+        this.skillType = skillType;
     }
 
     virtual public void Init(UnitBase b) {

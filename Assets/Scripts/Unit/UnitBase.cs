@@ -24,6 +24,8 @@ public abstract class UnitBase : MonoBehaviour {
 
     public Stats stats;
 
+    public CharacterCode characterCode;
+
     public DamageScaleBonus damageScaleBonus = new DamageScaleBonus(0, 5f, 50f);
 
 
@@ -134,6 +136,16 @@ public abstract class UnitBase : MonoBehaviour {
         return this.stats;
     }
 
+    public Stats DecreaseStats(Stats stats) {
+        this.stats.hp -= stats.hp;
+        this.stats.def -= stats.def;
+        this.stats.mp -= stats.mp;
+        this.stats.atk -= stats.atk;
+        this.stats.spd -= stats.spd;
+
+        return this.stats;
+    }
+
     public void IncreaseBaseStats(Stats stats) {
         Stats newStats = IncreaseStats(stats);
         OnBaseStatsIncrease?.Invoke(newStats);
@@ -145,7 +157,7 @@ public abstract class UnitBase : MonoBehaviour {
     }
 
     public void AddAbility(ScriptableAlbilities ability) {
-        abilityHolder.AddAbility(ability);
+        abilityHolder.ClaimAbility(ability);
         OnAbilityAdded?.Invoke(ability);
     }
 
