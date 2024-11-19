@@ -17,7 +17,7 @@ public class Thunder_Debuff1 : Effect {
 
     private void Explode() {
         // Find all colliders within the explosion radius
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 2f);
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 5f);
         
         Vector3 p1 = transform.position;
 

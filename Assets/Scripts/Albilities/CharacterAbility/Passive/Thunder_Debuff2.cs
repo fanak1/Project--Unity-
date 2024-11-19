@@ -12,6 +12,7 @@ public class Thunder_Debuff2 : Effect {
         blueEmission = Resources.Load<GameObject>("FunnyPrefabs/BlueEmission");
         var go = Instantiate(blueEmission);
         go.transform.SetParent(transform);
+        go.transform.localScale = new Vector3(0.5f, 0.5f, 1);
         go.transform.localPosition = Vector3.zero;
         base.Start();
 

@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private PlayerUnit playerUnit; //For stat like spd etc;
     private ProjectileHolder projectileHolder; //For projectile
     private AlbilitiesHolder abilityHolder;
+    private Animator animator;
 
     private NavMeshAgent navMeshAgent;
 
@@ -23,11 +24,14 @@ public class PlayerController : MonoBehaviour
     bool isMoving = false;
     bool createParticle = false;
 
+    bool runAnim = false;
+
     private void Start() {
         playerUnit = GetComponent<PlayerUnit>(); //UnitBase of Player
         projectileHolder = GetComponent<ProjectileHolder>(); //ProjectileHolder
         abilityHolder = GetComponent<AlbilitiesHolder>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         navMeshAgent.speed = playerUnit.stats.spd;
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
@@ -41,15 +45,21 @@ public class PlayerController : MonoBehaviour
         AbilityController();
 
         if(Vector2.Distance(transform.position, moveToTarget) > 0.1f && isMoving) {
-            Debug.Log(navMeshAgent.SetDestination(moveToTarget3));
+            navMeshAgent.SetDestination(moveToTarget3);
         } else {
+            animator.SetTrigger("Idle");
             isMoving = false;
+            runAnim = false;
         }
         
     }
 
     void MoveController() { //Movement of player
         if (Input.GetMouseButton(1)) {
+            if (!runAnim) {
+                runAnim = true;
+                animator.SetTrigger("Run");
+            }
             isMoving = true;
             moveToTarget = mousePos;
             moveToTarget3 = (Vector3)moveToTarget + new Vector3(0, 0, transform.position.z);
