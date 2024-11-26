@@ -83,7 +83,7 @@ public abstract class ProjectileBase : MonoBehaviour
     }
 
     public virtual void DestroyOnOverBounds() {
-        if (Vector2.Distance(this.position, this.transform.position) > 200f) Collided();
+        if (Vector2.Distance(this.position, this.transform.position) > 50f) Collided();
     }
 
     private void OnBecameInvisible() {

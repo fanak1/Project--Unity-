@@ -94,6 +94,12 @@ public class Abilities : MonoBehaviour
         amountIncrease.def += ratio * increase.def;
         amountIncrease.spd += ratio * increase.spd;
         amountIncrease.atk += ratio * increase.atk;
+
+        description =   $"Atk: +{amountIncrease.atk}, " +
+                        $"Hp: +{amountIncrease.hp}" +
+                        $"Def: +{amountIncrease.def}" +
+                        $"Spd: +{amountIncrease.spd}" +
+                        $"Mp: +{amountIncrease.mp}";
     }
 
     virtual public SkillUI InitSkillIcon() {

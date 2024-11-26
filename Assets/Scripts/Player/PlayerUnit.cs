@@ -8,7 +8,11 @@ public class PlayerUnit : UnitBase
     private HealthBar healthBar;
     private ManaBar manaBar;
 
+    public static PlayerUnit instance;
+
     protected override void Start() {
+        if (instance == null) instance = this;
+        
         healthBar = GameObject.FindGameObjectWithTag("HealthBarUI").GetComponent<HealthBar>();
         manaBar = GameObject.FindGameObjectWithTag("ManaBarUI").GetComponent<ManaBar>();
         base.Start();
@@ -16,7 +20,7 @@ public class PlayerUnit : UnitBase
     }
 
     internal override void Destroy() {
-        StageManager.numberEnemyLeft--;
+        instance = null;
         base.Destroy();
     }
 

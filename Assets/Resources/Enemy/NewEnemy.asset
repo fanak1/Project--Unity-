@@ -16,9 +16,10 @@ MonoBehaviour:
   stats:
     hp: 100
     mp: 0
-    atk: 10
+    atk: 1
     spd: 5
     def: 100
+  characterCode: 0
   projectiles:
   - {fileID: 11400000, guid: d041143a8cd3b6345a6561d4821e3b4c, type: 2}
   abilities: []

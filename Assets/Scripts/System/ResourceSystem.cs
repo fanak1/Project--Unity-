@@ -8,6 +8,7 @@ public class ResourceSystem : StaticInstance<ResourceSystem>
     //Enemy---------------------------------------------------------------------------------------------------------------------------------------------------
     public List<ScriptableEnemyUnit> EnemyUnitList {  get; private set; } //List to load the Resources into
     private Dictionary<EnemyCodeName, ScriptableEnemyUnit> _EnemyUnitDict; //Dictionary for find EnemyUnit with code name
+    public List<ScriptableAlbilities> allAbilities;
 
     public ScriptableEnemyUnit GetEnemyWithCodeName(EnemyCodeName enemyCodeName) => _EnemyUnitDict[enemyCodeName]; //Get 1 ScriptableEnemyUnit with code name
 
@@ -39,6 +40,8 @@ public class ResourceSystem : StaticInstance<ResourceSystem>
 
         cipherList = Resources.LoadAll<ScriptableCipher>("Cipher").ToList();
     }
+
+    public List<ScriptableAlbilities> GetAllAbilities() => allAbilities;
 
 
     

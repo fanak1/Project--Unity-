@@ -45,10 +45,25 @@ public class Inventory : StaticInstance<Inventory>
         }
     }
 
+    void DisplayAbilities(List<Abilities> abilities) {
+        foreach (Abilities ability in abilities) {
+            CreateAnAbilityDisplay(ability);
+        }
+    }
+
     void CreateAnAbilityDisplay(ScriptableAlbilities ability) {
         var abilityDisplay = Instantiate(abilityDisplayPrefabs);
         TextMeshProUGUI text = abilityDisplay.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         if(text != null) {
+            text.SetText(ability.description);
+        }
+        abilityDisplay.transform.SetParent(abilitiesContainer.transform);
+    }
+
+    void CreateAnAbilityDisplay(Abilities ability) {
+        var abilityDisplay = Instantiate(abilityDisplayPrefabs);
+        TextMeshProUGUI text = abilityDisplay.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        if (text != null) {
             text.SetText(ability.description);
         }
         abilityDisplay.transform.SetParent(abilitiesContainer.transform);
@@ -116,13 +131,21 @@ public class Inventory : StaticInstance<Inventory>
             UnitBase playerBase = player.GetComponent<UnitBase>();
             if(playerBase != null) {
                 DisplayStats(playerBase.ShowStats());
-                DisplayAbilities(playerBase.ShowAbilities());
+                DisplayAbilities(playerBase.ShowActiveAbilities());
+                DisplayAbilities(playerBase.ShowPassiveAbilities());
             }
         }
     }
 
     private void OnDisable() {
+        ResetAbilityDisplay();
+    }
 
+
+    private void ResetAbilityDisplay() {
+        foreach(Transform child in abilitiesContainer.transform) {
+            Destroy(child.gameObject);
+        }
     }
 
 }

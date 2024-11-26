@@ -13,18 +13,11 @@ public class RewardManager : PersistentSingleton<RewardManager>
     private List<ScriptableAlbilities> show;
 
 
-    //Event ------------------------------------------------------------------------------------------
-
-    public event Action<ScriptableAlbilities> OnRewardFinish;
-
-    //-------------------------------------------------------------------------------------------------
-
     private void Start() {
-        
     }
 
     public void Choose(int index) { //Choose in abilities in UI
-        OnRewardFinish?.Invoke(show[index]);
+        GameManager.Instance.GainReward(show[index]);
         rewardUI.gameObject.SetActive(false);
     }
 

@@ -296,6 +296,22 @@ public abstract class UnitBase : MonoBehaviour {
         }
     }
 
+
+    public virtual List<Abilities> ShowActiveAbilities() {
+        if (abilityHolder != null) {
+            return this.abilityHolder.active;
+        } else {
+            return null;
+        }
+    }
+
+    public virtual List<Abilities> ShowPassiveAbilities() {
+        if (abilityHolder != null) {
+            return this.abilityHolder.passive;
+        } else {
+            return null;
+        }
+    }
 }
 
 [Serializable]

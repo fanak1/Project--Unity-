@@ -1,6 +1,5 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using UnityEditor.Playables;
 using UnityEngine;
 
 public class AlbilitiesHolder : MonoBehaviour
@@ -54,27 +53,29 @@ public class AlbilitiesHolder : MonoBehaviour
     }
 
     public void AddAbility(ScriptableAlbilities a) {
+        Abilities ability = null;
         
-        var ability = a.Create();
         if(a.onEvent == Event.IncreaseStat) {
             if(increaseStats != null) {
                 increaseStats.StackIncreaseStats(a.amountIncrease);
-                return;
             } else {
+                ability = a.Create();
                 increaseStats = ability;
             }
         }
 
         else if(a.onEvent != Event.OnButtonClick) {
+            ability = a.Create();
             list.Add(a);
             passive.Add(ability);
         } 
 
         else {
+            ability = a.Create();
             list.Add(a);
             active.Add(ability);
         }
-        Attach(ability);
+        if(ability != null) Attach(ability);
     }
 
     

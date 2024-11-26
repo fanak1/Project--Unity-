@@ -57,6 +57,7 @@ public abstract class RenderSpriteBetweenTwoPoint : MonoBehaviour {
         AnimatorClipInfo[] clipInfo;
         while (true) {
             clipInfo = animator.GetCurrentAnimatorClipInfo(0);
+           
             if (clipInfo.Length <= 0) {
                 Debug.LogWarning("No animation clip is currently playing.");
                 yield return null;

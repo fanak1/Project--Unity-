@@ -64,17 +64,21 @@ public class GameManager : PersistentSingleton<GameManager>
     }
 
     public void GainReward(ScriptableAlbilities a) {
-        playerAlbilitiesHolder = GameObject.FindGameObjectWithTag("Player").GetComponent<UnitBase>();
+        playerAlbilitiesHolder = PlayerUnit.instance;
         playerAlbilitiesHolder.AddAbility(a);
         stageManager.RewardStateEnd();
     }
 
+
+    public void GainAbility(ScriptableAlbilities a) {
+        playerAlbilitiesHolder = PlayerUnit.instance;
+        playerAlbilitiesHolder.AddAbility(a);
+    }
     private void InitiateManager() {
         stageManager.OnCipherBegin += BeginCipherUI;
         cipherManager.OnCipherFinish += CloseCipherUI;
 
         stageManager.OnRewardBegin += BeginRewardUI;
-        rewardManager.OnRewardFinish += GainReward;
 
         stageManager.OnStageFinish += StageClear;
 

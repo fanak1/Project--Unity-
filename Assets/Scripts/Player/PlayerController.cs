@@ -24,6 +24,11 @@ public class PlayerController : MonoBehaviour
     bool isMoving = false;
     bool createParticle = false;
 
+    RaycastHit2D hit;
+    int interactionMask;
+
+    IInteractable interactItem;
+
     bool runAnim = false;
 
     private void Start() {
@@ -35,11 +40,14 @@ public class PlayerController : MonoBehaviour
         navMeshAgent.speed = playerUnit.stats.spd;
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
+
+        interactionMask = LayerMask.GetMask("RayCast");
     }
 
     void Update() {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+        MouseRaycast();
         MoveController();
         ShootController();
         AbilityController();
@@ -56,6 +64,7 @@ public class PlayerController : MonoBehaviour
 
     void MoveController() { //Movement of player
         if (Input.GetMouseButton(1)) {
+            if(interactItem != null) interactItem.OnClicked();
             if (!runAnim) {
                 runAnim = true;
                 animator.SetTrigger("Run");
@@ -97,6 +106,33 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+    }
+
+    public void MouseRaycast() {
+        hit = Physics2D.Raycast(mousePos, Vector2.zero, 2f, interactionMask);
+
+        if(hit.transform != null) {
+            Debug.Log("Hit");
+
+            createParticle = true;
+            IInteractable temp = hit.transform.gameObject.GetComponent<IInteractable>();
+
+            if (temp != null && interactItem != temp ) interactItem = temp;
+            if(interactItem != null) interactItem.OnMouseEnterInteract();
+        } else {
+            interactItem = null;
+        }
+
+        
+    }
+
+    public void StopMoving() {
+        navMeshAgent.isStopped = true;
+        animator.SetTrigger("Idle");
+    }
+
+    public void ContinueMoving() {
+        navMeshAgent.isStopped = false;
     }
 
 }
