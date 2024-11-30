@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Abilities : MonoBehaviour
-{
+public class Abilities : MonoBehaviour {
     public UnitBase source;
 
     public Stats amountIncrease;
@@ -76,18 +75,18 @@ public class Abilities : MonoBehaviour
                 break;
         }
     }
-    
+
 
     virtual public void PerformAbility() {
         if (skillIcon.usable) {
             ActionPressed(button);
-            
+
         }
     }
 
     public void StackIncreaseStats(Stats increase, int ratio = 1) {
 
-        if(ratio > 0) source.IncreaseStats(increase);
+        if (ratio > 0) source.IncreaseStats(increase);
         else source.DecreaseStats(increase);
         amountIncrease.hp += ratio * increase.hp;
         amountIncrease.mp += ratio * increase.mp;
@@ -95,11 +94,15 @@ public class Abilities : MonoBehaviour
         amountIncrease.spd += ratio * increase.spd;
         amountIncrease.atk += ratio * increase.atk;
 
-        description =   $"Atk: +{amountIncrease.atk}, " +
+        description = $"Atk: +{amountIncrease.atk}, " +
                         $"Hp: +{amountIncrease.hp}" +
                         $"Def: +{amountIncrease.def}" +
                         $"Spd: +{amountIncrease.spd}" +
                         $"Mp: +{amountIncrease.mp}";
+    }
+
+    public Stats ShowIncreaseStats() {
+        return this.amountIncrease;
     }
 
     virtual public SkillUI InitSkillIcon() {

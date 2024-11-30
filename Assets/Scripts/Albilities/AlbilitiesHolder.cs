@@ -44,6 +44,13 @@ public class AlbilitiesHolder : MonoBehaviour
         AddAbility(a);
     }
 
+    public Stats ShowIncreaseStats() {
+        if (increaseStats != null)  return increaseStats.ShowIncreaseStats();
+        else {
+            return new Stats();
+        }
+    }
+
     public void ClaimAbility(ScriptableAlbilities a) {
         if (a.characterCode == source.characterCode) UpgradeAbility(a);
         else {

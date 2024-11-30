@@ -9,6 +9,8 @@ public class AbilityPackage : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI description;
 
+    private bool playerHave = false;
+
     private void Start() {
         if(ability != null) {
             description.SetText(ability.description);
@@ -16,12 +18,14 @@ public class AbilityPackage : MonoBehaviour
     }
 
     public void Choose() {
-        if(ability != null) TrainingRoomManager.Instance.AddAbility(ability);
+        if (ability != null && !playerHave) {
+            TrainingRoomManager.Instance.AddAbility(ability);
+        }
     }
 
-    public void Init(ScriptableAlbilities a) {
+    public void Init(ScriptableAlbilities a, bool playerHave = false) {
         ability = a;
         description.SetText(a.description);
-
+        this.playerHave = playerHave;
     }
 }

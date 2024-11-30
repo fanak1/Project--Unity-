@@ -20,8 +20,6 @@ public class GameManager : PersistentSingleton<GameManager>
 
     private Difficulty difficulty;
 
-    public List<ScriptableStage> stageList; //Will have to generate stageList for GameManager (Can be random or scripted)
-
     public int stageIndex;
 
     private bool inventoryOpen = false;
@@ -95,25 +93,7 @@ public class GameManager : PersistentSingleton<GameManager>
         concious--;
     }
 
-    private void NewStage() {
-
-        //LoadNewStage();
-
-        //GenerateRewardForNewStage();
-
-        //Delay
-
-        //if Done then
-
-        //stageManager.Ready();
-       
-
-        LoadNewStage(stageList[stageIndex]);
-
-        stageManager.Ready();
-
-        stageIndex++;
-    }
+   
 
     private void GenerateRewardForNewStage() {
         //Give Reward Manager a List of Ability
@@ -137,15 +117,6 @@ public class GameManager : PersistentSingleton<GameManager>
         SceneManager.LoadScene(0);
     }
 
-    public void NextStage() {
-        if (stageIndex >= stageList.Count) {
-            
-            return;
-        } else {
-            NewStage();
-            LoadScene();
-        }
-    }
 
     public void LoadStage(ScriptableStage stage) {
         LoadNewStage(stage);

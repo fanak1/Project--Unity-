@@ -24,6 +24,8 @@ public abstract class UnitBase : MonoBehaviour {
 
     public Stats stats;
 
+    public Stats base_stats => stats;
+
     public CharacterCode characterCode;
 
     public DamageScaleBonus damageScaleBonus = new DamageScaleBonus(0, 5f, 50f);
@@ -287,6 +289,10 @@ public abstract class UnitBase : MonoBehaviour {
     }
 
     public virtual Stats ShowStats() => this.stats;
+
+    public virtual Stats ShowBaseStats() => this.base_stats;
+
+    public virtual Stats ShowIncreaseStats() => abilityHolder.ShowIncreaseStats();
 
     public virtual List<ScriptableAlbilities> ShowAbilities() {
         if (abilityHolder != null) {

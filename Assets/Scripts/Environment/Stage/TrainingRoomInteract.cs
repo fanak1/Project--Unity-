@@ -21,13 +21,15 @@ public class TrainingRoomInteract : MonoBehaviour, IInteractable
             if(script != null) {
                 playerController = script;
                 script.StopMoving();
-                Debug.Log("collided");
+                TrainingRoomManager.Instance.Interact();
+                TrainingRoomManager.Instance.OnExit += Exit;
             }
         }
     }
 
     public void Exit() {
         playerController.ContinueMoving();
+        TrainingRoomManager.Instance.OnExit -= Exit;
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
