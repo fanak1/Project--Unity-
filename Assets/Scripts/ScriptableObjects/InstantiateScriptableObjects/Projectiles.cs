@@ -10,12 +10,15 @@ public class Projectiles : MonoBehaviour
 
     private Queue<ProjectileBase> bulletPooling = new Queue<ProjectileBase>();
 
+    private List<ProjectileBase> bulletPool = new List<ProjectileBase>();
+
     private ProjectileBase Create(ProjectileBase prefabs, UnitBase source, int bulletIndex, Vector3 position, Vector3 destination) {
         prefabs.SetProjectileAttribute(projectileAttribute);
         prefabs.SetSourceAndDestination(source, position, destination);
         prefabs.bulletIndex = bulletIndex;
         var p = Instantiate(prefabs, source.transform.position, Quaternion.identity);
         p.OnDisable += ReturnToPool;
+        bulletPool.Add(p);
         return p;
     }
 
@@ -67,6 +70,19 @@ public class Projectiles : MonoBehaviour
 
     public ProjectileAttribute GetAttribute() {
         return this.projectileAttribute;
+    }
+
+    private void OnDestroy() {
+        FreeBulletPooling();
+        
+    }
+
+    private void FreeBulletPooling() {
+        foreach(var bullet in bulletPool) {
+           if(bullet != null) Destroy(bullet.gameObject);
+        }
+        bulletPool.Clear();
+        bulletPooling.Clear();
     }
 
 }
