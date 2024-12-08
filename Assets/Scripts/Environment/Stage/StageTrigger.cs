@@ -45,4 +45,9 @@ public class StageTrigger : MonoBehaviour
     }
 
     public void Clear() => clear = true;
+
+    public void ResetStage() {
+        enter = false;
+        clear = false;
+    }
 }

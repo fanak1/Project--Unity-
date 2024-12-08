@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class StageScript : MonoBehaviour
@@ -47,6 +48,10 @@ public abstract class StageScript : MonoBehaviour
         for (int i = 0; i < doors.Length; i++) {
             doors[i].SetActive(false);
         }
+    }
+
+    public void ChangeStageContent(EnemyCodeName enemy, int count) {
+        this.stageContent.ChangeEnemyForRound(enemy, count);
     }
 
     public List<SpawnPoint> GetSpawnPoints() => this.spawnPoint;

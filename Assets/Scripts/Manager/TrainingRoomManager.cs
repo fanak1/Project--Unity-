@@ -10,6 +10,12 @@ public class TrainingRoomManager : Singleton<TrainingRoomManager>
 
     public Action OnExit;
 
+    private StageScript trainingRoomScript;
+
+    public EnemyCodeName enemyCodeName { private set; get; }
+
+    public int numberOfEnemy { private set; get; }
+
 
     //Guard Condition for change of stats, ability
     public bool changeStats = false;
@@ -19,6 +25,10 @@ public class TrainingRoomManager : Singleton<TrainingRoomManager>
     void Start()
     {
         allAbilities = ResourceSystem.Instance.GetAllAbilities();
+
+        trainingRoomScript = GameObject.FindGameObjectWithTag("TrainingRoom").GetComponent<StageScript>();
+
+        Debug.Log(trainingRoomScript.gameObject.name);
     }
 
 
@@ -35,6 +45,14 @@ public class TrainingRoomManager : Singleton<TrainingRoomManager>
             return PlayerUnit.instance.ShowAbilities();
         } 
         return null;
+    }
+
+    public void ChangeTrainingRoom(EnemyCodeName enemy, int count) {
+        enemyCodeName = enemy;
+        numberOfEnemy = count;
+        if(trainingRoomScript != null) {
+            trainingRoomScript.ChangeStageContent(enemy, count);
+        }
     }
 
 

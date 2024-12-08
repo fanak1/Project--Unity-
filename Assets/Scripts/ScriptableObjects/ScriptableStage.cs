@@ -13,6 +13,12 @@ public class ScriptableStage : ScriptableObject
     public List<StageState> GetStateList() => stateList;
 
     public List<ScriptableRounds> GetRoundList() => roundList;
+
+    public void ChangeEnemyForRound(EnemyCodeName enemy, int count, int index = 0) {
+        if(roundList.Count > 0) {
+            roundList[index].GetNewEnemyList(enemy, count);
+        }
+    }
 }
 
 [Serializable]

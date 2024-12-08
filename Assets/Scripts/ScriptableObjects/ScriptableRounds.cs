@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 [CreateAssetMenu(fileName = "NewRound", menuName = "Round")]
 public class ScriptableRounds : ScriptableObject
@@ -19,6 +20,12 @@ public class ScriptableRounds : ScriptableObject
             list.Add(e);
         }
         return list;
+    }
+
+    public void GetNewEnemyList(EnemyCodeName enemy, int count = 1) {
+        List<EnemyCodeName> enemies = Enumerable.Repeat(enemy, count).ToList();
+
+        this.enemyList = enemies;
     }
 
     //Cipher -- The question for this stage that can lead to difference occurence
