@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa576637e1bb1384c94780365127c0d3, type: 3}
   m_Name: TrainingStage
   m_EditorClassIdentifier: 
-  stateList: 
+  stateList: 0000000003000000
   roundList:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: cea5fd54aab810c48a9b8883c080984b, type: 2}
