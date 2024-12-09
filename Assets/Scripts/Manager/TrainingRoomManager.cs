@@ -12,9 +12,12 @@ public class TrainingRoomManager : Singleton<TrainingRoomManager>
 
     private StageScript trainingRoomScript;
 
-    public EnemyCodeName enemyCodeName { private set; get; }
+    public EnemyCodeName EnemyCodeName { private set; get; }
 
-    public int numberOfEnemy { private set; get; }
+    public int NumberOfEnemy { private set; get; }
+
+    private List<EnemyCodeName> listEnemyCodeName;
+    private int indexOfEnemy;
 
 
     //Guard Condition for change of stats, ability
@@ -24,9 +27,11 @@ public class TrainingRoomManager : Singleton<TrainingRoomManager>
     // Start is called before the first frame update
     void Start()
     {
-        allAbilities = ResourceSystem.Instance.GetAllAbilities();
+        
 
         trainingRoomScript = GameObject.FindGameObjectWithTag("TrainingRoom").GetComponent<StageScript>();
+
+        Init();
 
         Debug.Log(trainingRoomScript.gameObject.name);
     }
@@ -48,16 +53,40 @@ public class TrainingRoomManager : Singleton<TrainingRoomManager>
     }
 
     public void ChangeTrainingRoom(EnemyCodeName enemy, int count) {
-        enemyCodeName = enemy;
-        numberOfEnemy = count;
-        if(trainingRoomScript != null) {
+        EnemyCodeName = enemy;
+        NumberOfEnemy = count;
+        if(trainingRoomScript != null && count >= 0) {
             trainingRoomScript.ChangeStageContent(enemy, count);
         }
     }
 
+    public void ChangeQuantityOfMonster(int amount) {
+        if (NumberOfEnemy + amount < 0) return;
+        ChangeTrainingRoom(EnemyCodeName, NumberOfEnemy + amount);
+    }
+
+    public void ChangeEnemy(EnemyCodeName enemy) {
+        indexOfEnemy = listEnemyCodeName.IndexOf(enemy);
+        ChangeTrainingRoom(enemy, NumberOfEnemy);
+    }
+
+    public void ChangeEnemyByIndex(int index) {
+        indexOfEnemy = index % listEnemyCodeName.Count;
+        ChangeEnemy(listEnemyCodeName[indexOfEnemy]);
+    }
+
+    public void ChangeEnemyAsCyclic(int amount) {
+        indexOfEnemy = (indexOfEnemy + amount) % listEnemyCodeName.Count;
+        ChangeEnemyByIndex(indexOfEnemy);
+    }
+
 
     private void Init() {
+        allAbilities = ResourceSystem.Instance.GetAllAbilities();
 
+        listEnemyCodeName = new List<EnemyCodeName>((EnemyCodeName[])Enum.GetValues(typeof(EnemyCodeName)));
+        indexOfEnemy = 0;
+        EnemyCodeName = listEnemyCodeName[indexOfEnemy];
     }
 
     public void Interact() {
