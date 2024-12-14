@@ -347,7 +347,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 104479549}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 368932961}
+        m_TargetAssemblyTypeName: ComputerTrainingRoomPanel, Assembly-CSharp
+        m_MethodName: DecreaseQuanity
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &104479549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,7 +517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1573823293811501851, guid: b7fd4fbf12a337145a21efe8020e6fb0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1573823293811501851, guid: b7fd4fbf12a337145a21efe8020e6fb0, type: 3}
       propertyPath: m_AnchorMin.x
@@ -513,7 +525,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1573823293811501851, guid: b7fd4fbf12a337145a21efe8020e6fb0, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1573823293811501851, guid: b7fd4fbf12a337145a21efe8020e6fb0, type: 3}
       propertyPath: m_SizeDelta.x
@@ -553,11 +565,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1573823293811501851, guid: b7fd4fbf12a337145a21efe8020e6fb0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1573823293811501851, guid: b7fd4fbf12a337145a21efe8020e6fb0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -130
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1573823293811501851, guid: b7fd4fbf12a337145a21efe8020e6fb0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -787,7 +799,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 182519923}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 368932961}
+        m_TargetAssemblyTypeName: ComputerTrainingRoomPanel, Assembly-CSharp
+        m_MethodName: IncreaseQuanity
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &182519923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1411,7 +1435,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 232603064}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 368932961}
+        m_TargetAssemblyTypeName: ComputerTrainingRoomPanel, Assembly-CSharp
+        m_MethodName: ChangeToRightMonster
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &232603064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1507,7 +1543,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: '>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1534,8 +1570,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2268,13 +2304,14 @@ GameObject:
   - component: {fileID: 368932958}
   - component: {fileID: 368932960}
   - component: {fileID: 368932959}
+  - component: {fileID: 368932961}
   m_Layer: 5
   m_Name: Traning Rom Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &368932958
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2334,6 +2371,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368932957}
   m_CullTransparentMesh: 1
+--- !u!114 &368932961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368932957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d413cbd52cd1c44bbf46f7c6a8a71b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterCodeName: {fileID: 1327335894}
+  quantity: {fileID: 1549230227}
 --- !u!1 &405377536
 GameObject:
   m_ObjectHideFlags: 0
@@ -2344,7 +2395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 405377537}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Quantity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3128,7 +3179,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: '-'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3155,13 +3206,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3340,7 +3391,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 549055851}
         m_TargetAssemblyTypeName: ComputerUI, Assembly-CSharp
-        m_MethodName: TurnOff
+        m_MethodName: ConfirmButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4113,7 +4164,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &630563671
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6732,7 +6783,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -0.42999268}
-  m_SizeDelta: {x: 200, y: 262}
+  m_SizeDelta: {x: 0, y: 262}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1012733326
 MonoBehaviour:
@@ -8023,7 +8074,7 @@ GameObject:
   - component: {fileID: 1327335895}
   - component: {fileID: 1327335894}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: MonsterText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61923,7 +61974,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: <
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -61950,13 +62001,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -62457,7 +62508,7 @@ GameObject:
   - component: {fileID: 1549230228}
   - component: {fileID: 1549230227}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: QuantityText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63764,7 +63815,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: +
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -63791,13 +63842,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -65692,7 +65743,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.000045589415}
-  m_SizeDelta: {x: 10, y: 262}
+  m_SizeDelta: {x: 0, y: 262}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2045896406
 MonoBehaviour:
@@ -65854,7 +65905,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2051044954}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 368932961}
+        m_TargetAssemblyTypeName: ComputerTrainingRoomPanel, Assembly-CSharp
+        m_MethodName: ChangeToLeftMonster
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2051044954
 MonoBehaviour:
   m_ObjectHideFlags: 0

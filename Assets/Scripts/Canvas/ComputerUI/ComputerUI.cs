@@ -19,4 +19,10 @@ public class ComputerUI : Singleton<ComputerUI>
         this.gameObject.SetActive(false);
     }
 
+    public void ConfirmButton() {
+        TurnOff();
+        TrainingRoomManager.Instance.InitializeNewRound();
+        
+    }
+
 }

@@ -104,4 +104,8 @@ public class TrainingRoomManager : Singleton<TrainingRoomManager>
     public Stats ShowIncreaseStats() {
         return PlayerUnit.instance.ShowIncreaseStats();
     }
+
+    public void InitializeNewRound() {
+        trainingRoomScript.StageStart();
+    }
 }
