@@ -3306,6 +3306,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e73371d8e73bbf64fadfe39913b15dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPanel: {fileID: 630563670}
+  trainingRoomPanel: {fileID: 368932957}
 --- !u!1 &552494586
 GameObject:
   m_ObjectHideFlags: 0
@@ -4239,10 +4241,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allAbilityPanel: {fileID: 1012733324}
   playerAbilityPanel: {fileID: 2045896405}
+  allAbilities: []
   playerAbilities: []
   baseStatsText: {fileID: 1349673639}
   increaseStatsText: {fileID: 2045346051}
   abilityPrefab: {fileID: 2201910794797407596, guid: b7fd4fbf12a337145a21efe8020e6fb0, type: 3}
+  thunderAbilityPrefab: {fileID: 2201910794797407596, guid: 4dbe3a0432d5d074c9c5e2367559da77, type: 3}
 --- !u!1 &639154577
 GameObject:
   m_ObjectHideFlags: 0
@@ -64649,7 +64653,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1937554541}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 549055851}
+        m_TargetAssemblyTypeName: ComputerUI, Assembly-CSharp
+        m_MethodName: SwitchPanel
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1937554541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65389,7 +65405,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2034936384}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 549055851}
+        m_TargetAssemblyTypeName: ComputerUI, Assembly-CSharp
+        m_MethodName: SwitchPanel
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &2034936384
 MonoBehaviour:
   m_ObjectHideFlags: 0

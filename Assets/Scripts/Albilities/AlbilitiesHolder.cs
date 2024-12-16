@@ -34,7 +34,7 @@ public class AlbilitiesHolder : MonoBehaviour
     public void UpgradeAbility(ScriptableAlbilities a) {
         if (a.onEvent != Event.IncreaseStat) {
             foreach (ScriptableAlbilities ability in list) {
-                if (ability.skillType == a.skillType) {
+                if (ability.skillType == a.skillType && ability.skillType != "None") {
                     DeleteAbility(ability);
                     break;
                 }
@@ -52,11 +52,7 @@ public class AlbilitiesHolder : MonoBehaviour
     }
 
     public void ClaimAbility(ScriptableAlbilities a) {
-        if (a.characterCode == source.characterCode) UpgradeAbility(a);
-        else {
-            if (a.onEvent != Event.IncreaseStat) DeleteAbility(a);
-            AddAbility(a);
-        }
+        UpgradeAbility(a);
     }
 
     public void AddAbility(ScriptableAlbilities a) {
@@ -154,10 +150,6 @@ public class AlbilitiesHolder : MonoBehaviour
     }
 
     public bool EnoughMana(Abilities a, float mana) => a.EnoughMana(mana);
-
-    public float MPCost(Abilities a) {
-        return a.stat.manaSpend;
-    }
 
     public bool Usable(Abilities a) => a.Usable();
 }

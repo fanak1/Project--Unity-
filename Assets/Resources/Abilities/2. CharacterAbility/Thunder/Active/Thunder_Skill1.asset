@@ -28,5 +28,8 @@ MonoBehaviour:
     amount: 150
   description: 
   rarity: 0
-  skillType: 3
+  skillType: ThunderActive1
+  skillTypeColor:
+    serializedVersion: 2
+    rgba: 4294927360
   characterCode: 1

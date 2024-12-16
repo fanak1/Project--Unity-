@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Playables;
 using UnityEngine;
 
 public class ComputerPlayerPanel : MonoBehaviour
@@ -10,6 +11,8 @@ public class ComputerPlayerPanel : MonoBehaviour
 
     [SerializeField] private Transform playerAbilityPanel;
 
+    [SerializeField] private List<ScriptableAlbilities> allAbilities;
+
     [SerializeField] private List<ScriptableAlbilities> playerAbilities;
 
     [SerializeField] private TextMeshProUGUI baseStatsText;
@@ -17,6 +20,8 @@ public class ComputerPlayerPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI increaseStatsText;
 
     [SerializeField] private AbilityPackage abilityPrefab;
+
+    [SerializeField] private AbilityPackage thunderAbilityPrefab;
 
     private bool init = false;
     // Start is called before the first frame update
@@ -40,6 +45,7 @@ public class ComputerPlayerPanel : MonoBehaviour
         ResetPlayerAbility();
         BaseStatsDisplay();
         IncreaseStatsDisplay();
+        AllAbilityDisplay();
     }
 
     void BaseStatsDisplay() {
@@ -69,9 +75,35 @@ public class ComputerPlayerPanel : MonoBehaviour
         playerAbilities = TrainingRoomManager.Instance.GetPlayerAbility();
 
         foreach (var ability in playerAbilities) {
-            AbilityPackage a = Instantiate(abilityPrefab);
-            a.Init(ability, true);
-            a.gameObject.transform.SetParent(playerAbilityPanel);
+            CreateAndAddAbilityToTransform(ability, playerAbilityPanel);
+        }
+    }
+
+    private void AllAbilityDisplay() {
+        allAbilities = ResourceSystem.Instance.GetAllAbilities();
+
+        foreach(Transform child in allAbilityPanel) {
+            Destroy(child.gameObject);
+        }
+
+        foreach(var ability in allAbilities) {
+            CreateAndAddAbilityToTransform(ability, allAbilityPanel);
+        }
+    }
+
+    private void CreateAndAddAbilityToTransform(ScriptableAlbilities ability, Transform parent) {
+        AbilityPackage a;
+        switch (ability.characterCode) {
+            case CharacterCode.Thunder:
+                a = Instantiate(thunderAbilityPrefab);
+                a.Init(ability, true);
+                a.gameObject.transform.SetParent(parent);
+                break;
+            default:
+                a = Instantiate(abilityPrefab);
+                a.Init(ability, true);
+                a.gameObject.transform.SetParent(parent);
+                break;
         }
     }
 

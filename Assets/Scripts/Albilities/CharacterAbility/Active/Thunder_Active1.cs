@@ -5,9 +5,15 @@ using System;
 
 public class Thunder_Active1 : Abilities
 {
-    public override void Action() {
-        List<UnitBase> enemies = new List<UnitBase>(Thunder_Debuff2.underEffect);
+    List<UnitBase> enemies;
+    public override void ActionPressed(KeyCode key) {
 
+        Thunder_Debuff2.underEffect.RemoveAll(item => item == null);
+        enemies = new List<UnitBase>(Thunder_Debuff2.underEffect);
+        if(enemies.Count > 0) base.ActionPressed(key);
+    }
+    public override void Action() {
+       
         foreach(var enemy in enemies) {
             if(enemy is EnemyBase && enemy != null) {
                 var effect = LightningEffect.Create();
@@ -15,8 +21,6 @@ public class Thunder_Active1 : Abilities
                  effect.OnEffectHit += EffectHit;
                  effect.StartRender(source, enemy);
             }
-            
-
         }
     }
 

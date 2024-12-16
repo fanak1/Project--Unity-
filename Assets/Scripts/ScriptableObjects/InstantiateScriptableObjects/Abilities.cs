@@ -25,7 +25,8 @@ public class Abilities : MonoBehaviour {
 
     internal SkillUI skillIcon;
 
-    public SkillType skillType;
+    public string skillType;
+    public Color32 skillTypeColor;
 
 
     public void AttachTo(UnitBase target) {
@@ -80,7 +81,6 @@ public class Abilities : MonoBehaviour {
     virtual public void PerformAbility() {
         if (skillIcon.usable) {
             ActionPressed(button);
-
         }
     }
 
@@ -128,6 +128,7 @@ public class Abilities : MonoBehaviour {
         if (skillIcon.usable) {
             DebugMessege.Instance.Messege(key + " is Pressed");
             Action();
+            source.ReduceMP(stat.manaSpend);
             if(skillIcon != null) skillIcon.UseSkill();
         }
     }
@@ -139,7 +140,7 @@ public class Abilities : MonoBehaviour {
 
     virtual public bool Usable() => skillIcon.usable;
 
-    virtual public void Init(Stats amountIncrease, Event onEvent, SkillUI skillIconPrefabs, KeyCode button, float cooldown, Rarity rarity, string description, AbilityStat stat, SkillType skillType) {
+    virtual public void Init(Stats amountIncrease, Event onEvent, SkillUI skillIconPrefabs, KeyCode button, float cooldown, Rarity rarity, string description, AbilityStat stat, string skillType, Color32 skillTypeColor) {
         this.amountIncrease = amountIncrease;
         this.onEvent = onEvent;
         this.skillIconPrefabs = skillIconPrefabs;
@@ -149,6 +150,7 @@ public class Abilities : MonoBehaviour {
         this.description = description;
         this.stat = stat;
         this.skillType = skillType;
+        this.skillTypeColor = skillTypeColor;
     }
 
     virtual public void Init(UnitBase b) {

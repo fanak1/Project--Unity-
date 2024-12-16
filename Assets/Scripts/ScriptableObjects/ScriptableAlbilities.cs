@@ -27,7 +27,8 @@ public class ScriptableAlbilities : ScriptableObject {
 
     public Rarity rarity;
 
-    public SkillType skillType;
+    public string skillType = "None";
+    public Color32 skillTypeColor = Color.black;
 
     public CharacterCode characterCode;
 
@@ -43,7 +44,7 @@ public class ScriptableAlbilities : ScriptableObject {
         }
         
         
-        p.Init(amountIncrease, onEvent, skillIconPrefabs, button, cooldown, rarity, description, stat, skillType);
+        p.Init(amountIncrease, onEvent, skillIconPrefabs, button, cooldown, rarity, description, stat, skillType, skillTypeColor);
         return p;
     }
 }
@@ -64,13 +65,6 @@ public enum Rarity {
     Legendary
 }
 
-public enum SkillType {
-    None,
-    Passive1,
-    Passive2,
-    Active1,
-    Active2,
-}
 
 [Serializable]
 public struct AbilityStat {

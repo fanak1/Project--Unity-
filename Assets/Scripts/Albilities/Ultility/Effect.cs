@@ -13,11 +13,17 @@ public abstract class Effect : MonoBehaviour
 
     private SkillUI icon;
 
+    private Coroutine coroutine;
+
     protected abstract void ActionOnUpdate();
 
     protected abstract void ActionOnStart();
 
     protected abstract void ActionOnDie();
+
+    protected virtual void ActionOnOverTime() {
+
+    }
 
     protected virtual void OnResetEffect() {
 
@@ -48,8 +54,10 @@ public abstract class Effect : MonoBehaviour
 
     protected virtual void ResetEffect() {
         OnResetEffect();
-        StopCoroutine(EffectCountdown());
-        StartCoroutine(EffectCountdown());
+        if(coroutine != null) {
+            StopCoroutine(coroutine);
+        }
+        coroutine = StartCoroutine(EffectCountdown());
     }
 
     public bool AttachTo(UnitBase target, UnitBase source) {
@@ -88,7 +96,13 @@ public abstract class Effect : MonoBehaviour
         
 
     private IEnumerator EffectCountdown() {
-        yield return new WaitForSeconds(countdown);
+        float time = 0f;
+        while (time < this.countdown) {
+            ActionOnOverTime();
+            time += Time.deltaTime;
+            yield return null;
+        }
+        
         Die();
     }
 

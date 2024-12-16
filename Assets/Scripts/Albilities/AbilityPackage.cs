@@ -9,11 +9,14 @@ public class AbilityPackage : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI description;
 
+    [SerializeField] TextMeshProUGUI skillType;
+
     private bool playerHave = false;
 
     private void Start() {
         if(ability != null) {
-            description.SetText(ability.description);
+            SetUI(ability);
+
         }
     }
 
@@ -25,7 +28,17 @@ public class AbilityPackage : MonoBehaviour
 
     public void Init(ScriptableAlbilities a, bool playerHave = false) {
         ability = a;
-        description.SetText(a.description);
+        SetUI(a);
         this.playerHave = playerHave;
+    }
+
+    public void SetUI(ScriptableAlbilities a) {
+        description.SetText(a.description);
+        skillType.SetText(a.skillType);
+        skillType.outlineWidth = 0.2f;
+        skillType.outlineColor = a.skillTypeColor;
+        Color32 underlayColor = a.skillTypeColor;
+        underlayColor.a = 150;
+        skillType.fontMaterial.SetColor("_UnderlayColor", underlayColor);
     }
 }

@@ -101,7 +101,6 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(a.button)) {
                 if(abilityHolder.EnoughMana(a, playerUnit.nowMP) && abilityHolder.Usable(a)) {
                     abilityHolder.PerformAbility(a.button);
-                    playerUnit.ReduceMP(abilityHolder.MPCost(a));
                 }
             }
 

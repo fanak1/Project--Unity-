@@ -9,5 +9,7 @@ public class Thunder_Passive1 : Abilities
         var d = debuff.AddComponent<Thunder_Debuff2>();
         var value = this.stat.amount;
         d.Init(cooldown, target, source, value);
+
     }
+
 }

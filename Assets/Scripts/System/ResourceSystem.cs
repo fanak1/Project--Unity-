@@ -38,6 +38,8 @@ public class ResourceSystem : StaticInstance<ResourceSystem>
         EnemyUnitList = Resources.LoadAll<ScriptableEnemyUnit>("Enemy").ToList(); //Load all ScriptableEnemyUnit from "EnemyUnit" folder inside "Resources" folder to List
         _EnemyUnitDict = EnemyUnitList.ToDictionary(r => r.enemyCodeName, r => r); //Insert all enemy from list to dict to find with code name
 
+        allAbilities = Resources.LoadAll<ScriptableAlbilities>("Abilities").ToList();
+
         cipherList = Resources.LoadAll<ScriptableCipher>("Cipher").ToList();
     }
 
