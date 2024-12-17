@@ -5,16 +5,24 @@ using UnityEngine;
 
 public class EnemyBase : UnitBase
 {
+
+    private Animator animator;
     
     protected override void Start() {
         faction = Faction.Enemy;
         //mmHealthBar = GetComponent<MMHealthBar>();
         base.Start();
-        
+        animator = GetComponent<Animator>();
+    }
+
+    internal override void TakeDamage(UnitBase source, float dmg, bool crit) {
+        animator.SetTrigger("Hit");
+        base.TakeDamage(source, dmg, crit);
     }
 
     internal override void Destroy() {
         StageManager.numberEnemyLeft--;
+        DieParticles.Create(this.transform.position);
         base.Destroy();
     }
 

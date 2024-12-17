@@ -12,10 +12,4 @@ public class PlayerSpawn : MonoBehaviour
         var player = scriptablePlayer.Spawn(transform.position);
         player.gameObject.transform.SetParent(this.transform);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
