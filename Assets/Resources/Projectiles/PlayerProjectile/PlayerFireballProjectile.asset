@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8cb61c8dd65c647bad4589bf53e0f9, type: 3}
+  m_Name: PlayerFireballProjectile
+  m_EditorClassIdentifier: 
+  projectileAttribute:
+    speed: 75
+    accel: 0
+    numberOfBullet: 1
+    manaSpend: 0
+    deviation: 0
+    interval: 0
+    scale: 2
+  projectileCodeName: 0
+  prefabs: {fileID: 5669365608606652481, guid: 01b6afef25f4e54448b7a5908a74a873, type: 3}
+  projectiles: {fileID: 0}

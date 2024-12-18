@@ -25,14 +25,19 @@ public abstract class ProjectileBase : MonoBehaviour
     internal float spd;
     internal float accel;
 
+    private bool isStart = true;
+
     public virtual void Start() {
         collided = false;
         animator = GetComponent<Animator>();
         playCollidedAnimation = false;
+        animator = GetComponent<Animator>();
         if (animator != null) animator.SetTrigger("Init");
+        isStart = false;
     }
 
     public virtual void OnEnable() {
+        if (isStart) return;
         transform.position = position;
         collided = false;
         playCollidedAnimation = false;

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8f35cd76529ec4781f21813e51dd6a, type: 3}
+  m_Name: FireballOnHit
+  m_EditorClassIdentifier: 
+  ability: {fileID: 3714424994162845129, guid: 4365e82dd56b3ab49ace9c5cde9a1883, type: 3}
+  onEvent: 0
+  amountIncrease:
+    hp: 0
+    mp: 0
+    atk: 0
+    spd: 0
+    def: 0
+  button: 0
+  skillIconPrefabs: {fileID: 0}
+  cooldown: 2
+  stat:
+    manaSpend: 0
+    amount: 2
+  description: When player hit an enemy, shoot a fireball toward it's position
+  rarity: 0
+  skillType: FireballOnHit
+  skillTypeColor:
+    serializedVersion: 2
+    rgba: 4278214655
+  characterCode: 0

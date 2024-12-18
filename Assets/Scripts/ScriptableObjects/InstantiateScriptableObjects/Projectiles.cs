@@ -50,6 +50,11 @@ public class Projectiles : MonoBehaviour
         prefabs.SetProjectileAttribute(projectileAttribute);
     }
 
+    public void SetScaleForProjectile(float scale) {
+        this.projectileAttribute.scale = scale;
+        prefabs.SetProjectileAttribute(this.projectileAttribute);
+    }
+
     public void SetStatForProjectile() { //Function to set stat of projectile on default
         prefabs.SetProjectileAttribute(projectileAttribute);
     }

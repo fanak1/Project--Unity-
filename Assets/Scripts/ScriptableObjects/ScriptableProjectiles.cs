@@ -34,6 +34,7 @@ public struct ProjectileAttribute {
     public int manaSpend; //Number of mana spend per shot
     public float deviation; //Deviation of each bullet per shot
     public float interval; //Interval of each shoot (aka attack speed)
+    public float scale;
 }
 
 [Serializable]

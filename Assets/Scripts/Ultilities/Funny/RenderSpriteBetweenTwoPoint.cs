@@ -59,7 +59,6 @@ public abstract class RenderSpriteBetweenTwoPoint : MonoBehaviour {
             clipInfo = animator.GetCurrentAnimatorClipInfo(0);
            
             if (clipInfo.Length <= 0) {
-                Debug.LogWarning("No animation clip is currently playing.");
                 yield return null;
             } else {
                 break;
@@ -69,7 +68,6 @@ public abstract class RenderSpriteBetweenTwoPoint : MonoBehaviour {
     
         
          float duration = clipInfo[0].clip.length;
-         Debug.Log($"Animation duration: {duration} seconds");
 
         // Continue with your logic
         if (target != null) {

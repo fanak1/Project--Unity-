@@ -83,6 +83,7 @@ public class AlbilitiesHolder : MonoBehaviour
 
     
     public void DeleteAbility(ScriptableAlbilities a) {
+        
         Abilities ability = a.ability;
         if (a.onEvent == Event.IncreaseStat) {
             list.Remove(a);
@@ -94,7 +95,7 @@ public class AlbilitiesHolder : MonoBehaviour
                 if(ab.GetType() == ability.GetType()) {
                     passive.Remove(ab);
                     Destroy(ab.gameObject);
-                    Detach(ability);
+                    Detach(ab);
                     break;
                 }
             }
@@ -103,9 +104,10 @@ public class AlbilitiesHolder : MonoBehaviour
             list.Remove(a);
             foreach (Abilities ab in active) {
                 if (ab.GetType() == ability.GetType()) {
+                    Debug.Log("Nice");
                     active.Remove(ab);
                     Destroy(ab.gameObject);
-                    Detach(ability);
+                    Detach(ab);
                     break;
                 }
             }
@@ -125,7 +127,6 @@ public class AlbilitiesHolder : MonoBehaviour
     private void Detach(Abilities a) {
         a.Detach(source);
         if (a.onEvent == Event.OnButtonClick) {
-
             abilityKey.Remove(a.button);
         }
     }

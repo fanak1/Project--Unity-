@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Playables;
 using UnityEngine;
 
 public class ComputerPlayerPanel : MonoBehaviour
@@ -75,7 +74,7 @@ public class ComputerPlayerPanel : MonoBehaviour
         playerAbilities = TrainingRoomManager.Instance.GetPlayerAbility();
 
         foreach (var ability in playerAbilities) {
-            CreateAndAddAbilityToTransform(ability, playerAbilityPanel);
+            CreateAndAddAbilityToTransform(ability, playerAbilityPanel, true);
         }
     }
 
@@ -91,17 +90,17 @@ public class ComputerPlayerPanel : MonoBehaviour
         }
     }
 
-    private void CreateAndAddAbilityToTransform(ScriptableAlbilities ability, Transform parent) {
+    private void CreateAndAddAbilityToTransform(ScriptableAlbilities ability, Transform parent, bool playerHave = false) {
         AbilityPackage a;
         switch (ability.characterCode) {
             case CharacterCode.Thunder:
                 a = Instantiate(thunderAbilityPrefab);
-                a.Init(ability, true);
+                a.Init(ability, playerHave);
                 a.gameObject.transform.SetParent(parent);
                 break;
             default:
                 a = Instantiate(abilityPrefab);
-                a.Init(ability, true);
+                a.Init(ability, playerHave);
                 a.gameObject.transform.SetParent(parent);
                 break;
         }

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class DieParticles : MonoBehaviour
 {
-    private static Queue<DieParticles> objectPooling = new();
+    private static Queue<DieParticles> objectPooling = new Queue<DieParticles>();
 
-    private static DieParticles instance;
+    private static GameObject instance;
 
     private Animator animator;
+
+    private bool isStart = true;
 
 
     // Start is called before the first frame update
@@ -16,14 +18,18 @@ public class DieParticles : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         StartCoroutine(Countdown());
+        isStart = false;
     }
 
     private void OnEnable() {
+        if (isStart) return;
+        animator.enabled = true;
         StartCoroutine(Countdown());
     }
 
     void PlayAnimation() {
-        animator.Play("New Animation");
+        animator.SetTrigger("Play");
+
     }
 
     IEnumerator Countdown() {
@@ -33,17 +39,22 @@ public class DieParticles : MonoBehaviour
     }
 
     void ReturnToPool() {
+        animator.enabled = false;
         gameObject.SetActive(false);
         objectPooling.Enqueue(this);
     }
 
     public static DieParticles Create(Vector3 position) {
-        DieParticles dieParticles;
+        DieParticles dieParticles = null;
         if(objectPooling.Count <= 0) {
             if(instance == null) {
-                instance = Resources.Load<GameObject>("FunnyPrefabs/DieParticles").GetComponent<DieParticles>();
+                instance = Resources.Load<GameObject>("FunnyPrefabs/DieParticles");
             }
-            dieParticles = Instantiate(instance, position, Quaternion.identity);
+            if(instance != null) {
+                var p = Instantiate(instance, position, Quaternion.identity);
+                dieParticles = p.GetComponent<DieParticles>();
+            }
+                    
         } else {
             dieParticles = objectPooling.Dequeue();
             dieParticles.gameObject.SetActive(true);

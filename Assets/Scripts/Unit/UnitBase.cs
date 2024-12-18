@@ -134,6 +134,10 @@ public abstract class UnitBase : MonoBehaviour {
         this.stats.mp += stats.mp;
         this.stats.atk += stats.atk;
         this.stats.spd += stats.spd;
+
+        this.maxHP = this.stats.hp;
+        this.maxMP = this.stats.mp;
+
         return this.stats;
     }
 
@@ -143,6 +147,9 @@ public abstract class UnitBase : MonoBehaviour {
         this.stats.mp -= stats.mp;
         this.stats.atk -= stats.atk;
         this.stats.spd -= stats.spd;
+
+        this.maxHP = this.stats.hp;
+        this.maxMP = this.stats.mp;
 
         return this.stats;
     }
@@ -242,7 +249,6 @@ public abstract class UnitBase : MonoBehaviour {
 
     internal virtual void Destroy() {
         Destroy(gameObject);
-        Debug.Log(gameObject + "mark for destruction");
     }
 
     //------------------------------------------------------------------------------------------------------------------------------------------------
