@@ -20,7 +20,7 @@ public abstract class ProjectileBase : MonoBehaviour
 
     public Action<ProjectileBase> OnDisable;
 
-    private Animator animator;
+    protected Animator animator;
 
     internal float spd;
     internal float accel;
@@ -74,8 +74,8 @@ public abstract class ProjectileBase : MonoBehaviour
         if (source == null) return;
         if (c.gameObject.CompareTag(source.tag)) return;
         if(CheckOpponent(c.gameObject) && !collided) {
-            if (!collided) collided = true;
-            Collided();
+            if (IfCollide(c.gameObject)) return;
+            Hit();
             UnitBase cUnit = c.gameObject.GetComponent<UnitBase>();
             if(cUnit != null) {
                 cUnit.damagePosition = transform.position;
@@ -88,16 +88,28 @@ public abstract class ProjectileBase : MonoBehaviour
     }
 
     public virtual void DestroyOnOverBounds() {
-        if (Vector2.Distance(this.position, this.transform.position) > 50f) Collided();
+        if (Vector2.Distance(this.position, this.transform.position) > 200f) Collided();
     }
 
     private void OnBecameInvisible() {
         Collided();
     }
 
-    private void Disable() {
+    protected void Disable() {
         OnDisable?.Invoke(this);
         gameObject.SetActive(false);
+    }
+
+    virtual protected void Hit() {
+        Collided();
+    }
+
+    virtual protected bool IfCollide(GameObject a) {
+        if (!collided) {
+            collided = true;
+            return false;
+        }
+        return true;
     }
 
     private void Collided() {
