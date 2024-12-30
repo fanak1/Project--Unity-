@@ -29,4 +29,8 @@ public class FireBall : Abilities
         yield return new WaitForSeconds(this.cooldown);
         usable = true;
     }
+
+    protected override void CleanUpOnDetach() {
+        Destroy(projectile.gameObject);
+    }
 }

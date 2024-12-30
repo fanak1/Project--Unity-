@@ -169,6 +169,11 @@ public abstract class UnitBase : MonoBehaviour {
         OnAbilityAdded?.Invoke(ability);
     }
 
+    public void DeleteAbility(ScriptableAlbilities ability) {
+        abilityHolder.DeleteAbility(ability);
+
+    }
+
     //-------------------------------------------------------------------------------------------------------------------------------------------
 
 

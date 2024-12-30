@@ -26,6 +26,12 @@ public class AbilityPackage : MonoBehaviour
         }
     }
 
+    public void Delete() {
+        if (ability != null && !playerHave) {
+            TrainingRoomManager.Instance.DeleteAbility(ability);
+        }
+    }
+
     public void Init(ScriptableAlbilities a, bool playerHave = false) {
         ability = a;
         SetUI(a);

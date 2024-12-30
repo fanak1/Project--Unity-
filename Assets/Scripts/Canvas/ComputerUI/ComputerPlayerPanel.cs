@@ -22,6 +22,10 @@ public class ComputerPlayerPanel : MonoBehaviour
 
     [SerializeField] private AbilityPackage thunderAbilityPrefab;
 
+    [SerializeField] private AbilityPackage abilityPrefab1;
+
+    [SerializeField] private AbilityPackage thunderAbilityPrefab1;
+
     private bool init = false;
     // Start is called before the first frame update
     void Start()
@@ -94,12 +98,12 @@ public class ComputerPlayerPanel : MonoBehaviour
         AbilityPackage a;
         switch (ability.characterCode) {
             case CharacterCode.Thunder:
-                a = Instantiate(thunderAbilityPrefab);
+                a = playerHave ? Instantiate(thunderAbilityPrefab) : Instantiate(thunderAbilityPrefab1);
                 a.Init(ability, playerHave);
                 a.gameObject.transform.SetParent(parent);
                 break;
             default:
-                a = Instantiate(abilityPrefab);
+                a = playerHave ? Instantiate(abilityPrefab) : Instantiate(abilityPrefab1);
                 a.Init(ability, playerHave);
                 a.gameObject.transform.SetParent(parent);
                 break;

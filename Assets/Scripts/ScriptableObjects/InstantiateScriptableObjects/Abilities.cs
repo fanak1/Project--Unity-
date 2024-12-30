@@ -75,6 +75,11 @@ public class Abilities : MonoBehaviour {
             default:
                 break;
         }
+        CleanUpOnDetach();
+    }
+
+    virtual protected void CleanUpOnDetach() {
+
     }
 
 

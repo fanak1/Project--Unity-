@@ -39,9 +39,16 @@ public class TrainingRoomManager : Singleton<TrainingRoomManager>
 
     public void AddAbility(ScriptableAlbilities ability) {
         if (PlayerUnit.instance != null) {
-            Debug.Log("Added");
 
             PlayerUnit.instance.AddAbility(ability);
+            changeStats = true;
+            changeAbility = true;
+        }
+    }
+
+    public void DeleteAbility(ScriptableAlbilities ability) {
+        if(PlayerUnit.instance != null) {
+            PlayerUnit.instance.DeleteAbility(ability);
             changeStats = true;
             changeAbility = true;
         }

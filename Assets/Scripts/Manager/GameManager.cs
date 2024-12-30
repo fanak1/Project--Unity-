@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -122,5 +123,18 @@ public class GameManager : PersistentSingleton<GameManager>
         LoadNewStage(stage);
         stageManager.Ready();
         LoadScene();
+    }
+
+    public void AddAbility(ScriptableAlbilities ability) {
+        if (PlayerUnit.instance != null) {
+
+            PlayerUnit.instance.AddAbility(ability);
+        }
+    }
+
+    public void DeleteAbility(ScriptableAlbilities ability) {
+        if (PlayerUnit.instance != null) {
+            PlayerUnit.instance.DeleteAbility(ability);
+        }
     }
 }

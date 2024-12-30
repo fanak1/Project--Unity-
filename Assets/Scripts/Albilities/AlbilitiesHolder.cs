@@ -83,13 +83,19 @@ public class AlbilitiesHolder : MonoBehaviour
 
     
     public void DeleteAbility(ScriptableAlbilities a) {
+        if (!list.Contains(a) && (a.onEvent != Event.IncreaseStat)) return;
         
         Abilities ability = a.ability;
         if (a.onEvent == Event.IncreaseStat) {
-            list.Remove(a);
+            if (increaseStats == null) {
+                ability = a.Create();
+                increaseStats = ability;
+                Attach(ability);
+            }
             increaseStats.StackIncreaseStats(a.amountIncrease, -1);
+
         }
-        if (a.onEvent != Event.OnButtonClick) {
+        else if (a.onEvent != Event.OnButtonClick) {
             list.Remove(a);
             foreach(Abilities ab in passive) {
                 if(ab.GetType() == ability.GetType()) {
