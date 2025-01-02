@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class MobScript : MonoBehaviour
 {
-    private GameObject player;
+    public GameObject player;
 
     private UnitBase unitBase;
 
@@ -41,7 +41,7 @@ public abstract class MobScript : MonoBehaviour
 
     }
 
-    private void Start() {
+    protected virtual void Start() {
         player = GameObject.FindGameObjectWithTag("Player");
 
         time = Random.Range(0f, moveInterval/2f);
@@ -50,12 +50,12 @@ public abstract class MobScript : MonoBehaviour
 
     }
 
-    private void Update() {
+    protected virtual void Update() {
         if (time < 50f) time += Time.deltaTime;
 
         if(time > moveInterval) {
             if(player != null)
-                if(Vector3.Distance(player.transform.position, transform.position) < 40f) 
+                if(Vector3.Distance(player.transform.position, transform.position) < 100f) 
                     RandomMove();
         }
         if(time > moveInterval + moveDuration) {
@@ -64,7 +64,7 @@ public abstract class MobScript : MonoBehaviour
             state = 0;
             time = 0f;
             if(player != null) {
-                if (Vector3.Distance(player.transform.position, transform.position) > 10f) {
+                if (Vector3.Distance(player.transform.position, transform.position) > 50f) {
                     tooFar = true;
                 } else {
                     tooFar = false;
@@ -84,11 +84,11 @@ public abstract class MobScript : MonoBehaviour
         }
     }
 
-    internal void RandomShoot() {
+    protected virtual void RandomShoot() {
         if(projectileHolder != null) projectileHolder.RandomShoot(transform.position, player.transform.position);
     }
 
-    internal void MoveToward() {
+    protected virtual void MoveToward() {
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, spd * Time.deltaTime);
     }
 }
