@@ -7,16 +7,14 @@ public class BatScript : MobScript
 {
 
     private Quaternion initialRotation;
-    private NavMeshAgent agent;
+    private EnemyBase enemy;
 
     int moveIndex = 0;
 
     protected override void Start() {
         base.Start();
 
-        agent = GetComponent<NavMeshAgent>();
-
-        agent.speed = spd;
+        enemy = GetComponent<EnemyBase>();
 
         initialRotation = transform.rotation;
     }
@@ -32,16 +30,16 @@ public class BatScript : MobScript
         
         switch(index) {
             case 0:
-                agent.SetDestination(transform.position + Vector3.up);
+                transform.Translate(Vector3.up * enemy.stats.spd * Time.deltaTime);
                 break;
             case 1:
-                agent.SetDestination(transform.position + Vector3.right);
+                transform.Translate(Vector3.right * enemy.stats.spd * Time.deltaTime);
                 break;
             case 2:
-                agent.SetDestination(transform.position + Vector3.up * -1);
+                transform.Translate(Vector3.up * -enemy.stats.spd * Time.deltaTime);
                 break;
             case 3:
-                agent.SetDestination(transform.position + Vector3.right * -1);
+                transform.Translate(Vector3.right * -enemy.stats.spd * Time.deltaTime);
                 break;
             case 4:
                 MoveToward();
@@ -61,8 +59,8 @@ public class BatScript : MobScript
     }
 
     protected override void MoveToward() {
-        if (player != null) {
-            agent.SetDestination(Vector3.Lerp((Vector2)this.transform.position, (Vector2)player.transform.position, spd / (Vector3.Distance(this.transform.position, player.transform.position) + 5f)));
-        }
+        if (player == null) return;
+        Vector2 direction = player.transform.position - this.transform.position;
+        transform.Translate(direction.normalized * enemy.stats.spd * Time.deltaTime);
     }
 }

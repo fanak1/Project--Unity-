@@ -129,9 +129,15 @@ public abstract class UnitBase : MonoBehaviour {
     //Stats ------------------------------------------------------------------------------------------------------------------------------------
 
     public Stats IncreaseStats(Stats stats) {
-        this.stats.hp += stats.hp;
+
+        //this.stats.hp += stats.hp;
+        IncreaseMaxHP(stats.hp);
+
+        //this.stats.mp += stats.mp;
+        IncreaseMaxMP(stats.mp);
+
         this.stats.def += stats.def;
-        this.stats.mp += stats.mp;
+        
         this.stats.atk += stats.atk;
         this.stats.spd += stats.spd;
 
@@ -142,14 +148,19 @@ public abstract class UnitBase : MonoBehaviour {
     }
 
     public Stats DecreaseStats(Stats stats) {
-        this.stats.hp -= stats.hp;
+
+        //this.stats.hp -= stats.hp;
+        IncreaseMaxHP(-stats.hp);
+
+        //this.stats.mp -= stats.mp;
+        IncreaseMaxMP(-stats.mp);
+
         this.stats.def -= stats.def;
-        this.stats.mp -= stats.mp;
+        
         this.stats.atk -= stats.atk;
         this.stats.spd -= stats.spd;
 
-        this.maxHP = this.stats.hp;
-        this.maxMP = this.stats.mp;
+        
 
         return this.stats;
     }
