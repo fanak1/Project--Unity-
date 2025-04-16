@@ -41,10 +41,6 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     public event Action<int> OnRoundFinish; //On round "number" finish. ex: OnRoundFinish(1) is called when round 1 is finish
 
-    public event Action OnCipherBegin;
-
-    public event Action OnCipherFinish; //On answer the question
-
     public event Action OnRewardBegin;
 
     public event Action OnRewardFinish; //On reward of round "number" finish
@@ -81,9 +77,6 @@ public class StageManager : PersistentSingleton<StageManager> {
                 break;
             case StageState.Round:
                 stateInfo = "Round Start";
-                break;
-            case StageState.Cipher:
-                stateInfo = "Question Begin";
                 break;
             case StageState.Reward:
                 stateInfo = "Reward";
@@ -199,17 +192,6 @@ public class StageManager : PersistentSingleton<StageManager> {
         }
     }
 
-    private void CipherState() {
-        if (!stateInit) { 
-            OnCipherBegin?.Invoke();
-            stateInit = true;
-        }
-    }
-
-    public void CipherStateEnd() {
-        OnCipherFinish?.Invoke();
-        FinishAndSwitchState();
-    }
 
     private void RewardState() {
         if (!stateInit) {
@@ -281,9 +263,6 @@ public class StageManager : PersistentSingleton<StageManager> {
                 break;
             case StageState.Round:
                 RoundState();
-                break;
-            case StageState.Cipher:
-                CipherState();
                 break;
             case StageState.Reward:
                 RewardState();

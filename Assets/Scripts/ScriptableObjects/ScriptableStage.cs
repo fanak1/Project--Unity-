@@ -26,7 +26,6 @@ public enum StageState {
     Unready = -2,
     Ready = -1,
     Round = 0,
-    Cipher = 1,
-    Reward = 2,
-    Finish = 3
+    Reward = 1,
+    Finish = 2
 }

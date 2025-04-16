@@ -83,7 +83,7 @@ public class GaugeBar : MonoBehaviour
         valueSlider.value = value * scale;
     }
 
-    public void SetMaxValue(float value, bool resetBar = true) {
+    public void SetMaxValue(float value, bool resetBar = false) {
         rectTransform.sizeDelta = new Vector2(value * scale, 30);
         increaseDelaySlider.maxValue = value * scale;
         decreaseDelaySlider.maxValue = value * scale;
@@ -94,7 +94,7 @@ public class GaugeBar : MonoBehaviour
 
     public void Init(float maxValue, float scale=1f) {
         this.scale = scale;
-        SetMaxValue(maxValue);
+        SetMaxValue(maxValue, true);
     }
 
     public bool DelayEnd() => this.delayCoroutineEnd;

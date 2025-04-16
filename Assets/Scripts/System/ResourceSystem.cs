@@ -14,20 +14,6 @@ public class ResourceSystem : StaticInstance<ResourceSystem>
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //Cipher --------------------------------------------------------------------------------------------------------------------------------------------------
-
-    public List<ScriptableCipher> cipherList { get; private set; } //List of cipher to load
-
-    public ScriptableCipher GetRandomCipherWithDifficulty(Difficulty d) { //Get the random cipher with a difficulty
-        List<ScriptableCipher> list = new List<ScriptableCipher>();
-        foreach(ScriptableCipher cipher in cipherList) {
-            if(cipher.difficulty == d) {
-                list.Add(cipher);
-            }
-        }
-        int random = Random.Range(0, list.Count);
-        return list[random];
-    }
 
     protected override void Awake() {
         base.Awake();
@@ -39,8 +25,6 @@ public class ResourceSystem : StaticInstance<ResourceSystem>
         _EnemyUnitDict = EnemyUnitList.ToDictionary(r => r.enemyCodeName, r => r); //Insert all enemy from list to dict to find with code name
 
         allAbilities = Resources.LoadAll<ScriptableAlbilities>("Abilities").ToList();
-
-        cipherList = Resources.LoadAll<ScriptableCipher>("Cipher").ToList();
     }
 
     public List<ScriptableAlbilities> GetAllAbilities() => allAbilities;

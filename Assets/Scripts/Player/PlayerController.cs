@@ -13,8 +13,6 @@ public class PlayerController : MonoBehaviour
     
     public Camera cam; //to get mouse input in screen cam
 
-    bool isMoving = false;
-
     RaycastHit2D hit;
     int interactionMask;
 
@@ -61,14 +59,13 @@ public class PlayerController : MonoBehaviour
         } else
         {
             animator.SetTrigger("Idle");
-            isMoving = false;
             runAnim = false;
         }
     }
 
     void ShootController() { //Shooting (left, right)
         
-        if(Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.A)) { //Left-mouse
+        if(Input.GetMouseButton(0)) { //Left-mouse
             if(projectileHolder.EnoughMana(0, playerUnit.nowMP)) {
                 projectileHolder.Shoot(0, transform.position, mousePos);
                 

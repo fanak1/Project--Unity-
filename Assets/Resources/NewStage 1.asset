@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa576637e1bb1384c94780365127c0d3, type: 3}
   m_Name: NewStage 1
   m_EditorClassIdentifier: 
-  stateList: 00000000010000000200000003000000
+  stateList: ffffffff000000000100000002000000
   roundList:
   - {fileID: 11400000, guid: 258150170c85e754ab19e58ab6925b14, type: 2}

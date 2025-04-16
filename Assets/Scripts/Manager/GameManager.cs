@@ -7,19 +7,15 @@ using UnityEngine.SceneManagement;
 public class GameManager : PersistentSingleton<GameManager>
 {
     [SerializeField] private GameObject stageManagerGameObject;
-    [SerializeField] private GameObject cipherManagerGameObject;
     [SerializeField] private GameObject rewardManagerGameObject;
 
     private StageManager stageManager;
-    private CipherManager cipherManager;
     private RewardManager rewardManager;
     private UnitBase playerAlbilitiesHolder;
 
     public GameObject inventoryTest;
 
     //public ExitDoor exitDoor;
-
-    private Difficulty difficulty;
 
     public int stageIndex;
 
@@ -29,7 +25,6 @@ public class GameManager : PersistentSingleton<GameManager>
 
     private void Start() {
         stageManager = stageManagerGameObject.GetComponent<StageManager>();
-        cipherManager = cipherManagerGameObject.GetComponent<CipherManager>();
         rewardManager = rewardManagerGameObject.GetComponent<RewardManager>();
 
         InitiateManager();
@@ -50,14 +45,6 @@ public class GameManager : PersistentSingleton<GameManager>
         }
     }
 
-    public void BeginCipherUI() {
-        cipherManager.InitiateQuestion(difficulty);
-    }
-
-    public void CloseCipherUI() {
-        stageManager.CipherStateEnd();
-    }
-
     public void BeginRewardUI() {
         rewardManager.InitReward();
     }
@@ -74,27 +61,12 @@ public class GameManager : PersistentSingleton<GameManager>
         playerAlbilitiesHolder.AddAbility(a);
     }
     private void InitiateManager() {
-        stageManager.OnCipherBegin += BeginCipherUI;
-        cipherManager.OnCipherFinish += CloseCipherUI;
 
         stageManager.OnRewardBegin += BeginRewardUI;
 
         stageManager.OnStageFinish += StageClear;
 
-        cipherManager.OnCorrectAnswer += ChooseRightAnswer;
-        cipherManager.OnWrongAnswer += ChooseWrongAnswer;
-
     }
-
-    public void ChooseRightAnswer() {
-        concious++;
-    }
-
-    public void ChooseWrongAnswer() {
-        concious--;
-    }
-
-   
 
     private void GenerateRewardForNewStage() {
         //Give Reward Manager a List of Ability
