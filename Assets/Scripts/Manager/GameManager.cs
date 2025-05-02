@@ -14,13 +14,11 @@ public class GameManager : PersistentSingleton<GameManager>
     private RewardManager rewardManager;
     private UnitBase playerAlbilitiesHolder;
 
-    public GameObject inventoryTest;
+    
 
     //public ExitDoor exitDoor;
 
     public int stageIndex;
-
-    private bool inventoryOpen = false;
 
     public int concious;
 
@@ -38,15 +36,7 @@ public class GameManager : PersistentSingleton<GameManager>
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (!inventoryOpen) {
-                inventoryTest.SetActive(true);
-                inventoryOpen = true;
-            } else {
-                inventoryTest.SetActive(false);
-                inventoryOpen = false;
-            }
-        }
+        
     }
 
     public void BeginRewardUI() {
@@ -89,8 +79,7 @@ public class GameManager : PersistentSingleton<GameManager>
     }
 
     public void LoadScene() {
-        inventoryOpen = false;
-        inventoryTest.SetActive(false);
+        
         SceneManager.LoadScene(0);
     }
 
