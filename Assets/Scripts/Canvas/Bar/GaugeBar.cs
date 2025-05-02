@@ -57,7 +57,7 @@ public class GaugeBar : MonoBehaviour
     internal Coroutine ResetCoroutine(Coroutine coroutine) {
         if(coroutine != null) StopCoroutine(coroutine);
 
-        return StartCoroutine(Delay(delay));
+        return CoroutineManager.Instance.StartNewCoroutine(Delay(delay));
     }
 
     public void Decrease(float value) {

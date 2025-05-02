@@ -60,7 +60,7 @@ public class CameraController : StaticInstance<CameraController> {
 
     private void StartSetSize(float size) {
         if(coroutine != null) StopCoroutine(coroutine);
-        coroutine = StartCoroutine(SetSize(size));
+        coroutine = CoroutineManager.Instance.StartNewCoroutine(SetSize(size));
     }
 
     private IEnumerator SetSize(float size) {

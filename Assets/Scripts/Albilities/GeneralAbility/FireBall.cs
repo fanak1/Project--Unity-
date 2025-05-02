@@ -19,7 +19,7 @@ public class FireBall : Abilities
     public override void Action(UnitBase target, float amount) {
         if(usable) {
             projectile.Shoot(this.source, source.gameObject.transform.position, target.gameObject.transform.position);
-            StartCoroutine(StartCooldown());
+            CoroutineManager.Instance.StartNewCoroutine(StartCooldown());
         }
         
     }

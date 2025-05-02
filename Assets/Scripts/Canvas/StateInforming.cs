@@ -57,7 +57,7 @@ public class StateInforming : StaticInstance<StateInforming>
     }
 
     public void Display(string text) {
-        StartCoroutine(DisplayStart(text));
+        CoroutineManager.Instance.StartNewCoroutine(DisplayStart(text));
     }
 
 }

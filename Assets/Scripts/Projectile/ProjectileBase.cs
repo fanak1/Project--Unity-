@@ -119,7 +119,7 @@ public abstract class ProjectileBase : MonoBehaviour
         if (animator != null) {
             if(!playCollidedAnimation) {
                 playCollidedAnimation = true;
-                StartCoroutine(PlayCollidedAnimation());
+                CoroutineManager.Instance.StartNewCoroutine(PlayCollidedAnimation());
             }
             
         } else Disable();
