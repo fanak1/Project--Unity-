@@ -21,8 +21,6 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     [SerializeField] private List<SpawnPoint> spawnList;
 
-    [SerializeField] private TextMeshProUGUI roundCount;
-
     public static int numberEnemyLeft; //number enemy we have to clear each round
 
     private List<StageState> stateList;
@@ -32,8 +30,6 @@ public class StageManager : PersistentSingleton<StageManager> {
     private bool stateInit = false; //For prevent init loop
 
     private bool loop = true;
-
-    [SerializeField] private StateInforming stateInforming;
 
     [SerializeField] private StageScript stageContent;
 
@@ -50,47 +46,14 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     //------------------------------------------------------------------------------------------------------------------------------------------
 
-    public void FinishStateInforming() {
-        //Time.timeScale = 1;
-        stateInforming.gameObject.SetActive(false);
-        stateInit = false;
-        loop = true;
-
-    }
-
     private void FinishAndSwitchState() { //Swtich stage
         //Time.timeScale = 0;
-        loop = false;
-        
+        stateInit = false;
         stateIndex++;
         this.state = stateList[stateIndex];
 
-        BeginStateInforming();
     }
 
-    private void BeginStateInforming() {
-        string stateInfo = "";
-
-        switch (state) {
-            case StageState.Ready:
-                stateInfo = "Ready";
-                break;
-            case StageState.Round:
-                stateInfo = "Round Start";
-                break;
-            case StageState.Reward:
-                stateInfo = "Reward";
-                break;
-            case StageState.Finish:
-                stateInfo = "Finish";
-                break;
-            default:
-                break;
-        }
-
-        stateInforming.gameObject.SetActive(true);
-        stateInforming.Display(stateInfo);
-    }
 
     public void DecreaseEnemyOnDead() { //Decrease count for each enemy die
         
@@ -143,8 +106,6 @@ public class StageManager : PersistentSingleton<StageManager> {
     private void RoundState() { //Round state - 0
 
         if (!stateInit) {
-
-            roundCount.SetText("Round: " + (roundIndex + 1) + "/" + roundList.Count);
 
             List<ScriptableEnemyUnit> enemyList = new List<ScriptableEnemyUnit>(roundList[roundIndex].LoadEnemyForRound()); //List of enemy in this round
 
@@ -229,19 +190,16 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     public void ChangeStage(ScriptableStage stage) {
         this.stage = stage;
-        string roundCount = "Round: 0/" + this.stage.GetRoundList().Count;
-        this.roundCount.SetText(roundCount);
         this.Start();
     }
 
     public void Ready() {
         state = StageState.Ready;
+        stateInit = false;
     }
 
 
     internal virtual void Start() {
-        stateInforming.OnDisplayEnd += FinishStateInforming;
-
         ResetStageParameter();
     }
 

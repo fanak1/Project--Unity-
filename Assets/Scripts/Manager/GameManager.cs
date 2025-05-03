@@ -1,18 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mono.Cecil.Cil;
 using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Scripting;
 
 public class GameManager : PersistentSingleton<GameManager>
 {
-    [SerializeField] private GameObject stageManagerGameObject;
-    [SerializeField] private GameObject rewardManagerGameObject;
-
-    private StageManager stageManager;
-    private RewardManager rewardManager;
-    private UnitBase playerAlbilitiesHolder;
 
     
 
@@ -22,61 +18,48 @@ public class GameManager : PersistentSingleton<GameManager>
 
     public int concious;
 
+
     public string currentScene;
+
+    public GameStatesManager gameStates;
+
+    private GameStates currentState;
+
 
 
     private void Start() {
-        stageManager = stageManagerGameObject.GetComponent<StageManager>();
-        rewardManager = rewardManagerGameObject.GetComponent<RewardManager>();
+        //Will remove when have more state
+        BeginState(GameStates.GAMEPLAY);
 
-        InitiateManager();
-
-
-        //NewStage();
     }
 
     private void Update() {
-        
-    }
 
-    public void BeginRewardUI() {
-        rewardManager.InitReward();
-    }
-
-    public void GainReward(ScriptableAlbilities a) {
-        playerAlbilitiesHolder = PlayerUnit.instance;
-        playerAlbilitiesHolder.AddAbility(a);
-        stageManager.RewardStateEnd();
-    }
-
-
-    public void GainAbility(ScriptableAlbilities a) {
-        playerAlbilitiesHolder = PlayerUnit.instance;
-        playerAlbilitiesHolder.AddAbility(a);
-    }
-    private void InitiateManager() {
-
-        stageManager.OnRewardBegin += BeginRewardUI;
-
-        stageManager.OnStageFinish += StageClear;
+        gameStates.Update();
 
     }
 
-    private void GenerateRewardForNewStage() {
-        //Give Reward Manager a List of Ability
+    // -- Game State
+
+    public void BeginState(GameStatesManager gameState)
+    {
+        this.gameStates = gameState;
+        this.currentState = gameState.StateName;
+        gameState.Start();
+    }
+    
+
+    public void BeginState(GameStates gameState)
+    {
+        BeginState(Registry.States(gameState));
     }
 
-    public void LoadNewStage(ScriptableStage stage) {
-        //Give Stage Manager a Scriptable Stage
 
-        stageManager.ChangeStage(stage);
-    }
+    // Game State --
 
-    public void StageClear() { // Let OnStageClear of stage manager += StageClear to call when stage is cleared
-        //StartCoroutine(NewStage);
-        //var exit = Instantiate(exitDoor, transform.position, Quaternion.identity);
-        //exit.OnDoorEnter += NextStage;
-    }
+
+
+    // -- Multi role
 
     public void LoadScene() {
         
@@ -84,11 +67,7 @@ public class GameManager : PersistentSingleton<GameManager>
     }
 
 
-    public void LoadStage(ScriptableStage stage) {
-        LoadNewStage(stage);
-        stageManager.Ready();
-        LoadScene();
-    }
+    
 
     public void AddAbility(ScriptableAlbilities ability) {
         if (PlayerUnit.instance != null) {
@@ -102,8 +81,6 @@ public class GameManager : PersistentSingleton<GameManager>
             PlayerUnit.instance.DeleteAbility(ability);
         }
     }
-
-
 
  // -- Scene Manager code
     public void LoadScene(string sceneName, Action onSceneLoaded) {
@@ -169,6 +146,9 @@ public class GameManager : PersistentSingleton<GameManager>
 
     // Scene Manger code end --
 }
+
+
+    // Multi role --
 
 public struct SaveGameData {
     public LevelData level;

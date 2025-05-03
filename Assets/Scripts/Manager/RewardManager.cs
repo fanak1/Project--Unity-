@@ -12,12 +12,15 @@ public class RewardManager : PersistentSingleton<RewardManager>
 
     private List<ScriptableAlbilities> show;
 
+    public GamePlayStatesManager gameStatesManager;
+
 
     private void Start() {
+
     }
 
     public void Choose(int index) { //Choose in abilities in UI
-        GameManager.Instance.GainReward(show[index]);
+        gameStatesManager.GainReward(show[index]);
         rewardUI.gameObject.SetActive(false);
     }
 
