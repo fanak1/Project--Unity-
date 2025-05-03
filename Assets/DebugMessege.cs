@@ -25,6 +25,6 @@ public class DebugMessege : PersistentSingleton<DebugMessege>
         if(wait != null) {
             StopCoroutine(wait);
         }
-        wait = StartCoroutine("TurnOffMessege");
+        wait = CoroutineManager.Instance.StartNewCoroutine(TurnOffMessege());
     }
 }

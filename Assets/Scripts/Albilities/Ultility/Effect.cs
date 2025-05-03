@@ -57,7 +57,7 @@ public abstract class Effect : MonoBehaviour
         if(coroutine != null) {
             StopCoroutine(coroutine);
         }
-        coroutine = StartCoroutine(EffectCountdown());
+        coroutine = CoroutineManager.Instance.StartNewCoroutine(EffectCountdown());
     }
 
     public bool AttachTo(UnitBase target, UnitBase source) {

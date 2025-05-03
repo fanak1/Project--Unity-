@@ -14,14 +14,14 @@ public abstract class Particles<T> : MonoBehaviour where T : MonoBehaviour
     private bool isStart = true;
     void Start() {
         animator = GetComponent<Animator>();
-        StartCoroutine(Countdown());
+        CoroutineManager.Instance.StartNewCoroutine(Countdown());
         isStart = false;
     }
 
     private void OnEnable() {
         if (isStart) return;
         animator.enabled = true;
-        StartCoroutine(Countdown());
+        CoroutineManager.Instance.StartNewCoroutine(Countdown());
     }
 
     void PlayAnimation() {

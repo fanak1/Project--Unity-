@@ -37,7 +37,7 @@ public class Pierce : ProjectileBase
     virtual protected bool HitDelayOnSameTarget(GameObject target) {
         if (hitQueue.Contains(target)) return true;
         hitQueue.Enqueue(target);
-        StartCoroutine(PopQueue());
+        CoroutineManager.Instance.StartNewCoroutine(PopQueue());
         return false;
     }
 

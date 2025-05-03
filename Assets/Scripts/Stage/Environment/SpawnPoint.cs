@@ -65,7 +65,7 @@ public class SpawnPoint : MonoBehaviour {
 
     public void Spawn() {
         if(listEnemy != null)
-            StartCoroutine("BeginSpawn");
+            CoroutineManager.Instance.StartNewCoroutine(BeginSpawn());
     }
 
     public IEnumerator BeginSpawn() {

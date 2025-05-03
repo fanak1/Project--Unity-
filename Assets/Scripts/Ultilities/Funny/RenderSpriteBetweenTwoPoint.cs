@@ -47,7 +47,7 @@ public abstract class RenderSpriteBetweenTwoPoint : MonoBehaviour {
         end = target.gameObject;
         
         animator.SetTrigger("Play");
-        StartCoroutine(PlayAnimationAfterStart(target));
+        CoroutineManager.Instance.StartNewCoroutine(PlayAnimationAfterStart(target));
 
     }
 

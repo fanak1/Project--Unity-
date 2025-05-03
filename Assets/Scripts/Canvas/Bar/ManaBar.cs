@@ -26,7 +26,7 @@ public class ManaBar : GaugeBar {
         if(regenCoroutine != null) {
             StopCoroutine(regenCoroutine);
         }
-        regenCoroutine = StartCoroutine(StartRegenCooldown());
+        regenCoroutine = CoroutineManager.Instance.StartNewCoroutine(StartRegenCooldown());
 
     }
 

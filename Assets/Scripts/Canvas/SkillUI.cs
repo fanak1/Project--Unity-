@@ -44,6 +44,6 @@ public class SkillUI : MonoBehaviour
     }
 
     public void UseSkill() {
-        StartCoroutine("StartCooldown");
+        CoroutineManager.Instance.StartNewCoroutine(StartCooldown());
     }
 }

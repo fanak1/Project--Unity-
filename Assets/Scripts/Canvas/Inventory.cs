@@ -148,4 +148,8 @@ public class Inventory : StaticInstance<Inventory>
         }
     }
 
+    public void GoBackButton() {
+        GameManager.Instance.Menu();
+    }
+
 }
