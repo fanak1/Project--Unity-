@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class AbilityPackage : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class AbilityPackage : MonoBehaviour
 
     private bool playerHave = false;
 
+    private bool forTraining = true;
+
+    public Action<ScriptableAlbilities> OnRewardChoose;
+
     private void Start() {
         if(ability != null) {
             SetUI(ability);
@@ -22,8 +27,18 @@ public class AbilityPackage : MonoBehaviour
 
     public void Choose() {
         if (ability != null && !playerHave) {
-            TrainingRoomManager.Instance.AddAbility(ability);
+            if(forTraining) TrainingRoomManager.Instance.AddAbility(ability);
+            else
+            {
+                OnRewardChoose?.Invoke(this.ability);
+                FinishChoose();
+            }
         }
+    }
+
+    private void FinishChoose()
+    {
+        OnRewardChoose = null;
     }
 
     public void Delete() {
@@ -32,10 +47,11 @@ public class AbilityPackage : MonoBehaviour
         }
     }
 
-    public void Init(ScriptableAlbilities a, bool playerHave = false) {
+    public void Init(ScriptableAlbilities a, bool playerHave = false, bool forTraining = false) {
         ability = a;
         SetUI(a);
         this.playerHave = playerHave;
+        this.forTraining = forTraining;
     }
 
     public void SetUI(ScriptableAlbilities a) {

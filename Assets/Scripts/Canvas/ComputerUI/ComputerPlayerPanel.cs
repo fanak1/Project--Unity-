@@ -99,12 +99,12 @@ public class ComputerPlayerPanel : MonoBehaviour
         switch (ability.characterCode) {
             case CharacterCode.Thunder:
                 a = playerHave ? Instantiate(thunderAbilityPrefab) : Instantiate(thunderAbilityPrefab1);
-                a.Init(ability, playerHave);
+                a.Init(ability, playerHave, true);
                 a.gameObject.transform.SetParent(parent);
                 break;
             default:
                 a = playerHave ? Instantiate(abilityPrefab) : Instantiate(abilityPrefab1);
-                a.Init(ability, playerHave);
+                a.Init(ability, playerHave, true);
                 a.gameObject.transform.SetParent(parent);
                 break;
         }

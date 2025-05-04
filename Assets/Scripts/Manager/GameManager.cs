@@ -28,14 +28,15 @@ public class GameManager : PersistentSingleton<GameManager>
 
 
     private void Start() {
-        //Will remove when have more state
-        BeginState(GameStates.GAMEPLAY);
+        
 
     }
 
     private void Update() {
 
-        gameStates.Update();
+        // Temporary check gameStates null, will remove when we init gamestate at the first frame of application
+        if(gameStates != null) 
+            gameStates.Update();
 
     }
 
@@ -45,7 +46,7 @@ public class GameManager : PersistentSingleton<GameManager>
     {
         this.gameStates = gameState;
         this.currentState = gameState.StateName;
-        gameState.Start();
+        this.gameStates.Start();
     }
     
 
@@ -105,6 +106,7 @@ public class GameManager : PersistentSingleton<GameManager>
     public void StartGame() {
         LoadScene("GamePlayScene", () => {
             LevelManager.Instance.LoadStageInScene(new LevelData());
+            BeginState(GameStates.GAMEPLAY);
         });
     }
 
@@ -116,6 +118,7 @@ public class GameManager : PersistentSingleton<GameManager>
 
         LoadScene("GamePlayScene", () => {
             LevelManager.Instance.LoadStageInScene(data.level);
+            BeginState(GameStates.GAMEPLAY);
         });
     }
 

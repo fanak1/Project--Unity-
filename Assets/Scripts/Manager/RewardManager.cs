@@ -16,18 +16,25 @@ public class RewardManager : PersistentSingleton<RewardManager>
 
 
     private void Start() {
-
+        Init();
     }
 
-    public void Choose(int index) { //Choose in abilities in UI
-        gameStatesManager.GainReward(show[index]);
+    public void Init()
+    {
+        rewardUI = Reward.Instance;
+    }
+
+    public void Choose(ScriptableAlbilities ability) { //Choose in abilities in UI
+        gameStatesManager.GainReward(ability);
         rewardUI.gameObject.SetActive(false);
     }
 
     public void InitReward() { //Init reward
         show = GenerateAlbilities(abilities, 3);
         rewardUI.gameObject.SetActive(true);
-        rewardUI.DisplayReward(show);
+        rewardUI.DisplayReward(show, (ScriptableAlbilities ability) => {
+            Choose(ability);
+        });
     }
 
     private List<ScriptableAlbilities> GenerateAlbilities(List<ScriptableAlbilities> myList, int amount) { //Generate random amounts of albilities from a List<ability> 
