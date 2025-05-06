@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 
 public class LevelManager : StaticInstance<LevelManager>
@@ -10,15 +11,38 @@ public class LevelManager : StaticInstance<LevelManager>
 
     public StageScript currentStage;
 
+    public Level level;
+
 
     public LevelData data;
+
+    public void LoadLevelToScene(string levelName) { 
+        var levelCheck = ResourceSystem.Instance.GetLevel(levelName);
+        if (levelCheck != null)
+        {
+            level = Instantiate(levelCheck);
+            level.gameObject.name = levelCheck.name;
+        } else 
+            return;
+        
+        var env = GameObject.Find("Environment/Grid");
+        if (env != null)
+        {
+            level.transform.SetParent(env.transform);
+        }
+        
+    }
     
     public void LoadStageInScene(LevelData data) {
 
         this.data = data;
 
+        LoadLevelToScene(data.levelName);
+
         var en = GameObject.Find("Environment/Grid");
-        var stages = en.GetComponentsInChildren<StageScript>();
+        var level = en.GetComponentInChildren<Level>();
+        var levelObj = level.gameObject;
+        var stages = levelObj.GetComponentsInChildren<StageScript>();
         
         stageLists.Clear();
         stageFinished.Clear();
@@ -57,6 +81,7 @@ public class LevelManager : StaticInstance<LevelManager>
             data.stageFinished[stage.Key.gameObject.name] = stage.Value;
         }
         data.currentStage = currentStage.gameObject.name;
+        data.levelName = level.gameObject.name;
 
         return data;
     }
@@ -87,5 +112,7 @@ public struct LevelData {
     public Dictionary<string, bool> stageFinished;
 
     public string currentStage;
+
+    public string levelName;
 }
 

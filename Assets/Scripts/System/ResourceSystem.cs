@@ -12,9 +12,14 @@ public class ResourceSystem : StaticInstance<ResourceSystem>
 
     public ScriptableEnemyUnit GetEnemyWithCodeName(EnemyCodeName enemyCodeName) => _EnemyUnitDict[enemyCodeName]; //Get 1 ScriptableEnemyUnit with code name
 
-    //---------------------------------------------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------------------------------------Enemy
 
 
+
+    //Level----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    //--------------------------------------------------------------------------------------------------------------------------------------------Level
     protected override void Awake() {
         base.Awake();
         AssembleResources();
@@ -29,6 +34,7 @@ public class ResourceSystem : StaticInstance<ResourceSystem>
 
     public List<ScriptableAlbilities> GetAllAbilities() => allAbilities;
 
+    public Level GetLevel(string levelName) => Resources.Load<Level>($"Environment/Level/{levelName}");
 
     
 }
