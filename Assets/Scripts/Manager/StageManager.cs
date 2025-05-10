@@ -50,7 +50,11 @@ public class StageManager : PersistentSingleton<StageManager> {
         //Time.timeScale = 0;
         stateInit = false;
         stateIndex++;
-        this.state = stateList[stateIndex];
+        if(stateIndex < stateList.Count) this.state = stateList[stateIndex];
+        else
+        {
+            FinishState();
+        }
 
     }
 

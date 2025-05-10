@@ -27,9 +27,8 @@ public class StageTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision) {
         
         if(collision != null && collision.gameObject.CompareTag("Player") && !enter) {
-            
-            CameraController.Instance.SetCameraSize(sizeScale);
-            CameraController.Instance.StartMovingTo(this.transform.position);
+
+            CameraController.Instance.ChangeCameraToStage(this);
             if (!clear && !init) {
                 stageScript.StageStart();
                 init = true;

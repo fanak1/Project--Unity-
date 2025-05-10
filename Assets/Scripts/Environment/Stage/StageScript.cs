@@ -6,7 +6,10 @@ using UnityEngine;
 public abstract class StageScript : MonoBehaviour
 {
 
-    [SerializeField] private GameObject[] doors;
+    [SerializeField] private List<GameObject> doors;
+
+    [SerializeField] private List<StageScript> scripts;
+
 
     [SerializeField] private StageTrigger trigger;
 
@@ -15,9 +18,23 @@ public abstract class StageScript : MonoBehaviour
     public ScriptableStage stageContent;
 
     internal void Start() {
-        for(int i=0; i<doors.Length; i++) {
-            doors[i].SetActive(false);
+        ResetDoors();
+    }
+
+    private void ResetDoors() {
+        var door = Utils.FindChildInTransform(this.transform, "Door");
+
+        doors.Clear();
+        foreach (Transform d in door)
+        {
+            doors.Add(d.gameObject);
+            d.gameObject.SetActive(true);
         }
+    }
+
+    public void FindChildName(string name)
+    {
+
     }
 
     public void StageStart() {
@@ -39,14 +56,16 @@ public abstract class StageScript : MonoBehaviour
     }
 
     private void CloseDoor() {
-        for (int i = 0; i < doors.Length; i++) {
-            doors[i].SetActive(true);
+        foreach (var d in doors)
+        {
+            d.gameObject.SetActive(true);
         }
     }
 
     private void OpenDoor() {
-        for (int i = 0; i < doors.Length; i++) {
-            doors[i].SetActive(false);
+        foreach (var d in doors)
+        {
+            d.gameObject.SetActive(false);
         }
     }
 
