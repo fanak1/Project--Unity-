@@ -22,7 +22,7 @@ public class Reward : StaticInstance<Reward>
     public void DisplayReward(List<ScriptableAlbilities> list, Action<ScriptableAlbilities> onRewardChoose) {
         foreach(Transform child in gameObject.transform)
         {
-            Destroy(child);
+            Destroy(child.gameObject);
         }
         foreach(var ability in list)
         {

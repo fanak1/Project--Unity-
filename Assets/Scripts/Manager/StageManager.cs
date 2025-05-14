@@ -21,7 +21,7 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     [SerializeField] private List<SpawnPoint> spawnList;
 
-    public static int numberEnemyLeft; //number enemy we have to clear each round
+    public int numberEnemyLeft; //number enemy we have to clear each round
 
     private List<StageState> stateList;
 
@@ -30,6 +30,8 @@ public class StageManager : PersistentSingleton<StageManager> {
     private bool stateInit = false; //For prevent init loop
 
     private bool loop = true;
+
+    private bool finish = false;
 
     [SerializeField] private StageScript stageContent;
 
@@ -174,10 +176,15 @@ public class StageManager : PersistentSingleton<StageManager> {
         if (!stateInit) {
             
             stateInit = true;
-            stageContent.StageFinish();
+            stageContent.StageFinish(() => { finish = true; });
             OnStageFinish?.Invoke();
+
         }
         
+        if(!finish)
+        {
+
+        }
     }
 
     private void ResetStageParameter() {
@@ -198,7 +205,8 @@ public class StageManager : PersistentSingleton<StageManager> {
     }
 
     public void Ready() {
-        state = StageState.Ready;
+        stateIndex = 0;
+        state = stateList[stateIndex];
         stateInit = false;
     }
 
@@ -210,6 +218,7 @@ public class StageManager : PersistentSingleton<StageManager> {
 
 
     public void StartStage(StageScript s) {
+        finish = false;
         stageContent = s;
         stage = stageContent.stageContent;
         spawnList = stageContent.GetSpawnPoints();

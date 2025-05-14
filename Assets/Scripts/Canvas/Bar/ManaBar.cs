@@ -6,6 +6,7 @@ public class ManaBar : GaugeBar {
     public bool canRegen = true;
     public float regenCooldown = 2f;
     private Coroutine regenCoroutine;
+    private IEnumerator routine;
 
     protected override void Start() {
         base.Start();
@@ -24,9 +25,10 @@ public class ManaBar : GaugeBar {
 
     private void ResetRegenCooldown() {
         if(regenCoroutine != null) {
-            StopCoroutine(regenCoroutine);
+            CoroutineManager.Instance.StopTrackedCoroutine(routine, ref regenCoroutine);
         }
-        regenCoroutine = CoroutineManager.Instance.StartNewCoroutine(StartRegenCooldown());
+        routine = StartRegenCooldown();
+        regenCoroutine = CoroutineManager.Instance.StartNewCoroutine(routine);
 
     }
 

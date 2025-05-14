@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa576637e1bb1384c94780365127c0d3, type: 3}
   m_Name: Empty
   m_EditorClassIdentifier: 
-  stateList: ffffffff
+  stateList: ffffffff02000000
   roundList: []

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using UnityEngine;
 public abstract class StageScript : MonoBehaviour
 {
 
-    [SerializeField] private List<GameObject> doors;
+    [SerializeField] private List<StageDoor> doors;
 
     [SerializeField] private List<StageScript> scripts;
 
@@ -17,19 +18,24 @@ public abstract class StageScript : MonoBehaviour
 
     public ScriptableStage stageContent;
 
+    private bool isStarted = false;
+
     internal void Start() {
+        
+    }
+
+    internal void Init()
+    {
         ResetDoors();
     }
 
     private void ResetDoors() {
-        var door = Utils.FindChildInTransform(this.transform, "Door");
-
-        doors.Clear();
-        foreach (Transform d in door)
+        
+        foreach(var d in doors)
         {
-            doors.Add(d.gameObject);
-            d.gameObject.SetActive(true);
+            d.Init();
         }
+        CloseDoor(() => { });
     }
 
     public void FindChildName(string name)
@@ -38,10 +44,18 @@ public abstract class StageScript : MonoBehaviour
     }
 
     public void StageStart() {
-        CloseDoor();
+        CloseDoor(() =>
+        {
+            if(!isStarted)
+            {
+                StageManager.Instance.StartStage(this);
+                isStarted = true;
+            }
+            
+        });
         
         //trigger.gameObject.SetActive(false);
-        StageManager.Instance.StartStage(this);
+        
     }
     
     public void StageBegin() {
@@ -49,23 +63,25 @@ public abstract class StageScript : MonoBehaviour
         StageManager.Instance.Ready();
     }
 
-    public void StageFinish() {
-        OpenDoor();
+    public void StageFinish(Action onDoorOpen) {
+        OpenDoor(onDoorOpen);
         trigger.Clear();
         //trigger.gameObject.SetActive(true);
     }
 
-    private void CloseDoor() {
+    private void CloseDoor(Action o) {
         foreach (var d in doors)
         {
             d.gameObject.SetActive(true);
+            d.CloseDoor( o);
         }
     }
 
-    private void OpenDoor() {
+    private void OpenDoor(Action onDoorOpen) {
         foreach (var d in doors)
         {
-            d.gameObject.SetActive(false);
+            if (!d.gameObject.activeSelf) d.gameObject.SetActive(true);
+            d.OpenDoor(() => { onDoorOpen(); d.setActiveInNextFrame = false; });
         }
     }
 

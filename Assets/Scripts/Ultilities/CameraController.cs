@@ -20,6 +20,7 @@ public class CameraController : StaticInstance<CameraController> {
 
 
     private Coroutine coroutine;
+    private IEnumerator routine;
 
     // Start is called before the first frame update
     void Start() {
@@ -99,8 +100,8 @@ public class CameraController : StaticInstance<CameraController> {
 
         SetCameraSize(orthoSize);
 
-        float clampOffsetX = Mathf.Max(((size.x - orthoSize * cam.aspect * 2f) / 2f) + 0.5f, 0f);
-        float clampOffsetY = Mathf.Max(((size.y - orthoSize * 2f) / 2f) + 0.5f, 0f);
+        float clampOffsetX = Mathf.Max(((size.x - orthoSize * cam.aspect * 2f) / 2f) + 1.5f, 1.5f);
+        float clampOffsetY = Mathf.Max(((size.y - orthoSize * 2f) / 2f) + 1.5f, 1.5f);
 
         clampOffset = new Vector2(clampOffsetX, clampOffsetY);
         
@@ -109,8 +110,9 @@ public class CameraController : StaticInstance<CameraController> {
     }
 
     private void StartSetSize(float size) {
-        if(coroutine != null) StopCoroutine(coroutine);
-        coroutine = CoroutineManager.Instance.StartNewCoroutine(SetSize(size));
+        if(coroutine != null) CoroutineManager.Instance.StopTrackedCoroutine(routine, ref coroutine);
+        routine = SetSize(size);
+        coroutine = CoroutineManager.Instance.StartNewCoroutine(routine);
     }
 
     private IEnumerator SetSize(float size) {

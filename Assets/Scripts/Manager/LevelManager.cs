@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.Assertions;
 
 
 public class LevelManager : StaticInstance<LevelManager>
@@ -30,6 +31,13 @@ public class LevelManager : StaticInstance<LevelManager>
         {
             level.transform.SetParent(env.transform);
         }
+        var stages = level.gameObject.transform.GetComponentsInChildren<StageScript>();
+        foreach (var s in stages)
+        {
+            s.Init();
+        }
+        
+
         
     }
     
@@ -59,7 +67,7 @@ public class LevelManager : StaticInstance<LevelManager>
                     stageFinished[stage] = false;
                 } else {
                     stageFinished[stage] = true;
-                    stage.StageFinish();
+                    stage.StageFinish(() => { });
                 }
             }
         }
@@ -96,7 +104,14 @@ public class LevelManager : StaticInstance<LevelManager>
 
     public StageScript LoadStage(string name) {
         StageScript stage = stageLists[name];
-        PlayerUnit.instance.gameObject.transform.position = (Vector2)stage.transform.position;
+        var playerSpawn = GameObject.Find("Environment/PlayerSpawn");
+        playerSpawn.transform.position = stage.gameObject.transform.position;
+        var spawn = playerSpawn.GetComponent<PlayerSpawn>();
+        if(spawn != null) spawn.Spawn();
+        else
+        {
+            
+        }
         return stage;
     }
 

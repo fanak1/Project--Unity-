@@ -106,7 +106,7 @@ public class GameManager : PersistentSingleton<GameManager>
     public void StartGame() {
         LoadScene("GamePlayScene", () => {
             LevelData data = new LevelData();
-            data.levelName = "Training_Level";
+            data.levelName = "Level_Sand";
             LevelManager.Instance.LoadStageInScene(data);
             BeginState(GameStates.GAMEPLAY);
         });

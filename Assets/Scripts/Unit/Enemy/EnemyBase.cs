@@ -21,7 +21,7 @@ public class EnemyBase : UnitBase
     }
 
     internal override void Destroy() {
-        StageManager.numberEnemyLeft--;
+        StageManager.Instance.numberEnemyLeft--;
         DieParticles.Create(this.transform.position);
         base.Destroy();
     }

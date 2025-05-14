@@ -15,6 +15,8 @@ public abstract class Effect : MonoBehaviour
 
     private Coroutine coroutine;
 
+    private IEnumerator routine;
+
     protected abstract void ActionOnUpdate();
 
     protected abstract void ActionOnStart();
@@ -55,9 +57,10 @@ public abstract class Effect : MonoBehaviour
     protected virtual void ResetEffect() {
         OnResetEffect();
         if(coroutine != null) {
-            StopCoroutine(coroutine);
+            CoroutineManager.Instance.StopTrackedCoroutine(routine, ref coroutine);
         }
-        coroutine = CoroutineManager.Instance.StartNewCoroutine(EffectCountdown());
+        routine = EffectCountdown();
+        coroutine = CoroutineManager.Instance.StartNewCoroutine(routine);
     }
 
     public bool AttachTo(UnitBase target, UnitBase source) {

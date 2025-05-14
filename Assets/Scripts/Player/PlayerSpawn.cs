@@ -7,7 +7,9 @@ public class PlayerSpawn : MonoBehaviour
 
     [SerializeField] private ScriptablePlayerUnit scriptablePlayer;
     // Start is called before the first frame update
-    void Start()
+    
+
+    public void Spawn()
     {
         var player = scriptablePlayer.Spawn(transform.position);
         player.gameObject.transform.SetParent(this.transform);

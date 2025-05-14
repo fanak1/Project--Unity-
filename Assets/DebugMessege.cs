@@ -7,6 +7,7 @@ public class DebugMessege : PersistentSingleton<DebugMessege>
     public static TMPro.TextMeshProUGUI text;
 
     private static Coroutine wait;
+    private IEnumerator routine;
 
     private void Start() {
         text = GetComponent<TMPro.TextMeshProUGUI>();
@@ -23,8 +24,9 @@ public class DebugMessege : PersistentSingleton<DebugMessege>
 
     private void DisplayMessege() {
         if(wait != null) {
-            StopCoroutine(wait);
+            CoroutineManager.Instance.StopTrackedCoroutine(routine, ref wait);
         }
-        wait = CoroutineManager.Instance.StartNewCoroutine(TurnOffMessege());
+        routine = TurnOffMessege();
+        wait = CoroutineManager.Instance.StartNewCoroutine(routine);
     }
 }
