@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using UnityEngine.Assertions;
+using System.Runtime.CompilerServices;
 
 
 public class LevelManager : StaticInstance<LevelManager>
@@ -17,15 +18,15 @@ public class LevelManager : StaticInstance<LevelManager>
 
     public LevelData data;
 
-    public void LoadLevelToScene(string levelName) { 
+    public void LoadLevelToScene(string levelName) {
         var levelCheck = ResourceSystem.Instance.GetLevel(levelName);
         if (levelCheck != null)
         {
             level = Instantiate(levelCheck);
             level.gameObject.name = levelCheck.name;
-        } else 
+        } else
             return;
-        
+
         var env = GameObject.Find("Environment/Grid");
         if (env != null)
         {
@@ -36,11 +37,11 @@ public class LevelManager : StaticInstance<LevelManager>
         {
             s.Init();
         }
-        
 
-        
+
+
     }
-    
+
     public void LoadStageInScene(LevelData data) {
 
         this.data = data;
@@ -51,11 +52,13 @@ public class LevelManager : StaticInstance<LevelManager>
         var level = en.GetComponentInChildren<Level>();
         var levelObj = level.gameObject;
         var stages = levelObj.GetComponentsInChildren<StageScript>();
-        
+
         stageLists.Clear();
         stageFinished.Clear();
 
-        if(data.stageFinished == null) {
+        GenerateStageContent(stages);
+
+        if (data.stageFinished == null) {
             foreach (var stage in stages) {
                 stageLists.Add(stage.gameObject.name, stage);
                 stageFinished[stage] = false;
@@ -71,9 +74,9 @@ public class LevelManager : StaticInstance<LevelManager>
                 }
             }
         }
-        
 
-        if(data.currentStage != null)
+
+        if (data.currentStage != null)
             currentStage = stageLists[data.currentStage];
         else {
             currentStage = stages[0];
@@ -107,16 +110,48 @@ public class LevelManager : StaticInstance<LevelManager>
         var playerSpawn = GameObject.Find("Environment/PlayerSpawn");
         playerSpawn.transform.position = stage.gameObject.transform.position;
         var spawn = playerSpawn.GetComponent<PlayerSpawn>();
-        if(spawn != null) spawn.Spawn();
+        if (spawn != null) spawn.Spawn();
         else
         {
-            
+
         }
         return stage;
     }
 
     public void Start() {
 
+    }
+
+
+    private StageScript[] GenerateStageContent(StageScript[] stages) 
+    {
+        foreach (StageScript stage in stages)
+        {
+            if (stage.stageTypes.Length > 0)
+            {
+                GenerateRandomContentForStage(stage, stage.stageTypes);
+            }
+            else
+            {
+                GenerateRandomContentForStage(stage, new StageType[1] {StageType.Interacting });
+            }
+        }
+        return stages;
+    }
+
+    private StageScript GenerateRandomContentForStage(StageScript stage, StageType[] stageType)
+    {
+        int radSize = stageType.Length;
+        int rad = UnityEngine.Random.Range(0, radSize);
+        List<ScriptableStage> stages = ResourceSystem.Instance.GetStages(stageType[rad]);
+        radSize = stages.Count;
+        if (radSize <= 0)
+        {
+            Debug.LogError($"Stupid when get StageType: {stageType[rad]} of Stages: {stages}");
+        }
+        rad = UnityEngine.Random.Range(0, radSize);
+        stage.stageContent = stages[rad];
+        return stage;
     }
 
 

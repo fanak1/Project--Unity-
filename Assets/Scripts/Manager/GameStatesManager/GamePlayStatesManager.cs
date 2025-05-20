@@ -9,6 +9,11 @@ public class GamePlayStatesManager : GameStatesManager
     private RewardManager rewardManager;
     private UnitBase playerAlbilitiesHolder;
 
+    public GamePlayState state;
+    private GamePlayState beforePause;
+
+
+
 
     public override void Start()
     {
@@ -21,6 +26,8 @@ public class GamePlayStatesManager : GameStatesManager
         }
 
         InitiateManager();
+
+        state = GamePlayState.Play;
     }
 
     public override void Update()
@@ -40,17 +47,48 @@ public class GamePlayStatesManager : GameStatesManager
         //}
     }
 
+    public void Pause()
+    {
+        if (state != GamePlayState.Pause)
+        {
+            beforePause = state;
+            state = GamePlayState.Pause;
+            Time.timeScale = 0;
+            gameManager.pause = true;
+        }
+    }
+
+    public void UnPause()
+    {
+        if (state == GamePlayState.Pause)
+        {
+            state = beforePause;
+            Time.timeScale = 1;
+            gameManager.pause = false;
+        }
+    }
+
 
     public void BeginRewardUI()
     {
-        rewardManager.InitReward();
+        if(state == GamePlayState.Play)
+        {
+            state = GamePlayState.Reward;
+            rewardManager.InitReward();
+        }
+            
     }
 
     public void GainReward(ScriptableAlbilities a)
     {
-        playerAlbilitiesHolder = PlayerUnit.instance;
-        playerAlbilitiesHolder.AddAbility(a);
-        stageManager.RewardStateEnd();
+        if (state != GamePlayState.Pause)
+        {
+            playerAlbilitiesHolder = PlayerUnit.instance;
+            playerAlbilitiesHolder.AddAbility(a);
+            stageManager.RewardStateEnd();
+            state = GamePlayState.Play;
+        }
+        
     }
 
 
@@ -59,6 +97,7 @@ public class GamePlayStatesManager : GameStatesManager
         playerAlbilitiesHolder = PlayerUnit.instance;
         playerAlbilitiesHolder.AddAbility(a);
     }
+
     private void InitiateManager()
     {
 
@@ -94,4 +133,9 @@ public class GamePlayStatesManager : GameStatesManager
         LoadNewStage(stage);
         stageManager.Ready();
     }
+}
+
+public enum GamePlayState
+{
+    Play, Pause, Reward
 }

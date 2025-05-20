@@ -23,6 +23,8 @@ public abstract class MobScript : MonoBehaviour
 
     [SerializeField] private float moveDuration = 2f;
 
+    private bool pause = false;
+
     internal int state = 0; //0 - stand still; 1 - moving
 
     
@@ -50,23 +52,36 @@ public abstract class MobScript : MonoBehaviour
 
     }
 
-    protected virtual void Update() {
+    private void Update() {
+        if (GameManager.Instance.pause)
+            return;
+        UpdateFunction();
+    }
+
+    protected virtual void UpdateFunction()
+    {
         if (time < 50f) time += Time.deltaTime;
 
-        if(time > moveInterval) {
-            if(player != null)
-                if(Vector3.Distance(player.transform.position, transform.position) < 100f) 
+        if (time > moveInterval)
+        {
+            if (player != null)
+                if (Vector3.Distance(player.transform.position, transform.position) < 100f)
                     RandomMove();
         }
-        if(time > moveInterval + moveDuration) {
+        if (time > moveInterval + moveDuration)
+        {
             float shoot = Random.Range(0, shootPercentage);
             if (shoot < shootPercentage) RandomShoot();
             state = 0;
             time = 0f;
-            if(player != null) {
-                if (Vector3.Distance(player.transform.position, transform.position) > 50f) {
+            if (player != null)
+            {
+                if (Vector3.Distance(player.transform.position, transform.position) > 50f)
+                {
                     tooFar = true;
-                } else {
+                }
+                else
+                {
                     tooFar = false;
                 }
             }

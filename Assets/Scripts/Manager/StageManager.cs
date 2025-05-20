@@ -29,6 +29,8 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     private bool stateInit = false; //For prevent init loop
 
+    private bool interactInit = false;
+
     private bool loop = true;
 
     private bool finish = false;
@@ -96,6 +98,23 @@ public class StageManager : PersistentSingleton<StageManager> {
         for(int i=0; i<spawn.Count; i++) {
             spawn[i].Spawn();
         }
+    }
+
+    private void SpawnInteract(List<SpawnPoint> spawn)
+    {
+        if (stage.interactableObject == null) 
+            return;
+
+        int rand = UnityEngine.Random.Range(0, spawn.Count);
+        var obj = Instantiate(stage.interactableObject, spawn[rand].transform.position, Quaternion.identity);
+        obj.OnInteractFinish += () => {
+            if (stateList[stateIndex] == StageState.Interact)
+            {
+                FinishAndSwitchState();
+                interactInit = false;
+            }
+                
+        };
     }
 
 
@@ -187,6 +206,16 @@ public class StageManager : PersistentSingleton<StageManager> {
         }
     }
 
+    private void InteractState()
+    {
+        if (!interactInit)
+        {
+            SpawnInteract(spawnList);
+            interactInit = true;
+        }
+        
+    }
+
     private void ResetStageParameter() {
         roundIndex = 0;
         stateIndex = -1;
@@ -240,6 +269,9 @@ public class StageManager : PersistentSingleton<StageManager> {
                 break;
             case StageState.Finish:
                 FinishState();
+                break;
+            case StageState.Interact:
+                InteractState();
                 break;
             default:
                 break;

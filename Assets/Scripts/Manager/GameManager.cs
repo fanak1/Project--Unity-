@@ -25,11 +25,15 @@ public class GameManager : PersistentSingleton<GameManager>
 
     private GameStates currentState;
 
+    public bool pause = false;
+
+    public int money;
+
+    public Action MoneyChangeObserver;
 
 
     private void Start() {
         
-
     }
 
     private void Update() {
@@ -38,6 +42,27 @@ public class GameManager : PersistentSingleton<GameManager>
         if(gameStates != null) 
             gameStates.Update();
 
+    }
+
+    public bool TryToPause()
+    {
+
+        if(gameStates.GetType() == typeof(GamePlayStatesManager))
+        {
+            ((GamePlayStatesManager) gameStates).Pause();
+            return true;
+        }
+        return false;
+    }
+
+    public bool TryToResume()
+    {
+        if (gameStates.GetType() == typeof(GamePlayStatesManager))
+        {
+            ((GamePlayStatesManager)gameStates).UnPause();
+            return true;
+        }
+        return false;
     }
 
     // -- Game State

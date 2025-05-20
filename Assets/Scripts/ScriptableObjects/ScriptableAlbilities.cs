@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 
 [CreateAssetMenu(fileName = "NewAbility", menuName = "Abilities")]
@@ -29,6 +30,10 @@ public class ScriptableAlbilities : ScriptableObject {
 
     public string skillType = "None";
     public Color32 skillTypeColor = Color.black;
+
+    public Sprite icon;
+
+    public int cost = 0;
 
     public CharacterCode characterCode;
 

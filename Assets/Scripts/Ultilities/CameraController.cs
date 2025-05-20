@@ -30,7 +30,7 @@ public class CameraController : StaticInstance<CameraController> {
 
     // Update is called once per frame
     void Update() {
-        StartMovingTo(PlayerUnit.instance.gameObject.transform.position);
+        if(PlayerUnit.instance != null) StartMovingTo(PlayerUnit.instance.gameObject.transform.position);
         switch (cameraState) {
             case CameraState.Stop:
                 

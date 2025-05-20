@@ -74,6 +74,8 @@ public abstract class UnitBase : MonoBehaviour {
 
     public event Action<ScriptableAlbilities> OnAbilityAdded;
 
+
+
     //public event Action OnAbilityKeyPressed;
 
     //public event Action<UnitBase, float> OnHit; //Use when being hit -----Mainternance
@@ -112,8 +114,12 @@ public abstract class UnitBase : MonoBehaviour {
         OnFinishInit?.Invoke(this);
     }
 
-    internal virtual void Update() {
-        if (nowHP <= 0) {
+
+    internal virtual void UpdateFunction()
+    {
+        
+        if (nowHP <= 0)
+        {
             //Dead event
             OnDead?.Invoke();
             Destroy();
@@ -122,6 +128,12 @@ public abstract class UnitBase : MonoBehaviour {
         //OnAbilityKeyPressed?.Invoke();
 
         RegenMP(regenMP);
+    }
+
+    private void Update() {
+        if (GameManager.Instance.pause)
+            return;
+        UpdateFunction();
     }
 
 

@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update() {
+        if (GameManager.Instance.pause)
+            return;
+
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         MoveController();

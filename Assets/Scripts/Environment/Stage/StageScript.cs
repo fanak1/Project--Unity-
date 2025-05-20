@@ -9,14 +9,15 @@ public abstract class StageScript : MonoBehaviour
 
     [SerializeField] private List<StageDoor> doors;
 
-    [SerializeField] private List<StageScript> scripts;
-
 
     [SerializeField] private StageTrigger trigger;
 
     [SerializeField] private List<SpawnPoint> spawnPoint;
 
     public ScriptableStage stageContent;
+
+    [SerializeField]
+    public StageType[] stageTypes;
 
     private bool isStarted = false;
 
@@ -65,6 +66,14 @@ public abstract class StageScript : MonoBehaviour
 
     public void StageFinish(Action onDoorOpen) {
         OpenDoor(onDoorOpen);
+        if (stageContent.stageType == StageType.Boss)
+        {
+            ExitDoor exit = ResourceSystem.Instance.GetComponent<ExitDoor>("ExitDoor");
+            if(exit != null)
+            {
+                Instantiate(exit, gameObject.transform.position, Quaternion.identity);
+            }
+        }
         trigger.Clear();
         //trigger.gameObject.SetActive(true);
     }

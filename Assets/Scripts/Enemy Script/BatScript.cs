@@ -21,8 +21,8 @@ public class BatScript : MobScript
 
     
 
-    protected override void Update() {
-        base.Update();
+    protected override void UpdateFunction() {
+        base.UpdateFunction();
         transform.rotation = initialRotation;
     }
 
