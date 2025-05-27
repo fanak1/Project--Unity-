@@ -16,7 +16,7 @@ public class Projectiles : MonoBehaviour
         prefabs.SetProjectileAttribute(projectileAttribute);
         prefabs.SetSourceAndDestination(source, position, destination);
         prefabs.bulletIndex = bulletIndex;
-        var p = Instantiate(prefabs, source.transform.position, Quaternion.identity);
+        var p = Instantiate(prefabs, position, Quaternion.identity);
         p.OnDisable += ReturnToPool;
         bulletPool.Add(p);
         return p;

@@ -10,10 +10,12 @@ public class SkillUI : MonoBehaviour
     private float cooldown = 0f;
     public bool usable = true;
 
+    public RectTransform rectTransform;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        this.rectTransform = GetComponent<RectTransform>();
     }
 
     // Update is called once per frame

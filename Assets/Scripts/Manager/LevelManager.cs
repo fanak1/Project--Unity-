@@ -13,6 +13,8 @@ public class LevelManager : StaticInstance<LevelManager>
 
     public StageScript currentStage;
 
+    public bool isLastLevel;
+
     public Level level;
 
 
@@ -56,7 +58,7 @@ public class LevelManager : StaticInstance<LevelManager>
         stageLists.Clear();
         stageFinished.Clear();
 
-        GenerateStageContent(stages);
+        GenerateStageContent(stages, data.stageContents);
 
         if (data.stageFinished == null) {
             foreach (var stage in stages) {
@@ -82,6 +84,8 @@ public class LevelManager : StaticInstance<LevelManager>
             currentStage = stages[0];
         }
 
+        isLastLevel = data.isLastLevel;
+
         LoadStage(currentStage.gameObject.name);
 
     }
@@ -90,6 +94,10 @@ public class LevelManager : StaticInstance<LevelManager>
         LevelData data = new();
         foreach (var stage in stageFinished) {
             data.stageFinished[stage.Key.gameObject.name] = stage.Value;
+        }
+        foreach (var stage in stageLists)
+        {
+            data.stageContents[stage.Key] = stage.Value.stageContent.name;
         }
         data.currentStage = currentStage.gameObject.name;
         data.levelName = level.gameObject.name;
@@ -123,19 +131,31 @@ public class LevelManager : StaticInstance<LevelManager>
     }
 
 
-    private StageScript[] GenerateStageContent(StageScript[] stages) 
+    private StageScript[] GenerateStageContent(StageScript[] stages, Dictionary<string, string> stageContents = null)
     {
-        foreach (StageScript stage in stages)
+        if (stageContents != null && stageContents.Count >= 0)
         {
-            if (stage.stageTypes.Length > 0)
+            foreach (var stage in stages)
             {
-                GenerateRandomContentForStage(stage, stage.stageTypes);
-            }
-            else
-            {
-                GenerateRandomContentForStage(stage, new StageType[1] {StageType.Interacting });
+                GenerateContentForStage(stage, stageContents[stage.name]);
             }
         }
+        else
+            foreach (StageScript stage in stages)
+            {
+                if (data.isTraining)
+                {
+                    return stages;
+                }
+                if (stage.stageTypes.Length > 0)
+                {
+                    GenerateRandomContentForStage(stage, stage.stageTypes);
+                }
+                else
+                {
+                    GenerateRandomContentForStage(stage, new StageType[1] { StageType.Interacting });
+                }
+            }
         return stages;
     }
 
@@ -154,6 +174,16 @@ public class LevelManager : StaticInstance<LevelManager>
         return stage;
     }
 
+    private StageScript GenerateContentForStage(StageScript stage, string stageName)
+    {
+        var stageContent = ResourceSystem.Instance.GetStageByName(stageName);
+        if (stageContent != null)
+        {
+            stage.stageContent = stageContent;
+        }
+        return stage;
+    }
+
 
 
 }
@@ -161,8 +191,14 @@ public class LevelManager : StaticInstance<LevelManager>
 public struct LevelData {
     public Dictionary<string, bool> stageFinished;
 
+    public Dictionary<string, string> stageContents;
+
     public string currentStage;
 
     public string levelName;
+
+    public bool isTraining;
+
+    public bool isLastLevel;
 }
 

@@ -27,13 +27,15 @@ public class Shop : StaticInstance<Shop>
         money.SetText(GameManager.Instance.money.ToString());
         GameManager.Instance.MoneyChangeObserver += () => { money.SetText(GameManager.Instance.money.ToString()); };
         gameObject.SetActive(false);
+        moneyOGColor = money.color;
     }
 
     public void Init(List<ScriptableAlbilities> shopList)
     {
+        gameObject.SetActive(true);
         InitInventory();
         InitShop(shopList);
-        gameObject.SetActive(true);
+        
     }
 
     public void DeInit()

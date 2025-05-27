@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Collections;
 using UnityEngine;
 
 public class ResourceSystem : PersistentSingleton<ResourceSystem>
@@ -52,6 +53,11 @@ public class ResourceSystem : PersistentSingleton<ResourceSystem>
     public List<ScriptableAlbilities> GetAllAbilities() => allAbilities;
 
     public List<ScriptableStage> GetStages(StageType type) => allStagesDict[type];
+
+    public ScriptableStage GetStageByName(string name)
+    {
+        return Resources.Load<ScriptableStage>($"Stages/{name}");
+    }
 
     public Level GetLevel(string levelName) => Resources.Load<Level>($"Environment/Level/{levelName}");
 

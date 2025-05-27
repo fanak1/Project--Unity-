@@ -5,6 +5,8 @@ public class ShopNPC : InteractableObject
 {
     bool playerIn = false;
 
+    bool inShop = false;
+
     public override void InteractBegin()
     {
         
@@ -19,8 +21,14 @@ public class ShopNPC : InteractableObject
     private void OnTriggerExit2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
-        Shop.Instance.DeInit();
-        playerIn = false;
+        if(inShop)
+        {
+            Shop.Instance.DeInit();
+            InteractFinish();
+            playerIn = false;
+            inShop = false;
+        }
+        
     }
 
     private void Update()
@@ -31,6 +39,7 @@ public class ShopNPC : InteractableObject
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
+                inShop = true;
                 Shop.Instance.Init(ResourceSystem.Instance.GetAllAbilities());
             }
                 

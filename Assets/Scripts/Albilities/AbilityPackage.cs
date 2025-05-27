@@ -12,6 +12,8 @@ public class AbilityPackage : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI skillType;
 
+    [SerializeField] UnityEngine.UI.Image icon;
+
     private bool playerHave = false;
 
     private bool forTraining = true;
@@ -62,5 +64,7 @@ public class AbilityPackage : MonoBehaviour
         Color32 underlayColor = a.skillTypeColor;
         underlayColor.a = 150;
         skillType.fontMaterial.SetColor("_UnderlayColor", underlayColor);
+        if(a.icon != null) 
+            icon.sprite = a.icon;
     }
 }

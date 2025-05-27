@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public abstract class Particles<T> : MonoBehaviour where T : MonoBehaviour
 {
@@ -16,6 +17,16 @@ public abstract class Particles<T> : MonoBehaviour where T : MonoBehaviour
         animator = GetComponent<Animator>();
         CoroutineManager.Instance.StartNewCoroutine(Countdown());
         isStart = false;
+    }
+
+    static Particles()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        objectPooling.Clear();
     }
 
     private void OnEnable() {

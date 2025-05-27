@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class StageScript : MonoBehaviour
+public class StageScript : MonoBehaviour
 {
 
     [SerializeField] private List<StageDoor> doors;
@@ -44,7 +44,7 @@ public abstract class StageScript : MonoBehaviour
 
     }
 
-    public void StageStart() {
+    public virtual void StageStart() {
         CloseDoor(() =>
         {
             if(!isStarted)
@@ -78,7 +78,7 @@ public abstract class StageScript : MonoBehaviour
         //trigger.gameObject.SetActive(true);
     }
 
-    private void CloseDoor(Action o) {
+    protected void CloseDoor(Action o) {
         foreach (var d in doors)
         {
             d.gameObject.SetActive(true);

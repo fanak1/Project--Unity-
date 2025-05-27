@@ -64332,6 +64332,7 @@ GameObject:
   - component: {fileID: 9143558411417414937}
   - component: {fileID: 338799158403852986}
   - component: {fileID: 4857839796047529951}
+  - component: {fileID: 5105162528918827975}
   m_Layer: 0
   m_Name: Right
   m_TagString: Untagged
@@ -64455,6 +64456,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5105162528918827975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3584946889906827137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c8c68dee0bca514a80209e6c1edeb0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Direction: 2
+  tiles: 9
+  setActiveInNextFrame: 1
 --- !u!1 &3665337210864317627
 GameObject:
   m_ObjectHideFlags: 0
@@ -65500,11 +65516,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doors:
-  - {fileID: 3584946889906827137}
+  - {fileID: 5105162528918827975}
   trigger: {fileID: 6781719395069180960}
   spawnPoint:
   - {fileID: 395819306265864766}
-  stageContent: {fileID: 11400000, guid: 23bda6f07075e704fac9ef6752775366, type: 2}
+  stageContent: {fileID: 11400000, guid: b8e9236690c41754d8de60554fa07945, type: 2}
+  stageTypes: 
 --- !u!1 &7116042865350933648
 GameObject:
   m_ObjectHideFlags: 0

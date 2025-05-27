@@ -549,3 +549,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Direction: 0
   tiles: 5
+  setActiveInNextFrame: 0

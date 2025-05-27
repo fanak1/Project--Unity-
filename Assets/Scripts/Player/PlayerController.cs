@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private PlayerUnit playerUnit; //For stat like spd etc;
-    private ProjectileHolder projectileHolder; //For projectile
-    private AlbilitiesHolder abilityHolder;
-    private Animator animator;
+    public PlayerUnit playerUnit; //For stat like spd etc;
+    public ProjectileHolder projectileHolder; //For projectile
+    public AlbilitiesHolder abilityHolder;
+    public Animator animator;
 
-    Vector2 mousePos; //Mouse position in screen
+    Rigidbody2D rb;
+
+    public Vector2 mousePos; //Mouse position in screen
+
     
     public Camera cam; //to get mouse input in screen cam
 
@@ -18,20 +21,49 @@ public class PlayerController : MonoBehaviour
 
     IInteractable interactItem;
 
-    bool runAnim = false;
+    protected bool runAnim = false;
+
+    public int controllerBlockCount = 0;
+
+    public bool IsControllerBlocked => controllerBlockCount > 0;
+
+    public void PushBlock() => controllerBlockCount++;
+    public void PopBlock() => controllerBlockCount = Mathf.Max(0, controllerBlockCount-1);
 
     private void Start() {
         playerUnit = GetComponent<PlayerUnit>(); //UnitBase of Player
         projectileHolder = GetComponent<ProjectileHolder>(); //ProjectileHolder
         abilityHolder = GetComponent<AlbilitiesHolder>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
 
         interactionMask = LayerMask.GetMask("RayCast");
+
+        InitInputInstruction();
+        
+    }
+
+    void InitInputInstruction()
+    {
+        InputInstructionUI.Instance.AddInstructions(new KeyValuePair<string, List<string>>("Aim", new List<string> { "mouse"}));
+        InputInstructionUI.Instance.AddInstructions(new KeyValuePair<string, List<string>>("Shoot", new List<string> { "lmb" }));
+        InputInstructionUI.Instance.AddInstructions(new KeyValuePair<string, List<string>>("Move", new List<string> { "W", "A", "S", "D" }));
+        InputInstructionUI.Instance.AddInstructions(new KeyValuePair<string, List<string>>("Skill", new List<string> { "E" }));
     }
 
     void Update() {
+        if (GameManager.Instance.pause || IsControllerBlocked)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+
         if (GameManager.Instance.pause)
             return;
+
+        if (IsControllerBlocked) 
+            return;
+
+        
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -42,31 +74,36 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void MoveController() { //Movement of player
+    public virtual void MoveController()
+    {
         float movX = Input.GetAxis("Horizontal");
         float movY = Input.GetAxis("Vertical");
 
-        Vector2 mov = new Vector2(movX, movY).normalized;
+        Vector2 inputDir = new Vector2(movX, movY).normalized;
 
+        Vector2 velocity = inputDir * playerUnit.stats.spd;
 
-        if (mov != Vector2.zero)
+        rb.linearVelocity = velocity;
+
+        if (rb.linearVelocity.magnitude > 0.1f)
         {
             if (!runAnim)
             {
                 runAnim = true;
-                animator.SetTrigger("Run");
+                animator.CrossFade("Run", 0f);
             }
-
-            transform.Translate(mov * playerUnit.stats.spd * Time.deltaTime);
-
-        } else
+        }
+        else
         {
-            animator.SetTrigger("Idle");
-            runAnim = false;
+            if (runAnim)
+            {
+                runAnim = false;
+                animator.CrossFade("Idle", 0f);
+            }
         }
     }
 
-    void ShootController() { //Shooting (left, right)
+    public virtual void ShootController() { //Shooting (left, right)
         
         if(Input.GetMouseButton(0)) { //Left-mouse
             if(projectileHolder.EnoughMana(0, playerUnit.nowMP)) {
@@ -82,7 +119,7 @@ public class PlayerController : MonoBehaviour
         */
     }
 
-    void AbilityController() {
+    public virtual void AbilityController() {
         foreach (Abilities a in abilityHolder.active) {
             if (Input.GetKeyDown(a.button)) {
                 if(abilityHolder.EnoughMana(a, playerUnit.nowMP) && abilityHolder.Usable(a)) {
@@ -94,7 +131,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void StopMoving() {
-        animator.SetTrigger("Idle");
+        animator.CrossFade("Idle", 0f);
     }
 
     public void ContinueMoving() {

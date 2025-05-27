@@ -32,7 +32,7 @@ public enum EnemyType {
 [Serializable]
 public enum EnemyCodeName {
     Bat = 0,
-
+    Stone_Boss = 1,
 }
 
 

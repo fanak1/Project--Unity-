@@ -28,7 +28,6 @@ public class GaugeBar : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
 
-        SetMaxValue(300);
     }
 
     // Update is called once per frame
@@ -84,12 +83,21 @@ public class GaugeBar : MonoBehaviour
     }
 
     public void SetMaxValue(float value, bool resetBar = false) {
-        rectTransform.sizeDelta = new Vector2(value * scale, 30);
+        rectTransform.sizeDelta = new Vector2(value * scale, rectTransform.sizeDelta.y);
         increaseDelaySlider.maxValue = value * scale;
         decreaseDelaySlider.maxValue = value * scale;
         valueSlider.maxValue = value * scale;
 
         if(resetBar) SetValue(value); 
+    }
+
+    public void SetMaxValueWithoutResize(float value)
+    {
+        increaseDelaySlider.maxValue = value * scale;
+        decreaseDelaySlider.maxValue = value * scale;
+        valueSlider.maxValue = value * scale;
+
+        SetValue(value);
     }
 
     public void Init(float maxValue, float scale=1f) {

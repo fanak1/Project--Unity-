@@ -20,6 +20,7 @@ public class Reward : StaticInstance<Reward>
     }
 
     public void DisplayReward(List<ScriptableAlbilities> list, Action<ScriptableAlbilities> onRewardChoose) {
+        
         foreach(Transform child in gameObject.transform)
         {
             Destroy(child.gameObject);
@@ -28,6 +29,10 @@ public class Reward : StaticInstance<Reward>
         {
             var a = CreateAndAddAbilityToTransform(ability, this.gameObject.transform);
             a.OnRewardChoose += onRewardChoose;
+        }
+        if (animator != null)
+        {
+            animator.CrossFade("Init Anim", 0f);
         }
     }
 

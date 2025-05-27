@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using TMPro;
 
-public class RewardManager : PersistentSingleton<RewardManager>
+public class RewardManager : Singleton<RewardManager>
 {
     [SerializeField] private List<ScriptableAlbilities> abilities;
 
@@ -13,6 +13,8 @@ public class RewardManager : PersistentSingleton<RewardManager>
     private List<ScriptableAlbilities> show;
 
     public GamePlayStatesManager gameStatesManager;
+
+    public GameObject prefab;
 
 
     private void Start() {
@@ -29,11 +31,18 @@ public class RewardManager : PersistentSingleton<RewardManager>
         rewardUI.gameObject.SetActive(false);
     }
 
-    public void InitReward() { //Init reward
+    public void CreateRewardObject(Vector3 position)
+    {
+        Instantiate(prefab, position, Quaternion.identity);
+    }
+
+    public void InitReward(Action callBackChooseReward) { //Init reward
+
         show = GenerateAlbilities(abilities, 3);
         rewardUI.gameObject.SetActive(true);
         rewardUI.DisplayReward(show, (ScriptableAlbilities ability) => {
             Choose(ability);
+            callBackChooseReward();
         });
     }
 

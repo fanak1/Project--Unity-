@@ -24,7 +24,13 @@ public class ExitDoor : MonoBehaviour
             
             OnDoorEnter?.Invoke();
             Destroy(gameObject);
-            GameManager.Instance.StartGame();
+            if(LevelManager.Instance.isLastLevel)
+            {
+                Statistic.Instance.Open();
+            } else
+            {
+                GameManager.Instance.NextLevel();
+            }
         }
     }
 

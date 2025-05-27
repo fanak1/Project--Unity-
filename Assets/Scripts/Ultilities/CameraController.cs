@@ -96,7 +96,7 @@ public class CameraController : StaticInstance<CameraController> {
         var orthoSizeY = size.y / 2f;
         var orthoSizeX = (size.x / (cam.aspect * 2f));
 
-        var orthoSize = Mathf.Max(Mathf.Min(Mathf.Min(orthoSizeX, orthoSizeY), 20f), 5f);
+        var orthoSize = Mathf.Max(Mathf.Min(Mathf.Min(orthoSizeX, orthoSizeY), 15f), 10f);
 
         SetCameraSize(orthoSize);
 

@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class AbilityItem : MonoBehaviour
+public class AbilityItem : MonoBehaviour, ITooltip
 {
     [SerializeField] ScriptableAlbilities ability;
 
@@ -29,7 +29,7 @@ public class AbilityItem : MonoBehaviour
 
     public void BuyOrSell()
     {
-        if (!CanBuy(GameManager.Instance.money))
+        if (!playerHave && !CanBuy(GameManager.Instance.money))
         {
             Shop.Instance.NotEnoughMoney();
             return;
@@ -89,5 +89,10 @@ public class AbilityItem : MonoBehaviour
             icon.sprite = a.icon;
 
         cost.SetText(a.cost.ToString());
+    }
+
+    public string ToolTipText()
+    {
+        return ability.description;
     }
 }

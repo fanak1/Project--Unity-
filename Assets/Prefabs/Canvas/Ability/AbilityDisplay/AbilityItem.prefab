@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1981339614661910864}
   - component: {fileID: 6564611845934001291}
   - component: {fileID: 1127580947941955552}
+  - component: {fileID: 4415504383159192717}
   m_Layer: 5
   m_Name: AbilityItem
   m_TagString: Untagged
@@ -177,6 +178,18 @@ MonoBehaviour:
   ability: {fileID: 0}
   cost: {fileID: 6735709546928836583}
   icon: {fileID: 5371999166011155475}
+--- !u!114 &4415504383159192717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3026138796784789607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e558ba9b341973b4cb6799e602a74400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7744445080068055508
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,7 +357,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.25
+  m_fontSize: 18
   m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 1

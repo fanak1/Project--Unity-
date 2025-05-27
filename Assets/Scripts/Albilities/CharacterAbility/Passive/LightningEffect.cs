@@ -1,12 +1,23 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.SceneManagement;
 
 public class LightningEffect : RenderSpriteBetweenTwoPoint {
 
     public static Queue<LightningEffect> pool = new Queue<LightningEffect>();
 
     public static GameObject prefabs;
+
+    static LightningEffect()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        pool.Clear();
+    }
 
     protected override void Start() {
         base.Start();

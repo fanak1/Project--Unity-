@@ -9,8 +9,8 @@ public abstract class UnitBase : MonoBehaviour {
     public ProjectileHolder projectileHolder; //For projectile shoot
     public AlbilitiesHolder abilityHolder;
 
-    [SerializeField] private DamagePopUps normalDamagePopUps; //DamagePopUp
-    [SerializeField] private DamagePopUps critDamagePopUps; //Crit
+    public Sprite icon;
+
     //[SerializeField] private MMHealthBar mmHealthBar; //healthbar
 
     public Vector3 damagePosition; //Positiion where Damage Pop Up
@@ -74,6 +74,8 @@ public abstract class UnitBase : MonoBehaviour {
 
     public event Action<ScriptableAlbilities> OnAbilityAdded;
 
+    public bool dead = false;
+
 
 
     //public event Action OnAbilityKeyPressed;
@@ -118,11 +120,12 @@ public abstract class UnitBase : MonoBehaviour {
     internal virtual void UpdateFunction()
     {
         
-        if (nowHP <= 0)
+        if (nowHP <= 0 && !dead)
         {
             //Dead event
             OnDead?.Invoke();
             Destroy();
+            dead = true;
             //Destroy(gameObject);
         }
         //OnAbilityKeyPressed?.Invoke();
@@ -284,17 +287,8 @@ public abstract class UnitBase : MonoBehaviour {
 
 
     //Ultility things
-    private void DamagePopUps(float dmg, bool critted) { // Damage Pop Up when take damage
-        float radX = UnityEngine.Random.Range(-0.1f, 0.1f);
-        float radY = UnityEngine.Random.Range(-0.1f, 0.1f);
-        if (!critted) {
-            normalDamagePopUps.dmg = (int)dmg;
-            Instantiate(normalDamagePopUps, damagePosition + Vector3.right * radX + Vector3.up * radY, Quaternion.identity);
-        } else {
-            critDamagePopUps.dmg = (int)dmg;
-            Instantiate(critDamagePopUps, damagePosition + Vector3.right * radX + Vector3.up * radY, Quaternion.identity);
-        }
-
+    private void DamagePopUps(float dmg, bool critted) {
+        DamagePopUpSpawner.Instance.ShowDamage(damagePosition, (int)dmg, critted);
     }
 
 

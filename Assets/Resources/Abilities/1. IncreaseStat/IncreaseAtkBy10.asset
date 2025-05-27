@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c8f35cd76529ec4781f21813e51dd6a, type: 3}
   m_Name: IncreaseAtkBy10
   m_EditorClassIdentifier: 
-  albility: {fileID: 0}
+  ability: {fileID: 0}
   onEvent: 3
   amountIncrease:
     hp: 0
@@ -20,5 +20,18 @@ MonoBehaviour:
     atk: 10
     spd: 0
     def: 0
-  description: Increase ATK by 10
+  button: 0
+  skillIconPrefabs: {fileID: 0}
+  cooldown: 0
+  stat:
+    manaSpend: 0
+    amount: 0
+  description: japsodifjaposdifjapsodifjapsodfijaspdofijaspodfijaspdoifjaspodifjapsdofijapsodifjapsodifjaspodifjaspdoifjaspodifjaspodifjaspodifjaspdoifj
   rarity: 0
+  skillType: None
+  skillTypeColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  icon: {fileID: 21300000, guid: fc07825bdc7b3b14a8980cacb78c025d, type: 3}
+  cost: 0
+  characterCode: 0

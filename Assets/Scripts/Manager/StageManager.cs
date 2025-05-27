@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using TMPro;
 
-public class StageManager : PersistentSingleton<StageManager> {
+public class StageManager : Singleton<StageManager> {
 
     public StageState state;
 
@@ -37,11 +37,13 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     [SerializeField] private StageScript stageContent;
 
+    public Vector3 lastEnemyDiePos;
+
     //Event ------------------------------------------------------------------------------------------------------------------------------------
 
     public event Action<int> OnRoundFinish; //On round "number" finish. ex: OnRoundFinish(1) is called when round 1 is finish
 
-    public event Action OnRewardBegin;
+    public event Action<Vector3> OnRewardBegin;
 
     public event Action OnRewardFinish; //On reward of round "number" finish
 
@@ -142,6 +144,10 @@ public class StageManager : PersistentSingleton<StageManager> {
 
             SpawnEnemy(spawnList, enemyList);
 
+            if(stage.stageType == StageType.Boss) {
+
+            }
+
             /*
             int firstSpawn = UnityEngine.Random.Range(0, (numberEnemyLeft + 1) / 2); //number of enemy we spawn in first spawnpoint
             int secondSpawn = numberEnemyLeft - firstSpawn; //number of enemy we spawn in second spawnpoint
@@ -181,7 +187,13 @@ public class StageManager : PersistentSingleton<StageManager> {
 
     private void RewardState() {
         if (!stateInit) {
-            OnRewardBegin?.Invoke();
+            int count = 0;
+            foreach (var r in roundList)
+            {
+                count += r.enemyList.Count;
+            }
+            Vector3 pos = count > 0 ? lastEnemyDiePos : spawnList[0].transform.position;
+            OnRewardBegin?.Invoke(pos);
             stateInit = true;
         }
     }

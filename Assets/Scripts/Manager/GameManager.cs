@@ -1,11 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Mono.Cecil.Cil;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Scripting;
 
 public class GameManager : PersistentSingleton<GameManager>
 {
@@ -30,6 +26,10 @@ public class GameManager : PersistentSingleton<GameManager>
     public int money;
 
     public Action MoneyChangeObserver;
+
+    public int level = 0;
+
+    public float score;
 
 
     private void Start() {
@@ -108,23 +108,46 @@ public class GameManager : PersistentSingleton<GameManager>
         }
     }
 
+    public void IncreaseMoney(int money)
+    {
+        this.money += money;
+        MoneyChangeObserver?.Invoke();
+    }
+
+    public void DecreaseMoney(int money)
+    {
+        this.money -= money;
+        MoneyChangeObserver?.Invoke();
+    }
+
  // -- Scene Manager code
     public void LoadScene(string sceneName, Action onSceneLoaded) {
         CoroutineManager.Instance.StartNewCoroutine(LoadSceneThenExecute(sceneName, onSceneLoaded));
     }
 
     private IEnumerator LoadSceneThenExecute(string sceneName, Action onSceneLoaded) {
+        float time = 0f;
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        asyncLoad.allowSceneActivation = false;
 
-        while (!asyncLoad.isDone) {
-            // -- Can do animation code there
+        Transition.Instance.StartLoading();
 
-            // Animation code end --
+        while (asyncLoad.progress < 0.9f && time < 4f) {
+            time += Time.deltaTime;
             yield return null;
         }
 
+        if (time < 1f)
+        {
+            yield return new WaitForSeconds(1 - time);
+        } 
+
+        asyncLoad.allowSceneActivation = true;
+
+        yield return null;
         // -- After scene loaded code
         onSceneLoaded?.Invoke();
+        Transition.Instance.EndLoading();
         // -- End after scene loaded code
     }
 
@@ -132,6 +155,41 @@ public class GameManager : PersistentSingleton<GameManager>
         LoadScene("GamePlayScene", () => {
             LevelData data = new LevelData();
             data.levelName = "Level_Sand";
+            LevelManager.Instance.LoadStageInScene(data);
+            BeginState(GameStates.GAMEPLAY);
+        });
+    }
+
+    public void NextLevel()
+    {
+        if(level == 3)
+        {
+            StartLastLevel();
+        } else
+        {
+            level++;
+            StartGame();
+        }
+    }
+
+    public void StartLastLevel()
+    {
+        LoadScene("GamePlayScene", () => {
+            LevelData data = new LevelData();
+            data.levelName = "Level_Sand";
+            data.isLastLevel = true;
+            LevelManager.Instance.LoadStageInScene(data);
+            BeginState(GameStates.GAMEPLAY);
+        });
+    }
+
+    public void StartTrainingLevel()
+    {
+        LoadScene("GamePlayScene", () =>
+        {
+            LevelData data = new LevelData();
+            data.levelName = "Training_Level";
+            data.isTraining = true;
             LevelManager.Instance.LoadStageInScene(data);
             BeginState(GameStates.GAMEPLAY);
         });
@@ -170,6 +228,12 @@ public class GameManager : PersistentSingleton<GameManager>
         string saveGameData = JsonUtility.ToJson(saveGame);
         string filePath = Application.persistentDataPath + path + "/save.json";
         System.IO.File.WriteAllText(filePath, saveGameData);
+
+    }
+
+    public void CalculateScore(float timeFinish, float stageScore, int numberOfEnemyKill)
+    {
+        score += (stageScore * 10) + (numberOfEnemyKill * 5) + (1000f / Mathf.Max(timeFinish, 360f));
 
     }
 

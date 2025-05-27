@@ -42,6 +42,8 @@ public abstract class Effect : MonoBehaviour
 
     protected virtual void EndEffect() {
         //underEffect.Remove(target);
+        this.target.OnDead -= ActionOnDie;
+        this.target.OnDead -= Die;
     }
 
     protected virtual void Die() {

@@ -7,6 +7,8 @@ public abstract class ScriptableEntity : ScriptableObject {
 
     public Faction faction;
 
+    public Sprite Icon;
+
     [SerializeField]
     private Stats stats; //For customize the stats of this Entity
     public Stats base_stats => stats; //base stats
@@ -56,7 +58,7 @@ public abstract class ScriptableEntity : ScriptableObject {
     public virtual UnitBase Spawn(Vector3 position) {
         InitUnit();
         var obj = Instantiate(prefabs, position, Quaternion.identity);
-        
+        obj.icon = Icon;
         if (projectiles.Count > 0) obj.OnFinishInit += SetProjectileForEntity;
         if (abilities.Count > 0) obj.OnFinishInit += SetAbilitiesForEntity;
         return obj;

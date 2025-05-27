@@ -69,12 +69,12 @@ public class GamePlayStatesManager : GameStatesManager
     }
 
 
-    public void BeginRewardUI()
+    public void BeginRewardUI(Vector3 position)
     {
         if(state == GamePlayState.Play)
         {
             state = GamePlayState.Reward;
-            rewardManager.InitReward();
+            rewardManager.CreateRewardObject(position);
         }
             
     }
