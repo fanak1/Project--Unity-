@@ -380,13 +380,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Border All 2_3
+      name: BorderPlayerSelection - Bottom
       rect:
         serializedVersion: 2
-        x: 192
+        x: 206
         y: 448
-        width: 64
-        height: 64
+        width: 36
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2117,6 +2117,182 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: BorderPlayerSelection - Top
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 498
+        width: 36
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8272f37a34aa52479f32c55b26ea71c
+      internalID: 832400932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BorderPlayerSelection - Inner
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 462
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64521a0804c9eea40b9cc6efa59e2f66
+      internalID: -372167340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BorderPlayerSelection - BottomRight
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 448
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98486e72820f5514aac0783d2c91c6f3
+      internalID: -431608267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BorderPlayerSelection - BottomLeft
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 448
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6a770175a6e9b44380417a498a24542
+      internalID: -286440902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BorderPlayerSelection - Left
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 462
+        width: 14
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71ee448b6fe82e240bf0c9a68b4b68f3
+      internalID: -1393251123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BorderPlayerSelection - TopLeft
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 498
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64fe4a7ba145bbe49b4f6b49fa2e2695
+      internalID: 1368550454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BorderPlayerSelection - TopRight
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 498
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba65f01514aa68546b2bd8bf3cb855d9
+      internalID: 1079694691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BorderPlayerSelection - Right
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 462
+        width: 14
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 701e0067c97a3ee4aa9db8a2c0598577
+      internalID: -1937729423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -2154,7 +2330,6 @@ TextureImporter:
       Border All 2_27: 648349014870992834
       Border All 2_28: -4970206326194485470
       Border All 2_29: -8762973981413984885
-      Border All 2_3: 3278100760287891189
       Border All 2_30: -2802474533295572218
       Border All 2_31: 1593979223799412005
       Border All 2_32: -8853730707286566607
@@ -2212,6 +2387,15 @@ TextureImporter:
       Border All 2_9: 2393418726618015650
       BorderBottom: 1993090898
       BorderInner: 1461032292
+      BorderPlayerSelection - Bottom: 3278100760287891189
+      BorderPlayerSelection - BottomLeft: -286440902
+      BorderPlayerSelection - BottomRight: -431608267
+      BorderPlayerSelection - Inner: -372167340
+      BorderPlayerSelection - Left: -1393251123
+      BorderPlayerSelection - Right: -1937729423
+      BorderPlayerSelection - Top: 832400932
+      BorderPlayerSelection - TopLeft: 1368550454
+      BorderPlayerSelection - TopRight: 1079694691
       BorderTop: -8996152864230504951
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

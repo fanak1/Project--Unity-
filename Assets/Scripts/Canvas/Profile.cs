@@ -15,8 +15,8 @@ public class Profile : Singleton<Profile>
     {
         StartCoroutine(TryToGetPlayerIcon());
 
-        money.SetText(GameManager.Instance.money.ToString());
-        GameManager.Instance.MoneyChangeObserver += () => { money.SetText(GameManager.Instance.money.ToString()); };
+        money.SetText(GameManager.Instance.currentMoney.ToString());
+        GameManager.Instance.MoneyChangeObserver += () => { money.SetText(GameManager.Instance.currentMoney.ToString()); };
     }
 
     // Update is called once per frame

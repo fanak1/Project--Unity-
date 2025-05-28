@@ -12,7 +12,7 @@ public class TooltipTarget : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData eventData)
     {
         if(tooltipText != null) 
-            TooltipManager.Instance.Show(tooltipText.ToolTipText());
+            TooltipManager.Instance.Show(tooltipText.ToolTipText().Length > 0 ? tooltipText.ToolTipText() : "Unknown");
     }
 
     public void OnPointerExit(PointerEventData eventData)

@@ -40,7 +40,7 @@ public class ShopNPC : InteractableObject
             if (Input.GetKeyDown(KeyCode.F))
             {
                 inShop = true;
-                Shop.Instance.Init(ResourceSystem.Instance.GetAllAbilities());
+                Shop.Instance.Init(ResourceSystem.Instance.GetClaimableAbilitiesForPlayer());
             }
                 
             

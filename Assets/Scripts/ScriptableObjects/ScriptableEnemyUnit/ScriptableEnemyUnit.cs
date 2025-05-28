@@ -15,7 +15,7 @@ public class ScriptableEnemyUnit : ScriptableEntity
 
     public event Action OnSpawnEnemy;
 
-    public override UnitBase Spawn(Vector3 position) {
+    public override UnitBase Spawn(Vector3 position, List<ScriptableAlbilities> abilities = null, List<ScriptableProjectiles> projectiles = null) {
         OnSpawnEnemy?.Invoke();
         var obj = base.Spawn(position);
         return obj;

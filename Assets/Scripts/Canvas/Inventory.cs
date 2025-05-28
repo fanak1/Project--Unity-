@@ -6,27 +6,17 @@ using TMPro;
 
 public class Inventory : StaticInstance<Inventory>
 {
-    private GameObject tabBeingDisplay;
-    [SerializeField] private GameObject[] tabs;
-
-    private GameObject buttonBeingDisplay;
-    [SerializeField] private GameObject[] buttons;
-
-    [SerializeField] private Color buttonActiveColor;
-    [SerializeField] private Color buttonInactiveColor;
-    [SerializeField] private Vector2 buttonActiveSize;
-    [SerializeField] private Vector2 buttonInactiveSize;
-    [SerializeField] private Vector2 buttonActivePosition;
-    [SerializeField] private Vector2 buttonInactivePosition;
-
     [SerializeField] private TextMeshProUGUI hpText;
     [SerializeField] private TextMeshProUGUI mpText;
     [SerializeField] private TextMeshProUGUI atkText;
     [SerializeField] private TextMeshProUGUI spdText;
     [SerializeField] private TextMeshProUGUI defText;
 
+    [SerializeField] private TextMeshProUGUI moneyText;
+    [SerializeField] private TextMeshProUGUI scoreText;
+ 
     [SerializeField] private GameObject abilitiesContainer;
-    [SerializeField] private GameObject abilityDisplayPrefabs;
+    [SerializeField] private AbilityIcon abilityDisplayPrefabs;
 
     private GameObject player;
 
@@ -37,90 +27,25 @@ public class Inventory : StaticInstance<Inventory>
         atkText.SetText(stats.atk.ToString());
         spdText.SetText(stats.spd.ToString());
         defText.SetText(stats.def.ToString());
+
+        moneyText.SetText(GameManager.Instance.currentMoney.ToString());
+        scoreText.SetText(GameManager.Instance.currentStatistics.score.ToString());
     }
 
     void DisplayAbilities(List<ScriptableAlbilities> abilities) {
         foreach(ScriptableAlbilities ability in abilities) {
-            CreateAnAbilityDisplay(ability);
-        }
-    }
-
-    void DisplayAbilities(List<Abilities> abilities) {
-        foreach (Abilities ability in abilities) {
-            CreateAnAbilityDisplay(ability);
+            if(ability.onEvent != Event.IncreaseStat)
+                CreateAnAbilityDisplay(ability);
         }
     }
 
     void CreateAnAbilityDisplay(ScriptableAlbilities ability) {
-        var abilityDisplay = Instantiate(abilityDisplayPrefabs);
-        TextMeshProUGUI text = abilityDisplay.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        if(text != null) {
-            text.SetText(ability.description);
-        }
-        abilityDisplay.transform.SetParent(abilitiesContainer.transform);
-    }
-
-    void CreateAnAbilityDisplay(Abilities ability) {
-        var abilityDisplay = Instantiate(abilityDisplayPrefabs);
-        TextMeshProUGUI text = abilityDisplay.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        if (text != null) {
-            text.SetText(ability.description);
-        }
-        abilityDisplay.transform.SetParent(abilitiesContainer.transform);
-    }
-
-
-    void SetActiveForButton(GameObject button) {
-        if(buttonBeingDisplay != button) {
-            SetInactiveForButton(buttonBeingDisplay);
-
-            Image image = button.GetComponent<Image>();
-            image.color = buttonActiveColor;
-            RectTransform rect = button.GetComponent<RectTransform>();
-            rect.localPosition = new Vector2(rect.localPosition.x, buttonActivePosition.y);
-            rect.sizeDelta = buttonActiveSize;
-
-            buttonBeingDisplay = button;
-        }
-    }
-
-    void SetInactiveForButton(GameObject button) {
-        Image image = button.GetComponent<Image>();
-        image.color = buttonInactiveColor;
-        RectTransform rect = button.GetComponent<RectTransform>();
-        rect.localPosition = new Vector2(rect.localPosition.x, buttonInactivePosition.y);
-        rect.sizeDelta = buttonInactiveSize;
-    }
-
-    public void SwitchToTab(int index) {
-        if(tabBeingDisplay != tabs[index]) {
-            tabBeingDisplay.SetActive(false);
-            SetActiveForButton(buttons[index]);
-            tabs[index].SetActive(true);
-            
-            tabBeingDisplay = tabs[index];
-        }
+        var ab = Instantiate(abilityDisplayPrefabs);
+        ab.Init(ability);
+        ab.transform.SetParent(abilitiesContainer.transform);
     }
 
     private void Start() {
-        foreach(GameObject tab in tabs) {
-            tab.SetActive(false);
-        }
-
-        foreach(GameObject button in buttons) {
-            SetInactiveForButton(button);
-        }
-
-        buttonBeingDisplay = buttons[0];
-        Image image = buttonBeingDisplay.GetComponent<Image>();
-        image.color = buttonActiveColor;
-        RectTransform rect = buttonBeingDisplay.GetComponent<RectTransform>();
-        rect.localPosition = new Vector2(rect.localPosition.x, buttonActivePosition.y);
-        rect.sizeDelta = buttonActiveSize;
-
-        tabBeingDisplay = tabs[0];
-        tabBeingDisplay.SetActive(true);
-
         gameObject.SetActive(false);
     }
 
@@ -131,8 +56,7 @@ public class Inventory : StaticInstance<Inventory>
             UnitBase playerBase = player.GetComponent<UnitBase>();
             if(playerBase != null) {
                 DisplayStats(playerBase.ShowStats());
-                DisplayAbilities(playerBase.ShowActiveAbilities());
-                DisplayAbilities(playerBase.ShowPassiveAbilities());
+                DisplayAbilities(playerBase.ShowAbilities());
             }
         }
     }

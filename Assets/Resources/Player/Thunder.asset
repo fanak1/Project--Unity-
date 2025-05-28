@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Thunder
   m_EditorClassIdentifier: 
   faction: 0
-  Icon: {fileID: 21300000, guid: 3db229f97d6787f4b8b70cd1cc79daa1, type: 3}
+  Icon: {fileID: 6315784868803468625, guid: 09926e5bb0e58554fac0b72f87ae72f8, type: 3}
   stats:
     hp: 100
     mp: 100

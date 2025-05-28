@@ -1,5 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,13 +26,15 @@ public class GameManager : PersistentSingleton<GameManager>
 
     public bool pause = false;
 
-    public int money;
+    public int currentMoney;
 
     public Action MoneyChangeObserver;
 
     public int level = 0;
 
-    public float score;
+    public Statistics currentStatistics;
+
+    public SaveGameData tempSave;
 
 
     private void Start() {
@@ -110,13 +115,14 @@ public class GameManager : PersistentSingleton<GameManager>
 
     public void IncreaseMoney(int money)
     {
-        this.money += money;
+        this.currentMoney += money;
+        currentStatistics.money += money;
         MoneyChangeObserver?.Invoke();
     }
 
     public void DecreaseMoney(int money)
     {
-        this.money -= money;
+        this.currentMoney -= money;
         MoneyChangeObserver?.Invoke();
     }
 
@@ -151,32 +157,62 @@ public class GameManager : PersistentSingleton<GameManager>
         // -- End after scene loaded code
     }
 
-    public void StartGame() {
+    public LevelData LoadRandomLevel()
+    {
+        LevelData data = new LevelData();
+        data.levelName = "Level_Sand";
+        return data;
+    }
+
+    //Lambda for load scene: 1/Load Character data, 2/Load Level
+
+    public void StartGame(ScriptablePlayerUnit player)
+    {
+        level = 1;
         LoadScene("GamePlayScene", () => {
-            LevelData data = new LevelData();
-            data.levelName = "Level_Sand";
-            LevelManager.Instance.LoadStageInScene(data);
+            PlayerSpawn.Instance.scriptablePlayer = player;
+            LevelManager.Instance.LoadStageInScene(LoadRandomLevel());
             BeginState(GameStates.GAMEPLAY);
         });
     }
 
+    public void StartGame(bool persistent = false) {
+        if(!persistent)
+        {
+            currentStatistics = new();
+            LoadScene("GamePlayScene", () => {
+                LevelManager.Instance.LoadStageInScene(LoadRandomLevel());
+                BeginState(GameStates.GAMEPLAY);
+            });
+        } else
+        {
+            LoadScene("GamePlayScene", () => {
+                PlayerSpawn.Instance.data = tempSave.player;
+                LevelManager.Instance.LoadStageInScene(LoadRandomLevel());
+                BeginState(GameStates.GAMEPLAY);
+            });
+        }
+        
+    }
+
     public void NextLevel()
     {
+        CreateTempSave();
         if(level == 3)
         {
             StartLastLevel();
         } else
         {
             level++;
-            StartGame();
+            StartGame(true);
         }
     }
 
     public void StartLastLevel()
     {
         LoadScene("GamePlayScene", () => {
-            LevelData data = new LevelData();
-            data.levelName = "Level_Sand";
+            PlayerSpawn.Instance.data = tempSave.player;
+            LevelData data = LoadRandomLevel();
             data.isLastLevel = true;
             LevelManager.Instance.LoadStageInScene(data);
             BeginState(GameStates.GAMEPLAY);
@@ -219,11 +255,36 @@ public class GameManager : PersistentSingleton<GameManager>
         });
     }
 
+    public void CreateTempSave()
+    {
+        SaveGameData saveGame = new();
+        if (LevelManager.Instance)
+        {
+            saveGame.level = LevelManager.Instance.data;
+        }
+        if (PlayerUnit.instance)
+        {
+            saveGame.player = PlayerUnit.instance.Save();
+        }
+        saveGame.stats = currentStatistics;
+
+        saveGame.runLevel = level;
+
+        tempSave = saveGame;
+    }
+
     public void SaveGame(string path = "") {
         SaveGameData saveGame = new();
         if (LevelManager.Instance) {
             saveGame.level = LevelManager.Instance.data;
         }
+        if (PlayerUnit.instance)
+        {
+            saveGame.player = PlayerUnit.instance.Save();
+        }
+        saveGame.stats = currentStatistics;
+
+        saveGame.runLevel = level;
 
         string saveGameData = JsonUtility.ToJson(saveGame);
         string filePath = Application.persistentDataPath + path + "/save.json";
@@ -233,8 +294,8 @@ public class GameManager : PersistentSingleton<GameManager>
 
     public void CalculateScore(float timeFinish, float stageScore, int numberOfEnemyKill)
     {
-        score += (stageScore * 10) + (numberOfEnemyKill * 5) + (1000f / Mathf.Max(timeFinish, 360f));
-
+        float score = (stageScore * 10) + (numberOfEnemyKill * 5) + (1000f / Mathf.Max(Mathf.Min(timeFinish, 360f), 10f));
+        currentStatistics.score += (int)score;
     }
 
 
@@ -246,4 +307,13 @@ public class GameManager : PersistentSingleton<GameManager>
 
 public struct SaveGameData {
     public LevelData level;
+    public PlayerData player;
+    public Statistics stats;
+    public int runLevel;
+}
+
+public struct Statistics
+{
+    public int score;
+    public int money;
 }

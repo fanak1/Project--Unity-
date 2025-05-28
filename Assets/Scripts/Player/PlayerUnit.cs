@@ -65,4 +65,26 @@ public class PlayerUnit : UnitBase
             
     }
 
+    public PlayerData Save()
+    {
+        PlayerData p = new();
+        var listA = ShowAbilities();
+        List<string> listS = new();
+        listA.ForEach(a => listS.Add(a.name));
+        p.allAlbilities = listS;
+
+        p.code = characterCode;
+
+        p.stats = stats;
+
+        return p;
+    }
+
+}
+
+public struct PlayerData
+{
+    public List<string> allAlbilities;
+    public Stats stats;
+    public CharacterCode code;
 }

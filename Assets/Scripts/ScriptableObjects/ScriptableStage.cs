@@ -12,6 +12,8 @@ public class ScriptableStage : ScriptableObject
 
     [SerializeField] public InteractableObject interactableObject;
 
+    [SerializeField] public StageValue stageValue;
+
     public List<StageState> GetStateList() => stateList;
 
     public List<ScriptableRounds> GetRoundList() => roundList;
@@ -34,6 +36,15 @@ public enum StageState {
     Reward = 1,
     Finish = 2,
     Interact = 3
+}
+
+[Serializable]
+public struct StageValue
+{ //Information of stage
+    public int stageValue; //The value that help random stage 
+    public int stagePoint; //Point of stage
+    public int gold; //How many gold stage give
+    //public int numberOfEnemy; //How many enemy we have to clear to win this round
 }
 
 public enum StageType

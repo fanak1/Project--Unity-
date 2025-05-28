@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AbilityItem : MonoBehaviour, ITooltip
 {
@@ -10,9 +11,11 @@ public class AbilityItem : MonoBehaviour, ITooltip
 
     private Color costOGColor;
 
-    [SerializeField] UnityEngine.UI.Image icon;
+    [SerializeField] Image icon;
 
     private bool playerHave = false;
+
+    public bool isInteractable = true;
 
     public Action<ScriptableAlbilities> OnBuy;
 
@@ -25,11 +28,16 @@ public class AbilityItem : MonoBehaviour, ITooltip
             SetUI(ability);
 
         }
+
+        if (!isInteractable)
+        {
+            GetComponent<Button>().interactable = isInteractable;
+        }
     }
 
     public void BuyOrSell()
     {
-        if (!playerHave && !CanBuy(GameManager.Instance.money))
+        if (!playerHave && !CanBuy(GameManager.Instance.currentMoney))
         {
             Shop.Instance.NotEnoughMoney();
             return;
@@ -56,7 +64,7 @@ public class AbilityItem : MonoBehaviour, ITooltip
     private void FinishBuy()
     {
         OnBuy = null;
-        GameManager.Instance.money -= ability.cost;
+        GameManager.Instance.currentMoney -= ability.cost;
         GameManager.Instance.MoneyChangeObserver?.Invoke();
         Destroy(gameObject);
     }
@@ -64,7 +72,7 @@ public class AbilityItem : MonoBehaviour, ITooltip
     private void FinishSell()
     {
         OnSell = null;
-        GameManager.Instance.money += ability.cost;
+        GameManager.Instance.currentMoney += ability.cost;
         GameManager.Instance.MoneyChangeObserver?.Invoke();
     }
 
@@ -76,17 +84,22 @@ public class AbilityItem : MonoBehaviour, ITooltip
         }
     }
 
-    public void Init(ScriptableAlbilities a, bool playerHave = false)
+    public void Init(ScriptableAlbilities a, bool isInteractable = false, bool playerHave = false)
     {
         ability = a;
         SetUI(a);
         this.playerHave = playerHave;
+        this.isInteractable = isInteractable;
     }
 
     public void SetUI(ScriptableAlbilities a)
     {
-        if(a.icon != null) 
+        if(a.icon != null)
+        {
             icon.sprite = a.icon;
+            icon.color = Color.white;
+        }
+            
 
         cost.SetText(a.cost.ToString());
     }

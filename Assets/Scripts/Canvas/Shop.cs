@@ -24,8 +24,8 @@ public class Shop : StaticInstance<Shop>
 
     private void Start()
     {
-        money.SetText(GameManager.Instance.money.ToString());
-        GameManager.Instance.MoneyChangeObserver += () => { money.SetText(GameManager.Instance.money.ToString()); };
+        money.SetText(GameManager.Instance.currentMoney.ToString());
+        GameManager.Instance.MoneyChangeObserver += () => { money.SetText(GameManager.Instance.currentMoney.ToString()); };
         gameObject.SetActive(false);
         moneyOGColor = money.color;
     }
@@ -56,10 +56,14 @@ public class Shop : StaticInstance<Shop>
             var aList = PlayerUnit.instance.ShowAbilities();
             foreach (var a in aList)
             {
-                var ab = Instantiate(abilityItemPrefab);
-                ab.Init(a, true);
-                ab.OnSell += SellAbility;
-                ab.transform.SetParent(abilityInventory);
+                if (a.onEvent != Event.IncreaseStat)
+                {
+                    var ab = Instantiate(abilityItemPrefab);
+                    ab.Init(a, true, true);
+                    ab.OnSell += SellAbility;
+                    ab.transform.SetParent(abilityInventory);
+                }
+                
             }
         }
     }
@@ -73,7 +77,7 @@ public class Shop : StaticInstance<Shop>
         foreach (var a in list)
         {
             var ab = Instantiate(abilityItemPrefab);
-            ab.Init(a, false);
+            ab.Init(a, true, false);
             ab.OnBuy += BuyAbility;
             ab.transform.SetParent(abilityShop);
         }

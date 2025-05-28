@@ -13,7 +13,7 @@ public class Statistic : StaticInstance<Statistic>
     public void Open()
     {
         this.gameObject.SetActive(true);
-        score.SetText(GameManager.Instance.score.ToString());
+        score.SetText(GameManager.Instance.currentStatistics.score.ToString());
     }
 
     public void ExitToMainMenu()

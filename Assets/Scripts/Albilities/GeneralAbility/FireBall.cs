@@ -17,11 +17,11 @@ public class FireBall : Abilities
         projectile.Init(this.source);
     }
     public override void Action(UnitBase target, float amount) {
-        if(usable) {
+        if (usable)
+        {
             projectile.Shoot(this.source, source.gameObject.transform.position, target.gameObject.transform.position);
             CoroutineManager.Instance.StartNewCoroutine(StartCooldown());
         }
-        
     }
 
     IEnumerator StartCooldown() {

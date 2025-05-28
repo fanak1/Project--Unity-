@@ -37,7 +37,7 @@ public class RewardManager : Singleton<RewardManager>
     }
 
     public void InitReward(Action callBackChooseReward) { //Init reward
-
+        GenerateAbilitiesList(ResourceSystem.Instance.GetClaimableAbilitiesForPlayer());
         show = GenerateAlbilities(abilities, 3);
         rewardUI.gameObject.SetActive(true);
         rewardUI.DisplayReward(show, (ScriptableAlbilities ability) => {

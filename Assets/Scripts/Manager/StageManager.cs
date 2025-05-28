@@ -49,6 +49,10 @@ public class StageManager : Singleton<StageManager> {
 
     public event Action OnStageFinish; //On Clear Stage
 
+    public int numberOfEnemyKill = 0;
+
+    public float timeToFinish = 0f;
+
 
     //------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -208,8 +212,10 @@ public class StageManager : Singleton<StageManager> {
             
             stateInit = true;
             stageContent.StageFinish(() => { finish = true; });
+            LevelManager.Instance.StageFinish(stageContent);
             OnStageFinish?.Invoke();
-
+            GameManager.Instance.CalculateScore(timeToFinish, stage.stageValue.stagePoint, numberOfEnemyKill);
+            GameManager.Instance.IncreaseMoney(stage.stageValue.gold);
         }
         
         if(!finish)
@@ -263,12 +269,16 @@ public class StageManager : Singleton<StageManager> {
         stageContent = s;
         stage = stageContent.stageContent;
         spawnList = stageContent.GetSpawnPoints();
+        numberOfEnemyKill = 0;
+        timeToFinish = 0f;
         ResetStageParameter();
         stageContent.StageBegin();
+        LevelManager.Instance.StageStepInto(s);
     }
 
     internal virtual void Update() {
-        if (!loop) return;
+        if (!loop || GameManager.Instance.pause) return;
+        timeToFinish += Time.deltaTime;
         switch (state) {
             case StageState.Ready:
                 ReadyState();

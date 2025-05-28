@@ -16,10 +16,10 @@ public abstract class ScriptableEntity : ScriptableObject {
     public CharacterCode characterCode;
 
     [SerializeField]
-    private List<ScriptableProjectiles> projectiles; //Storage of projectiles
+    public List<ScriptableProjectiles> projectiles; //Storage of projectiles
 
     [SerializeField]
-    private List<ScriptableAlbilities> abilities; //Storage of abilities
+    public List<ScriptableAlbilities> abilities; //Storage of abilities
 
     [SerializeField]
     public UnitBase prefabs; //Prefabs of this entity
@@ -31,12 +31,12 @@ public abstract class ScriptableEntity : ScriptableObject {
         prefabs.stats = stats;
     }
 
-    public void SetProjectileForEntity(UnitBase obj) {
-        obj.InitProjecitle(projectiles);
+    public void SetProjectileForEntity(UnitBase obj, List<ScriptableProjectiles> projectiles = null) {
+        obj.InitProjecitle(projectiles == null ? this.projectiles : projectiles);
     }
 
-    public void SetAbilitiesForEntity(UnitBase obj) {
-        obj.InitAbility(abilities);
+    public void SetAbilitiesForEntity(UnitBase obj, List<ScriptableAlbilities> abilities = null) {
+        obj.InitAbility(abilities == null ? this.abilities : abilities);
     }
 
     public void BaseStatsChange(Stats stats) => this.stats = stats; //Call when stats change to modify stats
@@ -55,12 +55,12 @@ public abstract class ScriptableEntity : ScriptableObject {
         prefabs.characterCode = characterCode;
     }
 
-    public virtual UnitBase Spawn(Vector3 position) {
+    public virtual UnitBase Spawn(Vector3 position, List<ScriptableAlbilities> abilities = null, List<ScriptableProjectiles> projectiles = null) {
         InitUnit();
         var obj = Instantiate(prefabs, position, Quaternion.identity);
         obj.icon = Icon;
-        if (projectiles.Count > 0) obj.OnFinishInit += SetProjectileForEntity;
-        if (abilities.Count > 0) obj.OnFinishInit += SetAbilitiesForEntity;
+        if (this.projectiles.Count > 0) obj.OnFinishInit += (UnitBase b) => { SetProjectileForEntity(b, projectiles); } ;
+        if (this.abilities.Count > 0) obj.OnFinishInit += (UnitBase b) => SetAbilitiesForEntity(b, abilities);
         return obj;
     }
 }
