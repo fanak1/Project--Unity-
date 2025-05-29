@@ -28,7 +28,6 @@ public class Abilities : MonoBehaviour {
     public string skillType;
     public Color32 skillTypeColor;
 
-
     public void AttachTo(UnitBase target) {
         Init(target);
         switch (onEvent) {
@@ -143,7 +142,12 @@ public class Abilities : MonoBehaviour {
         return true;
     }
 
-    virtual public bool Usable() => skillIcon.usable;
+    virtual public bool Usable() => skillIcon.usable && IsUsable();
+
+    virtual public bool IsUsable()
+    {
+        return true;
+    }
 
     virtual public void Init(Stats amountIncrease, Event onEvent, SkillUI skillIconPrefabs, KeyCode button, float cooldown, Rarity rarity, string description, AbilityStat stat, string skillType, Color32 skillTypeColor) {
         this.amountIncrease = amountIncrease;

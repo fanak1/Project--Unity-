@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 4324167894759413301}
   - component: {fileID: 5659136824156353503}
   - component: {fileID: 3036694937562830186}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bat
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -194,9 +194,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -204,7 +204,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -223,8 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileHolder: {fileID: 0}
   abilityHolder: {fileID: 0}
-  normalDamagePopUps: {fileID: 4802245932234042993, guid: 0dc5598d5604c5946a85500eb0e513ac, type: 3}
-  critDamagePopUps: {fileID: 4802245932234042993, guid: 0b6884f5b6a2b5246956cb99244d9eff, type: 3}
+  icon: {fileID: 0}
   damagePosition: {x: 0, y: 0, z: 0}
   faction: 2
   stats:
@@ -238,6 +237,9 @@ MonoBehaviour:
     damageBonus: 0
     critRate: 5
     critDamage: 50
+  dead: 0
+  enemyType: 0
+  finishAnimationDie: 0
 --- !u!114 &1343442166935072885
 MonoBehaviour:
   m_ObjectHideFlags: 0

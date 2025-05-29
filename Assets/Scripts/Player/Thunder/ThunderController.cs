@@ -12,6 +12,7 @@ public class ThunderController : PlayerController
             {
                 if (abilityHolder.EnoughMana(a, playerUnit.nowMP) && abilityHolder.Usable(a))
                 {
+                    TurnFace((Vector3)mousePos);
                     StartAnimation("Cast");
                     abilityHolder.PerformAbility(a.button);
                 }
@@ -26,6 +27,7 @@ public class ThunderController : PlayerController
         { //Left-mouse
             if (projectileHolder.EnoughMana(0, playerUnit.nowMP))
             {
+                TurnFace((Vector3)mousePos);
                 StartAnimation("Cast");
                 projectileHolder.Shoot(0, transform.position, mousePos);
 

@@ -24,6 +24,13 @@ public class Thunder_Active1 : Abilities
         }
     }
 
+    public override bool IsUsable()
+    {
+        Thunder_Debuff2.underEffect.RemoveAll(item => item == null);
+        enemies = new List<UnitBase>(Thunder_Debuff2.underEffect);
+        return enemies.Count > 0;
+    }
+
     public void EffectHit(UnitBase enemy) {
 
         if (enemy == null) return;

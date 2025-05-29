@@ -12,8 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd9148c3e805684e9b52215ce4f8548, type: 3}
   m_Name: BossStoneRound
   m_EditorClassIdentifier: 
-  info:
-    roundValue: 0
-    round: 0
-    gold: 0
-  enemyList: 01000000
+  enemyList: 02000000

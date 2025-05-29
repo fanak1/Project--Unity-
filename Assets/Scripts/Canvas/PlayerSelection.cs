@@ -17,6 +17,7 @@ public class PlayerSelection : Singleton<PlayerSelection>
 
     public void Disable()
     {
+        TooltipManager.Instance.Hide();
         this.gameObject.SetActive(false);
     }
 

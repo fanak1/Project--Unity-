@@ -25,12 +25,27 @@ public abstract class BossScript : MonoBehaviour
         if (GameManager.Instance.pause) return;
         if (IsControllerBlocked) return;
 
+        TurnFace();
         RandomMove();
     }
 
     public void StartAnimation(string stateName)
     {
         StartCoroutine(StartAnimationCoroutine(stateName));
+    }
+
+    internal void TurnFace()
+    {
+        if (PlayerUnit.instance == null) return;
+
+        if (PlayerUnit.instance.GetPosition().x - this.transform.position.x < 0)
+        {
+            this.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            this.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
     }
 
     IEnumerator StartAnimationCoroutine(string stateName)

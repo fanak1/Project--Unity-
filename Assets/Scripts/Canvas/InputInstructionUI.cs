@@ -12,11 +12,6 @@ public class InputInstructionUI : StaticInstance<InputInstructionUI>
 
     List<KeyValuePair<string, GameObject>> instructionsObj = new();
 
-    public void Start()
-    {
-        AddInstructions(new KeyValuePair<string, List<string>>("Mouse", new List<string>(){"W", "A" }));
-    }
-
     public void AddInstructions(KeyValuePair<string, List<string>> instruction)
     {
         var obj = Instantiate(prefab);

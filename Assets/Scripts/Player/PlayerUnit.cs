@@ -10,6 +10,8 @@ public class PlayerUnit : UnitBase
 
     public static PlayerUnit instance;
 
+    public GameObject pivot;
+
     protected override void Start() {
         if (instance == null) instance = this;
         
@@ -19,7 +21,10 @@ public class PlayerUnit : UnitBase
         transform.position -= new Vector3(0, 0, transform.position.z);
     }
 
+    public Vector3 GetPosition() => pivot.transform.position;
+
     internal override void Destroy() {
+        Statistic.Instance.Open();
         instance = null;
         base.Destroy();
     }

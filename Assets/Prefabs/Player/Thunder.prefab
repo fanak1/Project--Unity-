@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2743520724950242447}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -74,7 +74,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.9, z: 0}
-  m_LocalScale: {x: 1, y: 0.3, z: 1}
+  m_LocalScale: {x: 1, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2514493577565467243}
@@ -156,6 +156,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &3943843246159908723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8264083349024252810}
+  m_Layer: 8
+  m_Name: pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8264083349024252810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3943843246159908723}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2514493577565467243}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4683809228726615157
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +378,7 @@ GameObject:
   - component: {fileID: 3213514860101786414}
   - component: {fileID: 1084186353370957680}
   - component: {fileID: 9156262751730263048}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Thunder
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -370,6 +401,7 @@ Transform:
   - {fileID: 3274270837562253905}
   - {fileID: 2900884959050047944}
   - {fileID: 934022397011890714}
+  - {fileID: 8264083349024252810}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2408825338130967419
@@ -447,7 +479,7 @@ MonoBehaviour:
   stats:
     hp: 100
     mp: 100
-    atk: 10
+    atk: 100
     spd: 10
     def: 100
   characterCode: 1
@@ -456,6 +488,7 @@ MonoBehaviour:
     critRate: 5
     critDamage: 100
   dead: 0
+  pivot: {fileID: 3943843246159908723}
 --- !u!114 &1779293548297873199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,7 +544,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 255
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -541,11 +574,11 @@ Rigidbody2D:
   m_GameObject: {fileID: 8272687137107061429}
   m_BodyType: 0
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -553,7 +586,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1

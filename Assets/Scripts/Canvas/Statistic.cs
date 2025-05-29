@@ -12,12 +12,14 @@ public class Statistic : StaticInstance<Statistic>
     }
     public void Open()
     {
+        GameManager.Instance.TryToPause();
         this.gameObject.SetActive(true);
         score.SetText(GameManager.Instance.currentStatistics.score.ToString());
     }
 
     public void ExitToMainMenu()
     {
+        GameManager.Instance.TryToResume();
         GameManager.Instance.Menu();
     }
 }

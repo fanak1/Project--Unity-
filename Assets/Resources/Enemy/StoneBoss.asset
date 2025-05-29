@@ -25,4 +25,4 @@ MonoBehaviour:
   abilities: []
   prefabs: {fileID: 1319779155082842738, guid: f8854f9bc3b744c49afdd52f81d91f1f, type: 3}
   enemyType: 1
-  enemyCodeName: 1
+  enemyCodeName: 2

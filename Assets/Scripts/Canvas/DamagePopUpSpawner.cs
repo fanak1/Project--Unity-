@@ -5,6 +5,7 @@ public class DamagePopUpSpawner : Singleton<DamagePopUpSpawner>
 {
     public GameObject dmgPopUpPrefab; // Assign a UI prefab (Text or TMP)
     public Canvas uiCanvas;           // Screen Space - Overlay Canvas
+    public GameObject dmgPopUpParent;
 
     public void ShowDamage(Vector3 worldPosition, int damageAmount, bool critted)
     {
@@ -18,7 +19,7 @@ public class DamagePopUpSpawner : Singleton<DamagePopUpSpawner>
         Vector2 finalScreenPos = screenPos + randomOffset;
 
         // Instantiate the popup
-        GameObject popUp = Instantiate(dmgPopUpPrefab, uiCanvas.transform);
+        GameObject popUp = Instantiate(dmgPopUpPrefab, dmgPopUpParent.transform);
 
         // Set position
         RectTransform canvasRect = uiCanvas.GetComponent<RectTransform>();

@@ -10,4 +10,9 @@ public class MainMenuButton : MonoBehaviour
     {
         GameManager.Instance.StartTrainingLevel();
     }
+
+    public void QuitGameButton()
+    {
+        GameManager.Instance.QuitGame();
+    }
 }

@@ -300,6 +300,11 @@ public class GameManager : PersistentSingleton<GameManager>
 
 
     // Scene Manger code end --
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
 
 

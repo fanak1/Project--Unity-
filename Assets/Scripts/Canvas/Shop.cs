@@ -40,6 +40,7 @@ public class Shop : StaticInstance<Shop>
 
     public void DeInit()
     {
+        TooltipManager.Instance.Hide();
         OnShopClose?.Invoke();
         OnShopClose = null;
         gameObject.SetActive(false);

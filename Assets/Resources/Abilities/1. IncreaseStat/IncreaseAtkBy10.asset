@@ -26,7 +26,7 @@ MonoBehaviour:
   stat:
     manaSpend: 0
     amount: 0
-  description: japsodifjaposdifjapsodifjapsodfijaspdofijaspodfijaspdoifjaspodifjapsdofijapsodifjapsodifjaspodifjaspdoifjaspodifjaspodifjaspodifjaspdoifj
+  description: Increase Atk by 10
   rarity: 0
   skillType: None
   skillTypeColor:

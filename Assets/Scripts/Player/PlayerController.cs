@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+
         MoveController();
         ShootController();
         AbilityController();
@@ -74,10 +75,26 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    protected virtual void TurnFace(Vector3 pos)
+    {
+        if (pos.x - this.transform.position.x < 0)
+        {
+            this.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            this.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
     public virtual void MoveController()
     {
         float movX = Input.GetAxis("Horizontal");
         float movY = Input.GetAxis("Vertical");
+
+        Vector3 newPos = transform.position + Vector3.right * movX;
+
+        TurnFace(newPos);
 
         Vector2 inputDir = new Vector2(movX, movY).normalized;
 

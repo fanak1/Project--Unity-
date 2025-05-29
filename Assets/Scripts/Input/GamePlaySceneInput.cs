@@ -22,15 +22,34 @@ public class GamePlaySceneInput : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (!inventoryOpen) {
                 if (!GameManager.Instance.TryToPause()) return;
-                inventoryTest.SetActive(true);
-                inventoryOpen = true;
-                
+                OpenInventory();
 
             } else {
                 if (!GameManager.Instance.TryToResume()) return;
-                inventoryTest.SetActive(false);
-                inventoryOpen = false;
+                CloseInventory();
+
             }
         }
+    }
+
+    public void OpenInventory()
+    {
+        GameManager.Instance.TryToPause();
+        inventoryTest.SetActive(true);
+        inventoryOpen = true;
+    }
+
+    public void CloseInventory()
+    {
+        TooltipManager.Instance.Hide();
+        GameManager.Instance.TryToResume();
+        inventoryTest.SetActive(false);
+        inventoryOpen = false;
+    }
+
+    public void QuitToMainMenu()
+    {
+        GameManager.Instance.TryToResume();
+        GameManager.Instance.Menu();
     }
 }

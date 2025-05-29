@@ -12,22 +12,22 @@ public abstract class MobScript : MonoBehaviour
 
     private AlbilitiesHolder albilitiesHolder;
 
+    private Rigidbody2D rb;
+
 
     private float time = 0f;
 
     
 
-    [SerializeField] private float moveInterval = 2f;
+    [SerializeField] protected float moveInterval = 2f;
 
     [SerializeField] private float shootPercentage = 0.5f;
 
-    [SerializeField] private float moveDuration = 2f;
+    [SerializeField] protected float moveDuration = 2f;
 
     private bool pause = false;
 
     internal int state = 0; //0 - stand still; 1 - moving
-
-    
 
     internal float spd;
 
@@ -50,11 +50,13 @@ public abstract class MobScript : MonoBehaviour
 
         spd = unitBase.stats.spd;
 
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update() {
         if (GameManager.Instance.pause)
             return;
+
         UpdateFunction();
     }
 
@@ -65,7 +67,7 @@ public abstract class MobScript : MonoBehaviour
         if (time > moveInterval)
         {
             if (player != null)
-                if (Vector3.Distance(player.transform.position, transform.position) < 100f)
+                if (Vector3.Distance(PlayerUnit.instance.GetPosition(), transform.position) < 100f)
                     RandomMove();
         }
         if (time > moveInterval + moveDuration)
@@ -76,7 +78,7 @@ public abstract class MobScript : MonoBehaviour
             time = 0f;
             if (player != null)
             {
-                if (Vector3.Distance(player.transform.position, transform.position) > 50f)
+                if (Vector3.Distance(PlayerUnit.instance.GetPosition(), transform.position) > 50f)
                 {
                     tooFar = true;
                 }
@@ -91,19 +93,33 @@ public abstract class MobScript : MonoBehaviour
 
     internal abstract void RandomMove();
 
+    internal void TurnFace()
+    {
+        if (PlayerUnit.instance == null) return;
+
+        if (PlayerUnit.instance.GetPosition().x - this.transform.position.x < 0)
+        {
+            this.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            this.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
     internal abstract void Move(int index);
 
     internal void Shoot(int index) {
         if(projectileHolder != null) {
-            if (index >= 0) projectileHolder.Shoot(index - 1, transform.position, player.transform.position);
+            if (index >= 0) projectileHolder.Shoot(index - 1, transform.position, PlayerUnit.instance.GetPosition());
         }
     }
 
     protected virtual void RandomShoot() {
-        if(projectileHolder != null) projectileHolder.RandomShoot(transform.position, player.transform.position);
+        if(projectileHolder != null) projectileHolder.RandomShoot(transform.position, PlayerUnit.instance.GetPosition());
     }
 
     protected virtual void MoveToward() {
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, spd * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, PlayerUnit.instance.GetPosition(), spd * Time.deltaTime);
     }
 }

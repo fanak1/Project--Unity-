@@ -50,6 +50,8 @@ public class BatScript : MobScript
     }
 
     internal override void RandomMove() {
+        TurnFace();
+        
         if (state == 0) {
             moveIndex = Random.Range(0, 5);
             if (tooFar) moveIndex = 4;
@@ -60,7 +62,7 @@ public class BatScript : MobScript
 
     protected override void MoveToward() {
         if (player == null) return;
-        Vector2 direction = player.transform.position - this.transform.position;
+        Vector2 direction = PlayerUnit.instance.GetPosition() - this.transform.position;
         transform.Translate(direction.normalized * enemy.stats.spd * Time.deltaTime);
     }
 }

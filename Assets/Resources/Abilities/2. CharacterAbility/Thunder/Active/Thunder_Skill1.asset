@@ -26,7 +26,8 @@ MonoBehaviour:
   stat:
     manaSpend: 10
     amount: 150
-  description: 
+  description: When Enemy has Electrify, Press E to deal damage to them equal to
+    150 and apply DeadlyElectric to them
   rarity: 0
   skillType: ThunderActive1
   skillTypeColor:

@@ -26,10 +26,12 @@ MonoBehaviour:
   stat:
     manaSpend: 0
     amount: 40
-  description: 
+  description: When hitting enemy, there is a chance to apply Electrify to them
   rarity: 0
   skillType: ThunderPassive1
   skillTypeColor:
     serializedVersion: 2
     rgba: 4294927360
+  icon: {fileID: 0}
+  cost: 0
   characterCode: 1

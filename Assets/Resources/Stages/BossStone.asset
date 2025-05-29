@@ -16,4 +16,8 @@ MonoBehaviour:
   roundList:
   - {fileID: 11400000, guid: 36a89d4aad8c9c34eb794cd7b17231bc, type: 2}
   interactableObject: {fileID: 0}
+  stageValue:
+    stageValue: 1
+    stagePoint: 10
+    gold: 10
   stageType: 1

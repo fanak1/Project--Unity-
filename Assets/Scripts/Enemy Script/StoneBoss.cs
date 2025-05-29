@@ -40,7 +40,7 @@ public class StoneBoss : BossScript
     public override void RandomMove()
     {
         if (PlayerUnit.instance != null) {
-            playerPosition = PlayerUnit.instance.transform.position;
+            playerPosition = PlayerUnit.instance.GetPosition();
         }
         timer += Time.deltaTime;
         if(timer > moveTime)
@@ -93,6 +93,8 @@ public class StoneBoss : BossScript
 
     public void Anim_NormalAttack()
     {
+        TurnFace();
+        if (PlayerUnit.instance != null) playerPosition = PlayerUnit.instance.GetPosition();
         normalAttackProjectile.Shoot(this.source, normalAttackPosition.position, playerPosition);
     }
 }
