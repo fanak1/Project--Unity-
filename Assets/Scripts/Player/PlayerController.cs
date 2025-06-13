@@ -92,9 +92,11 @@ public class PlayerController : MonoBehaviour
         float movX = Input.GetAxis("Horizontal");
         float movY = Input.GetAxis("Vertical");
 
-        Vector3 newPos = transform.position + Vector3.right * movX;
+        if(movX != 0) {
+            Vector3 newPos = transform.position + Vector3.right * movX;
 
-        TurnFace(newPos);
+            TurnFace(newPos);
+        }
 
         Vector2 inputDir = new Vector2(movX, movY).normalized;
 

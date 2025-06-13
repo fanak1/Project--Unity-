@@ -31,12 +31,13 @@ public class SpawnPoint : MonoBehaviour {
         return enemy.Spawn(position);
     }
 
-    public List<UnitBase> SpawnEnemy(List<ScriptableEnemyUnit> enemy) { //Function to spawn list of enemy with random position in range
+    public List<UnitBase> SpawnEnemy(List<ScriptableEnemyUnit> enemy, int level = 1) { //Function to spawn list of enemy with random position in range
         
         List<UnitBase> list = new List<UnitBase>();
         int i = 0;
         foreach (ScriptableEnemyUnit e in enemy) {
             var go = SpawnEnemy(e);
+            go.SetLevel(level);
             go.transform.name = e.name + " " + i;
             list.Add(go);
 
@@ -63,19 +64,19 @@ public class SpawnPoint : MonoBehaviour {
         this.listEnemy.AddRange(enemyUnits);
     }
 
-    public void Spawn() {
+    public void Spawn(int level = 1) {
         if(listEnemy != null)
-            CoroutineManager.Instance.StartNewCoroutine(BeginSpawn());
+            CoroutineManager.Instance.StartNewCoroutine(BeginSpawn(level));
     }
 
-    public IEnumerator BeginSpawn() {
+    public IEnumerator BeginSpawn(int level = 1) {
         animator.SetTrigger("SpawnBegin");
 
         yield return new WaitForSeconds(1f);
 
         animator.SetTrigger("SpawnEnd");
 
-        SpawnEnemy(this.listEnemy);
+        SpawnEnemy(this.listEnemy, level);
     }
 
     

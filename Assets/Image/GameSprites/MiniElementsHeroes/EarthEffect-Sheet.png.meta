@@ -572,7 +572,25 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      EarthEffect-Sheet_0: -4581847332897937257
+      EarthEffect-Sheet_1: 426554982985311886
+      EarthEffect-Sheet_10: 8255281194938382111
+      EarthEffect-Sheet_11: 8917212917609281538
+      EarthEffect-Sheet_12: 1854798111054878019
+      EarthEffect-Sheet_13: -508830576779535672
+      EarthEffect-Sheet_14: 8007070491196539797
+      EarthEffect-Sheet_15: -2625918324741943243
+      EarthEffect-Sheet_16: -3370252752251446865
+      EarthEffect-Sheet_17: 4949263488938961774
+      EarthEffect-Sheet_2: 5246480755175325184
+      EarthEffect-Sheet_3: -8444795163900558354
+      EarthEffect-Sheet_4: 341353028271229535
+      EarthEffect-Sheet_5: 9020529001947181408
+      EarthEffect-Sheet_6: 8459623731566258102
+      EarthEffect-Sheet_7: -2560652122298864134
+      EarthEffect-Sheet_8: 7072352029236700771
+      EarthEffect-Sheet_9: -6206693785663047547
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

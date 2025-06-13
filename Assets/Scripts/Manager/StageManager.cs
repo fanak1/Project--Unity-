@@ -102,7 +102,7 @@ public class StageManager : Singleton<StageManager> {
         spawn[spawn.Count - 1].SetEnemy(ListConfiguration<ScriptableEnemyUnit>.TakeRandomFromList(temp, temp.Count));
 
         for(int i=0; i<spawn.Count; i++) {
-            spawn[i].Spawn();
+            spawn[i].Spawn(GameManager.Instance.level);
         }
     }
 

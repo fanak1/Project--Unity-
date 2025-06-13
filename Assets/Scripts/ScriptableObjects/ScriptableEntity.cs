@@ -72,6 +72,22 @@ public struct Stats {
     public int atk;
     public int spd;
     public int def;
+
+    public Stats(int hp, int mp, int atk, int spd, int def) {
+        this.hp = hp;
+        this.mp = mp;
+        this.atk = atk;
+        this.spd = spd;
+        this.def = def;
+    }
+
+    public Stats(int amount) {
+        this.hp=amount;
+        this.mp=amount;
+        this.atk=amount;
+        this.spd=amount;
+        this.def=amount;
+    }
 }
 
 

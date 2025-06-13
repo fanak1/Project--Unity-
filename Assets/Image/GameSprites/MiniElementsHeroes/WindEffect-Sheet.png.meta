@@ -747,7 +747,32 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      WindEffect-Sheet_0: 7821839940286091460
+      WindEffect-Sheet_1: 7684195076049605711
+      WindEffect-Sheet_10: 6118404124056657866
+      WindEffect-Sheet_11: -3323931474045733599
+      WindEffect-Sheet_12: 8014547039866156686
+      WindEffect-Sheet_13: 7569835381085241410
+      WindEffect-Sheet_14: 6643233119760717663
+      WindEffect-Sheet_15: 3426303595808535464
+      WindEffect-Sheet_16: 7548085782614993822
+      WindEffect-Sheet_17: 1499109948131445840
+      WindEffect-Sheet_18: -3621435686816862124
+      WindEffect-Sheet_19: -9177106542007947853
+      WindEffect-Sheet_2: 5004266084912448522
+      WindEffect-Sheet_20: -5438951545616990615
+      WindEffect-Sheet_21: -5939346186908683837
+      WindEffect-Sheet_22: -4224981834096999500
+      WindEffect-Sheet_23: -2430079394172074446
+      WindEffect-Sheet_24: -3651903903308937757
+      WindEffect-Sheet_3: -7863282745777673490
+      WindEffect-Sheet_4: 3402372465715381942
+      WindEffect-Sheet_5: 5446831825860004870
+      WindEffect-Sheet_6: -6717071566060037026
+      WindEffect-Sheet_7: -8439204401553771654
+      WindEffect-Sheet_8: -5581241646440589921
+      WindEffect-Sheet_9: 8293342226707293104
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

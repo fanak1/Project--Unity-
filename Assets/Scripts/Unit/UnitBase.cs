@@ -39,6 +39,9 @@ public abstract class UnitBase : MonoBehaviour {
     internal float regenMP = 50f;
     internal float regenHP = 20f;
 
+    public int level = 1;
+    public int deltaLevel = 0;
+
 
     //--------------------------------------------------------------------------------------------------------------------------------------------
     //Events
@@ -142,6 +145,15 @@ public abstract class UnitBase : MonoBehaviour {
 
 
     //Stats ------------------------------------------------------------------------------------------------------------------------------------
+
+    public void SetLevel(int level, bool exceptSpd = true) {
+        int deltaLevel = level - this.level;
+        this.level = level;
+        int levelScale = this.deltaLevel * deltaLevel;
+        Stats incStats = new Stats(levelScale);
+        if (exceptSpd) incStats.spd = 0;
+        IncreaseStats(incStats);
+    }
 
     public Stats IncreaseStats(Stats stats) {
 

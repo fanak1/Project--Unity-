@@ -347,7 +347,16 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      IceEffect-Sheet_0: -2524043332418652700
+      IceEffect-Sheet_1: 2267469494457891128
+      IceEffect-Sheet_2: -7226810535189171663
+      IceEffect-Sheet_3: 5300439507590921243
+      IceEffect-Sheet_4: -3933465926156905103
+      IceEffect-Sheet_5: 5099716706264649519
+      IceEffect-Sheet_6: -3356498739279821821
+      IceEffect-Sheet_7: 8538094887108528455
+      IceEffect-Sheet_8: 2877523250968674181
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

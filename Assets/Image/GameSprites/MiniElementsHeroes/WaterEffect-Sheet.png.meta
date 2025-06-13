@@ -597,7 +597,26 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      WaterEffect-Sheet_0: -6406946241393470389
+      WaterEffect-Sheet_1: -1882119600911304698
+      WaterEffect-Sheet_10: -8507014340511977559
+      WaterEffect-Sheet_11: 1719043205692616016
+      WaterEffect-Sheet_12: -7895836037235510997
+      WaterEffect-Sheet_13: 247182913190409216
+      WaterEffect-Sheet_14: -7000077008738326814
+      WaterEffect-Sheet_15: 8075364031454412642
+      WaterEffect-Sheet_16: 7302999585895131759
+      WaterEffect-Sheet_17: -5921365745616785166
+      WaterEffect-Sheet_18: 5890910858322142752
+      WaterEffect-Sheet_2: -370865512260766687
+      WaterEffect-Sheet_3: -3351925529907642292
+      WaterEffect-Sheet_4: -4579977026309015727
+      WaterEffect-Sheet_5: 1446081545919526579
+      WaterEffect-Sheet_6: 4609183408030016225
+      WaterEffect-Sheet_7: -1498850617101471671
+      WaterEffect-Sheet_8: -3405155063629674912
+      WaterEffect-Sheet_9: -3010746730592854232
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

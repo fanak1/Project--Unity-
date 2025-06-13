@@ -183,6 +183,8 @@ MonoBehaviour:
     damageBonus: 0
     critRate: 5
     critDamage: 50
+  level: 1
+  deltaLevel: 200
   dead: 0
   enemyType: 1
   finishAnimationDie: 0
@@ -295,6 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d7dd09e58419e440a1ea30938f109f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  b: {fileID: 0}
   timer: 0
   moveTime: 2
   skill2: {fileID: 5570107757302080252, guid: 5c8283ec950ee4e4880164b6f37de457, type: 3}

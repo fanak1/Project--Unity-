@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Resources;
 using UnityEngine;
 
@@ -5,7 +6,13 @@ public class ShopNPC : InteractableObject
 {
     bool playerIn = false;
 
+    public List<ScriptableAlbilities> shopItems;
+
     bool inShop = false;
+
+    private void Start() {
+        shopItems = ResourceSystem.Instance.GetClaimableAbilitiesForPlayer();
+    }
 
     public override void InteractBegin()
     {
@@ -40,10 +47,14 @@ public class ShopNPC : InteractableObject
             if (Input.GetKeyDown(KeyCode.F))
             {
                 inShop = true;
-                Shop.Instance.Init(ResourceSystem.Instance.GetClaimableAbilitiesForPlayer());
+                Shop.Instance.Init(shopItems, (ScriptableAlbilities a) => Buy(a));
             }
                 
             
         }
+    }
+
+    public void Buy(ScriptableAlbilities a) {
+        shopItems.Remove(a);
     }
 }

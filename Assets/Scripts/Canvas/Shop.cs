@@ -22,6 +22,8 @@ public class Shop : StaticInstance<Shop>
 
     public Action OnShopClose;
 
+    public Action<ScriptableAlbilities> OnBuy;
+
     private void Start()
     {
         money.SetText(GameManager.Instance.currentMoney.ToString());
@@ -30,12 +32,12 @@ public class Shop : StaticInstance<Shop>
         moneyOGColor = money.color;
     }
 
-    public void Init(List<ScriptableAlbilities> shopList)
+    public void Init(List<ScriptableAlbilities> shopList, Action<ScriptableAlbilities> onBuyCallBack)
     {
         gameObject.SetActive(true);
         InitInventory();
         InitShop(shopList);
-        
+        OnBuy = onBuyCallBack;
     }
 
     public void DeInit()
@@ -43,6 +45,7 @@ public class Shop : StaticInstance<Shop>
         TooltipManager.Instance.Hide();
         OnShopClose?.Invoke();
         OnShopClose = null;
+        OnBuy = null;
         gameObject.SetActive(false);
     }
 
@@ -88,6 +91,7 @@ public class Shop : StaticInstance<Shop>
     {
         PlayerUnit.instance.AddAbility(a);
         InitInventory();
+        OnBuy?.Invoke(a);
     }
 
     public void SellAbility(ScriptableAlbilities a)
