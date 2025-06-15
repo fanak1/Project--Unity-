@@ -14,7 +14,7 @@ public class ScriptableRounds : ScriptableObject
     public List<ScriptableEnemyUnit> LoadEnemyForRound() {
         List<ScriptableEnemyUnit> list = new List<ScriptableEnemyUnit>();
         foreach(EnemyCodeName enemy in enemyList) {
-            var e = ResourceSystem.Instance.GetEnemyWithCodeName(enemy);
+            var e = Registry.Enemy(enemy);
             list.Add(e);
         }
         return list;

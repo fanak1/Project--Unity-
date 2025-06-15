@@ -12,6 +12,7 @@ public class Transition : PersistentSingleton<Transition>
     public void StartLoading()
     {
         animator.SetTrigger("Start");
+        SoundManager.Instance.PlayBackground(SoundManager.Instance.loading);
     }
 
     public void EndLoading()

@@ -10,7 +10,10 @@ public class ShopNPC : InteractableObject
 
     bool inShop = false;
 
+    public GameObject tooltip;
+
     private void Start() {
+        tooltip.SetActive(false);
         shopItems = ResourceSystem.Instance.GetClaimableAbilitiesForPlayer();
     }
 
@@ -23,6 +26,7 @@ public class ShopNPC : InteractableObject
     {
         if (!other.CompareTag("Player")) return;
         playerIn = true;
+        tooltip.SetActive(true);
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -30,12 +34,13 @@ public class ShopNPC : InteractableObject
         if (!other.CompareTag("Player")) return;
         if(inShop)
         {
-            Shop.Instance.DeInit();
+            Shop.Instance.StartDeInit();
             InteractFinish();
             playerIn = false;
             inShop = false;
         }
-        
+        tooltip.SetActive(false);
+
     }
 
     private void Update()
@@ -44,12 +49,16 @@ public class ShopNPC : InteractableObject
             return;
         if (playerIn)
         {
+            
             if (Input.GetKeyDown(KeyCode.F))
             {
                 inShop = true;
                 Shop.Instance.Init(shopItems, (ScriptableAlbilities a) => Buy(a));
             }
                 
+            
+        } else
+        {
             
         }
     }

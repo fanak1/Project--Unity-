@@ -66,7 +66,7 @@ public abstract class MobScript : MonoBehaviour
 
         if (time > moveInterval)
         {
-            if (player != null)
+            if (PlayerUnit.instance != null)
                 if (Vector3.Distance(PlayerUnit.instance.GetPosition(), transform.position) < 100f)
                     RandomMove();
         }
@@ -76,7 +76,7 @@ public abstract class MobScript : MonoBehaviour
             if (shoot < shootPercentage) RandomShoot();
             state = 0;
             time = 0f;
-            if (player != null)
+            if (PlayerUnit.instance != null)
             {
                 if (Vector3.Distance(PlayerUnit.instance.GetPosition(), transform.position) > 50f)
                 {

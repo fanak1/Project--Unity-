@@ -12,4 +12,17 @@ public static class Registry
             _ => null
         };
     }
+
+    public static ScriptablePlayerUnit Character(CharacterCode characterCode)
+    {
+        if (characterCode != CharacterCode.None)
+            return ResourceSystem.Instance.GetCharacterWithCodeName(characterCode);
+        else
+            return null;
+    }
+
+    public static ScriptableEnemyUnit Enemy(EnemyCodeName enemyCodeName)
+    {
+        return ResourceSystem.Instance.GetEnemyWithCodeName(enemyCodeName);
+    }
 }

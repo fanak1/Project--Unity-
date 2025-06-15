@@ -53,6 +53,7 @@ public class Inventory : StaticInstance<Inventory>
         player = GameObject.FindGameObjectWithTag("Player");
 
         if(player != null) {
+            PlayerUnit.instance.mouseBlock = true;
             UnitBase playerBase = player.GetComponent<UnitBase>();
             if(playerBase != null) {
                 DisplayStats(playerBase.ShowStats());
@@ -62,6 +63,8 @@ public class Inventory : StaticInstance<Inventory>
     }
 
     private void OnDisable() {
+        if (PlayerUnit.instance != null) 
+            PlayerUnit.instance.mouseBlock = false;
         ResetAbilityDisplay();
     }
 

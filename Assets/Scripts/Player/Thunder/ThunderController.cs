@@ -23,7 +23,7 @@ public class ThunderController : PlayerController
 
     public override void ShootController()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !playerUnit.mouseBlock)
         { //Left-mouse
             if (projectileHolder.EnoughMana(0, playerUnit.nowMP))
             {

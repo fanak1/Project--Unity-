@@ -48,7 +48,7 @@ public abstract class UnitBase : MonoBehaviour {
 
     //Function to called when the projectile succesfully collide with an object
     public virtual void Hitting(UnitBase target, float dmg) {
-
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.hitEnemy);
         OnHitting?.Invoke(target, dmg); // Invoke the functions when successfully hitting a target
 
         DealDamage(target, dmg);
@@ -291,6 +291,7 @@ public abstract class UnitBase : MonoBehaviour {
     }
 
     internal virtual void Destroy() {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.killEnemy);
         Destroy(gameObject);
     }
 

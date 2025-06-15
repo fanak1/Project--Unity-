@@ -15,4 +15,9 @@ public class MainMenuButton : MonoBehaviour
     {
         GameManager.Instance.QuitGame();
     }
+
+    public void HistoryButton()
+    {
+        HistoryUI.Instance.TurnOn();
+    }
 }

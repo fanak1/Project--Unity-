@@ -80,6 +80,7 @@ public class StoneBoss : BossScript
 
     public void Anim_Skill2()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.stoneBossLaser);
         Vector3 direction = playerPosition - skill2position.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion rot = Quaternion.Euler(0, 0, angle);

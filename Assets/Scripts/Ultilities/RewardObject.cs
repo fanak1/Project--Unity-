@@ -18,6 +18,7 @@ public class RewardObject : MonoBehaviour
             PlayerUnit.instance.stats.spd = 0;
             RewardManager.Instance.InitReward(() => { PlayerUnit.instance.stats.spd = ogSpd; });
             isInit = true;
+            SoundManager.Instance.PlaySFX(SoundManager.Instance.rewardBegin);
         }
     }
 

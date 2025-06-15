@@ -188,6 +188,7 @@ public class LevelManager : StaticInstance<LevelManager>
 
 }
 
+[Serializable]
 public struct LevelData {
     public Dictionary<string, bool> stageFinished;
 

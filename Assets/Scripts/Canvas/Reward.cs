@@ -20,7 +20,8 @@ public class Reward : StaticInstance<Reward>
     }
 
     public void DisplayReward(List<ScriptableAlbilities> list, Action<ScriptableAlbilities> onRewardChoose) {
-        
+        if (PlayerUnit.instance != null)
+            PlayerUnit.instance.mouseBlock = true;
         foreach(Transform child in gameObject.transform)
         {
             Destroy(child.gameObject);

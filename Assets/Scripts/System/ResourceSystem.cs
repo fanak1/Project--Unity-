@@ -11,18 +11,27 @@ public class ResourceSystem : PersistentSingleton<ResourceSystem>
     //Enemy---------------------------------------------------------------------------------------------------------------------------------------------------
     public List<ScriptableEnemyUnit> EnemyUnitList {  get; private set; } //List to load the Resources into
     private Dictionary<EnemyCodeName, ScriptableEnemyUnit> _EnemyUnitDict; //Dictionary for find EnemyUnit with code name
+
+    public ScriptableEnemyUnit GetEnemyWithCodeName(EnemyCodeName enemyCodeName) => _EnemyUnitDict[enemyCodeName]; //Get 1 ScriptableEnemyUnit with code name
+    // EnemyEnd ------
+
+    //Ability -----
     public List<ScriptableAlbilities> allAbilities;
     public Dictionary<Rarity, List<ScriptableAlbilities>> allAbilitiesByRarity = new();
     public Dictionary<string, ScriptableAlbilities> allAbilitiesDict;
+    //Ability End ------
 
+    //Stage ------
     public List<ScriptableStage> allStages;
     private Dictionary<StageType, List<ScriptableStage>> allStagesDict = new();
+    //Stage End ------
 
+    //Character ------
+    public List<ScriptablePlayerUnit> CharacterList { get; private set; }
+    private Dictionary<CharacterCode, ScriptablePlayerUnit> _CharacterDict;
 
-    public ScriptableEnemyUnit GetEnemyWithCodeName(EnemyCodeName enemyCodeName) => _EnemyUnitDict[enemyCodeName]; //Get 1 ScriptableEnemyUnit with code name
-
-    //-------------------------------------------------------------------------------------------------------------------------------------------------Enemy
-
+    public ScriptablePlayerUnit GetCharacterWithCodeName(CharacterCode characterCode) => _CharacterDict[characterCode];
+    //Character End -----
 
 
     //Level----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -35,8 +44,10 @@ public class ResourceSystem : PersistentSingleton<ResourceSystem>
     }
 
     private void AssembleResources() {
+        //Enemy Start -----------------------
         EnemyUnitList = Resources.LoadAll<ScriptableEnemyUnit>("Enemy").ToList(); //Load all ScriptableEnemyUnit from "EnemyUnit" folder inside "Resources" folder to List
         _EnemyUnitDict = EnemyUnitList.ToDictionary(r => r.enemyCodeName, r => r); //Insert all enemy from list to dict to find with code name
+        //Enemy End --------------------------------------
 
 
         //Ability start
@@ -68,6 +79,11 @@ public class ResourceSystem : PersistentSingleton<ResourceSystem>
             allStagesDict[stage.stageType].Add(stage);    
         });
         //AllStage end
+
+        //Character Start -------------------------------------------------------------------
+        CharacterList = Resources.LoadAll<ScriptablePlayerUnit>("Player").ToList();
+        _CharacterDict = CharacterList.ToDictionary(c => c.characterCode, c => c);
+        //Character End ------------------------------------------------------------------
     }
 
 // -- Ability Section

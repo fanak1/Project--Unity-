@@ -13,20 +13,24 @@ public class ExitDoor : MonoBehaviour
 
     private bool playerIn;
 
+    public GameObject tooltip;
+
     private void Start() {
         //message.gameObject.SetActive(false);
+        tooltip.SetActive(false);
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.exitDoor);
     }
 
     private void Update() {
         if (GameManager.Instance.pause)
             return;
-        if (playerIn && Input.GetKeyDown(KeyCode.K)){
-            
+        if (playerIn && Input.GetKeyDown(KeyCode.F)){
+            SoundManager.Instance.PlaySFX(SoundManager.Instance.exitDoor);
             OnDoorEnter?.Invoke();
             Destroy(gameObject);
             if(LevelManager.Instance.isLastLevel)
             {
-                Statistic.Instance.Open();
+                Statistic.Instance.Open(true);
             } else
             {
                 GameManager.Instance.NextLevel();
@@ -38,6 +42,7 @@ public class ExitDoor : MonoBehaviour
         if (other.CompareTag("Player")) {
            // message.gameObject.SetActive(true);
             playerIn = true;
+            tooltip.SetActive(true);
         }
     }
 
@@ -45,6 +50,7 @@ public class ExitDoor : MonoBehaviour
         if (other.CompareTag("Player")) {
            // message.gameObject.SetActive(false);
             playerIn = false;
+            tooltip.SetActive(false);
         }
 
     }

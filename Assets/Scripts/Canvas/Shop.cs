@@ -24,8 +24,11 @@ public class Shop : StaticInstance<Shop>
 
     public Action<ScriptableAlbilities> OnBuy;
 
+    public Animator animator;
+
     private void Start()
     {
+        animator = GetComponent<Animator>();
         money.SetText(GameManager.Instance.currentMoney.ToString());
         GameManager.Instance.MoneyChangeObserver += () => { money.SetText(GameManager.Instance.currentMoney.ToString()); };
         gameObject.SetActive(false);
@@ -34,10 +37,30 @@ public class Shop : StaticInstance<Shop>
 
     public void Init(List<ScriptableAlbilities> shopList, Action<ScriptableAlbilities> onBuyCallBack)
     {
+        
         gameObject.SetActive(true);
         InitInventory();
         InitShop(shopList);
         OnBuy = onBuyCallBack;
+    }
+
+    public void OnEnable()
+    {
+        if(PlayerUnit.instance != null) 
+            PlayerUnit.instance.mouseBlock = true;
+        if (animator)
+        {
+            animator.CrossFade("ShopInit", 0f);
+        }
+    }
+
+    public void StartDeInit()
+    {
+        PlayerUnit.instance.mouseBlock = false;
+        if (animator)
+        {
+            animator.CrossFade("ShopDeInit", 0f);
+        }
     }
 
     public void DeInit()

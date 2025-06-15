@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
 
     public virtual void ShootController() { //Shooting (left, right)
         
-        if(Input.GetMouseButton(0)) { //Left-mouse
+        if(Input.GetMouseButton(0) && !playerUnit.mouseBlock) { //Left-mouse
             if(projectileHolder.EnoughMana(0, playerUnit.nowMP)) {
                 projectileHolder.Shoot(0, transform.position, mousePos);
                 

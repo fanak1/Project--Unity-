@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class GameManager : PersistentSingleton<GameManager>
 {
@@ -34,9 +35,11 @@ public class GameManager : PersistentSingleton<GameManager>
 
     public SaveGameData tempSave;
 
+    public History history;
+
 
     private void Start() {
-        
+        SoundManager.Instance.PlayBackground(SoundManager.Instance.mainMenu);
     }
 
     private void Update() {
@@ -91,7 +94,7 @@ public class GameManager : PersistentSingleton<GameManager>
     // -- Multi role
 
     public void LoadScene() {
-        
+        SoundManager.Instance.PlayBackground(SoundManager.Instance.mainMenu);
         SceneManager.LoadScene(0);
     }
 
@@ -166,9 +169,14 @@ public class GameManager : PersistentSingleton<GameManager>
 
     public void StartGame(ScriptablePlayerUnit player)
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.levelBegin);
         level = 1;
         LoadScene("GamePlayScene", () => {
+            SoundManager.Instance.PlayBackground(SoundManager.Instance.idle);
             PlayerSpawn.Instance.scriptablePlayer = player;
+            currentStatistics = new();
+            CreateNewHistory();
+            SetCharacterToHistory(player.characterCode);
             LevelManager.Instance.LoadStageInScene(LoadRandomLevel());
             BeginState(GameStates.GAMEPLAY);
         });
@@ -178,16 +186,21 @@ public class GameManager : PersistentSingleton<GameManager>
         if(!persistent)
         {
             currentStatistics = new();
+            CreateNewHistory();
             LoadScene("GamePlayScene", () => {
+                SoundManager.Instance.PlayBackground(SoundManager.Instance.idle);
                 LevelManager.Instance.LoadStageInScene(LoadRandomLevel());
                 BeginState(GameStates.GAMEPLAY);
+                LightManager.Instance.SetColor(level);
             });
         } else
         {
             LoadScene("GamePlayScene", () => {
+                SoundManager.Instance.PlayBackground(SoundManager.Instance.idle);
                 PlayerSpawn.Instance.data = tempSave.player;
                 LevelManager.Instance.LoadStageInScene(LoadRandomLevel());
                 BeginState(GameStates.GAMEPLAY);
+                LightManager.Instance.SetColor(level);
             });
         }
         
@@ -246,10 +259,11 @@ public class GameManager : PersistentSingleton<GameManager>
 
         // -- Trigger Point cut
         SaveGame();
+        AppendToHistoryJson(history);
         // End Trigger Pointcut --
 
         LoadScene("MenuScene", () => {
-            
+            SoundManager.Instance.PlayBackground(SoundManager.Instance.mainMenu);
         });
     }
 
@@ -299,15 +313,96 @@ public class GameManager : PersistentSingleton<GameManager>
 
     // Scene Manger code end --
 
+    // -- History code
+
+    
+    public void CreateNewHistory()
+    {
+        history = new();
+        history.currentTime = DateTime.Now;
+    }
+
+    public void SetCharacterToHistory(CharacterCode character)
+    {
+        history.character = character;
+    }
+
+    public void AddEnemyToHistory(int amount)
+    {
+        history.enemyKill += amount;
+    }
+
+    public void SetLevelToHistory(int level)
+    {
+        history.highestLevel = level;
+    }
+
+    public void AddBossToHistory(string name)
+    {
+        if (history.bossName == null)
+            history.bossName = new();
+        history.bossName.Add(name);
+    }
+
+    public void SaveStastisticsToHistory(Statistics statistics)
+    {
+        history.stats = statistics;
+    }
+
+    public void SaveTimeToHistory(float time)
+    {
+        history.time = time;
+    }
+
+    public void AppendTimeToHistory(float time)
+    {
+        history.time += time;
+    }
+    
+    public void AppendToHistoryJson(History history)
+    {
+        string filePath = Application.persistentDataPath + "/history.json";
+        List<History> dataList = new List<History>();
+
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            dataList = ListJsonUtility.FromJson<History>(json);
+        }
+
+        dataList.Add(history);
+
+        string newJson = ListJsonUtility.ToJson<History>(dataList);
+        File.WriteAllText(filePath, newJson);
+    }
+
+    public List<History> LoadHistoryJson()
+    {
+        string filePath = Application.persistentDataPath + "/history.json";
+        List<History> dataList = new List<History>();
+
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            dataList = ListJsonUtility.FromJson<History>(json);
+        }
+
+        return dataList;
+    }
+
+    // History code end  ---
+
     public void QuitGame()
     {
+        AppendToHistoryJson(history);
         Application.Quit();
     }
 }
 
 
-    // Multi role --
+// Multi role --
 
+[Serializable]
 public struct SaveGameData {
     public LevelData level;
     public PlayerData player;
@@ -315,8 +410,21 @@ public struct SaveGameData {
     public int runLevel;
 }
 
+[Serializable]
 public struct Statistics
 {
     public int score;
     public int money;
+}
+
+[Serializable]
+public struct History
+{
+    public CharacterCode character; //
+    public DateTime currentTime; //
+    public int highestLevel; //
+    public int enemyKill; //
+    public List<string> bossName; //
+    public Statistics stats; //
+    public float time; //
 }

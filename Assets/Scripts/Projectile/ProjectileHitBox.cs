@@ -47,6 +47,7 @@ public class ProjectileHitBox : MonoBehaviour
                 CoroutineManager.Instance.StartNewCoroutine(AddDamageInterval(cUnit));
                 cUnit.damagePosition = cUnit.transform.position;
                 source.Hitting(cUnit, Damage());
+                SoundManager.Instance.PlaySFX(SoundManager.Instance.hitEnemy);
             }
         }
         else

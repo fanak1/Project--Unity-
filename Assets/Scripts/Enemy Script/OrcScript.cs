@@ -65,6 +65,7 @@ public class OrcScript : MobScript
     {
         if (PlayerUnit.instance != null)
         {
+            SoundManager.Instance.PlaySFX(SoundManager.Instance.orcAxe);
             dash = true;
             dashDirection = PlayerUnit.instance.GetPosition() - gameObject.transform.position;
             TurnFace();

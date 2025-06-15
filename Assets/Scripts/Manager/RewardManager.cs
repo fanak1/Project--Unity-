@@ -41,6 +41,7 @@ public class RewardManager : Singleton<RewardManager>
         show = GenerateAlbilities(abilities, 3);
         rewardUI.gameObject.SetActive(true);
         rewardUI.DisplayReward(show, (ScriptableAlbilities ability) => {
+            PlayerUnit.instance.mouseBlock = false;
             Choose(ability);
             callBackChooseReward();
         });

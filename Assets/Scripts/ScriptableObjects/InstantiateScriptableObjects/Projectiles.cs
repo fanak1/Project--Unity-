@@ -23,6 +23,7 @@ public class Projectiles : MonoBehaviour
     }
 
     private ProjectileBase ShootProjectile(UnitBase source, int bulletIndex, Vector3 position, Vector3 destination) {
+
         ProjectileBase p;
         if(bulletPooling.Count <= 0) {
             p = Create(prefabs, source, bulletIndex, position, destination);
@@ -40,6 +41,7 @@ public class Projectiles : MonoBehaviour
     }
 
     public void Shoot(UnitBase source, Vector3 position, Vector3 destination) { //Function to fire projectile
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.projectileOut);
         for (int i = 0; i < projectileAttribute.numberOfBullet; i++) {
             var p = ShootProjectile(source, i, position, destination);
         }

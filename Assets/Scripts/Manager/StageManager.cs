@@ -21,6 +21,8 @@ public class StageManager : Singleton<StageManager> {
 
     [SerializeField] private List<SpawnPoint> spawnList;
 
+    private string bossName;
+
     public int numberEnemyLeft; //number enemy we have to clear each round
 
     private List<StageState> stateList;
@@ -93,6 +95,7 @@ public class StageManager : Singleton<StageManager> {
     }
 
     private void SpawnEnemy(List<SpawnPoint> spawn, List<ScriptableEnemyUnit> enemy) {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.spawnPoint);
         List<ScriptableEnemyUnit> temp = new List<ScriptableEnemyUnit>(enemy);
         
         for (int i=0; i<spawn.Count-1; i++) {
@@ -137,7 +140,7 @@ public class StageManager : Singleton<StageManager> {
     private void RoundState() { //Round state - 0
 
         if (!stateInit) {
-
+            SoundManager.Instance.PlayBackground(SoundManager.Instance.combat);
             List<ScriptableEnemyUnit> enemyList = new List<ScriptableEnemyUnit>(roundList[roundIndex].LoadEnemyForRound()); //List of enemy in this round
 
             stateInit = true; //Prevent loop init
@@ -149,7 +152,7 @@ public class StageManager : Singleton<StageManager> {
             SpawnEnemy(spawnList, enemyList);
 
             if(stage.stageType == StageType.Boss) {
-
+                bossName = enemyList[0].name;
             }
 
             /*
@@ -203,6 +206,7 @@ public class StageManager : Singleton<StageManager> {
     }
 
     public void RewardStateEnd() {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.rewardEnd);
         OnRewardFinish?.Invoke();
         FinishAndSwitchState();
     }
@@ -216,6 +220,14 @@ public class StageManager : Singleton<StageManager> {
             OnStageFinish?.Invoke();
             GameManager.Instance.CalculateScore(timeToFinish, stage.stageValue.stagePoint, numberOfEnemyKill);
             GameManager.Instance.IncreaseMoney(stage.stageValue.gold);
+            GameManager.Instance.AddEnemyToHistory(numberOfEnemyKill);
+            if(stage.stageType == StageType.Boss)
+            {
+                SoundManager.Instance.PlaySFX(SoundManager.Instance.passLevel);
+                GameManager.Instance.AddBossToHistory(bossName);
+            }
+            GameManager.Instance.AppendTimeToHistory(timeToFinish);
+            SoundManager.Instance.PlayBackground(SoundManager.Instance.idle);
         }
         
         if(!finish)

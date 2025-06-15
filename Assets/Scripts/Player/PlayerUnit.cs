@@ -7,6 +7,7 @@ public class PlayerUnit : UnitBase
 {
     private HealthBar healthBar;
     private ManaBar manaBar;
+    public bool mouseBlock = false;
 
     public static PlayerUnit instance;
 
@@ -24,7 +25,7 @@ public class PlayerUnit : UnitBase
     public Vector3 GetPosition() => pivot.transform.position;
 
     internal override void Destroy() {
-        Statistic.Instance.Open();
+        Statistic.Instance.Open(false);
         instance = null;
         base.Destroy();
     }

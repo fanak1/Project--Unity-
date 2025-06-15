@@ -81,6 +81,7 @@ public abstract class ProjectileBase : MonoBehaviour
                 cUnit.damagePosition = transform.position;
 
                 source.Hitting(cUnit, Damage());
+                
             }
         } else {
 
