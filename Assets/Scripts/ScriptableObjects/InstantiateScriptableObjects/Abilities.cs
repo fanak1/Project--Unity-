@@ -47,6 +47,10 @@ public class Abilities : MonoBehaviour {
                 //target.OnAbilityKeyPressed += PerformAbility;
                 skillIcon = InitSkillIcon();
                 break;
+            case Event.OnClaimed:
+                // This event is not handled in this class, but can be used in derived classes
+                Action();
+                break;
             default:
                 break;
         }

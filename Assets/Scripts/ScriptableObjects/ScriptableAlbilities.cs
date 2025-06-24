@@ -60,7 +60,8 @@ public enum Event {
     OnDealDamage,
     OnDamageTaken,
     IncreaseStat,
-    OnButtonClick
+    OnButtonClick,
+    OnClaimed
 }
 
 public enum Rarity {

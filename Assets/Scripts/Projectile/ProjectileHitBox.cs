@@ -26,11 +26,13 @@ public class ProjectileHitBox : MonoBehaviour
     {
         var hit = collision.gameObject.GetComponent<UnitBase>();
         if (hit != null) {
+            
             if (hitUnits.Contains(hit)) 
                 return true;
             else 
                 return false;
         }
+        hitUnits.RemoveAll(u => u == null);
         return true;
     }
 

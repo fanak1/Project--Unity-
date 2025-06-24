@@ -24,6 +24,8 @@ public class PlayerUnit : UnitBase
 
     public Vector3 GetPosition() => pivot.transform.position;
 
+    public Transform GetTransformPosition() => pivot.transform;
+
     internal override void Destroy() {
         Statistic.Instance.Open(false);
         instance = null;
