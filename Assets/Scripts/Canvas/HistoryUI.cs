@@ -28,8 +28,8 @@ public class HistoryUI : StaticInstance<HistoryUI>
         if(list.Count > 0)
         {
             List<History> sortedHistory = list
-                .OrderBy(h => Math.Abs((DateTime.Now - h.currentTime).TotalSeconds))
-                .ToList();
+            .OrderBy(h => Math.Abs((DateTime.Now - DateTime.Parse(h.currentTime)).TotalSeconds))
+            .ToList();
 
             foreach (var h in sortedHistory)
             {

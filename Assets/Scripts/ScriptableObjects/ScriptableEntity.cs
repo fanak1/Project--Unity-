@@ -60,7 +60,7 @@ public abstract class ScriptableEntity : ScriptableObject {
         var obj = Instantiate(prefabs, position, Quaternion.identity);
         obj.icon = Icon;
         if (this.projectiles.Count > 0) obj.OnFinishInit += (UnitBase b) => { SetProjectileForEntity(b, projectiles); } ;
-        if (this.abilities.Count > 0) obj.OnFinishInit += (UnitBase b) => SetAbilitiesForEntity(b, abilities);
+        if (this.abilities.Count > 0) obj.OnFinishInitProjectile += (UnitBase b) => SetAbilitiesForEntity(b, abilities);
         return obj;
     }
 }
@@ -84,9 +84,9 @@ public struct Stats {
     public Stats(int amount) {
         this.hp=amount;
         this.mp=amount;
-        this.atk=amount;
+        this.atk=amount/10;
         this.spd=amount;
-        this.def=amount;
+        this.def=amount/10;
     }
 }
 

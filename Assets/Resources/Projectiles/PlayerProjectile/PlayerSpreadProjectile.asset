@@ -15,9 +15,11 @@ MonoBehaviour:
   projectileAttribute:
     speed: 50
     accel: 0.2
-    numberOfBullet: 4
-    manaSpend: 1
-    deviation: 0.1
+    numberOfBullet: 2
+    manaSpend: 5
+    deviation: 0.5
     interval: 0.5
+    scale: 0.8
   projectileCodeName: 0
   prefabs: {fileID: 3073157629829013096, guid: cbe8a1027e4c4aa47b58d8bb1549e67d, type: 3}
+  projectiles: {fileID: 0}

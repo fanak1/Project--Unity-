@@ -37,6 +37,8 @@ public class ScriptableAlbilities : ScriptableObject {
 
     public CharacterCode characterCode;
 
+    public bool isGenProjectile = false;
+
 
     public Abilities Create() {
         Abilities p;
@@ -61,7 +63,8 @@ public enum Event {
     OnDamageTaken,
     IncreaseStat,
     OnButtonClick,
-    OnClaimed
+    OnClaimed,
+    OnProjectileShoot
 }
 
 public enum Rarity {
@@ -75,7 +78,7 @@ public enum Rarity {
 [Serializable]
 public struct AbilityStat {
     public int manaSpend;
-    public int amount;
+    public float amount;
 }
 
 public enum CharacterCode {

@@ -13,6 +13,8 @@ public class AbilityItem : MonoBehaviour, ITooltip
 
     [SerializeField] Image icon;
 
+    [SerializeField] Image filter;
+
     private bool playerHave = false;
 
     public bool isInteractable = true;
@@ -58,7 +60,7 @@ public class AbilityItem : MonoBehaviour, ITooltip
 
     public bool CanBuy(int money)
     {
-        return money > ability.cost;
+        return money >= ability.cost;
     }
 
     private void FinishBuy()
@@ -72,7 +74,7 @@ public class AbilityItem : MonoBehaviour, ITooltip
     private void FinishSell()
     {
         OnSell = null;
-        GameManager.Instance.currentMoney += ability.cost;
+        GameManager.Instance.currentMoney += ability.cost / 2;
         GameManager.Instance.MoneyChangeObserver?.Invoke();
     }
 
@@ -87,21 +89,30 @@ public class AbilityItem : MonoBehaviour, ITooltip
     public void Init(ScriptableAlbilities a, bool isInteractable = false, bool playerHave = false)
     {
         ability = a;
-        SetUI(a);
+        SetUI(a, playerHave);
         this.playerHave = playerHave;
         this.isInteractable = isInteractable;
     }
 
-    public void SetUI(ScriptableAlbilities a)
+    public void SetUI(ScriptableAlbilities a, bool playerHave = false)
     {
         if(a.icon != null)
         {
             icon.sprite = a.icon;
             icon.color = Color.white;
+            var colorFilter = Registry.AbilityRarityColor(a.rarity);
+            filter.color = new Color32(
+                (byte)(colorFilter.r * 255f),
+                (byte)(colorFilter.g * 255f),
+                (byte)(colorFilter.b * 255f),
+                60
+            );
         }
             
-
-        cost.SetText(a.cost.ToString());
+        if(playerHave)
+            cost.SetText((a.cost / 2).ToString());
+        else
+            cost.SetText(a.cost.ToString());
     }
 
     public string ToolTipText()

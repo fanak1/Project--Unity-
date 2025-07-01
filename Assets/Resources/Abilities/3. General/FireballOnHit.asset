@@ -25,13 +25,14 @@ MonoBehaviour:
   cooldown: 2
   stat:
     manaSpend: 0
-    amount: 2
+    amount: 0.5
   description: When hitting an enemy, shoot a fireball toward it's position
-  rarity: 0
+  rarity: 1
   skillType: FireballOnHit
   skillTypeColor:
     serializedVersion: 2
     rgba: 4278214655
-  icon: {fileID: 0}
-  cost: 0
+  icon: {fileID: 21300000, guid: 796e446f0b9a7da409709a429aeccf78, type: 3}
+  cost: 10
   characterCode: 0
+  isGenProjectile: 1

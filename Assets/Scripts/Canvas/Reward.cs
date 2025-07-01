@@ -13,10 +13,17 @@ public class Reward : StaticInstance<Reward>
     public AbilityPackage abilityPrefab;
     public AbilityPackage abilityPrefab1;
 
+    public GameObject father;
+
     private void Start() {
         animator = GetComponent<Animator>();
 
-        gameObject.SetActive(false);
+        father.SetActive(false);
+    }
+
+    public void SetFatherActive(bool active)
+    {
+        father.SetActive(active);
     }
 
     public void DisplayReward(List<ScriptableAlbilities> list, Action<ScriptableAlbilities> onRewardChoose) {
@@ -54,5 +61,18 @@ public class Reward : StaticInstance<Reward>
                 break;
         }
         return a;
+    }
+
+    public void ResetButton()
+    {
+        if (gameObject != null)
+        {
+            if(GameManager.Instance.currentMoney >= 5)
+            {
+                RewardManager.Instance.ReInitReward();
+                GameManager.Instance.DecreaseMoney(5);
+            }
+                
+        }
     }
 }

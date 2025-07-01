@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class FireballProjectile : Pierce
 {
-    public override float Damage() {
-        return source.stats.atk * this._projectileAttribute.scale;
-    }
 
     protected override void Hit() {
         if (!gameObject.activeInHierarchy) return;

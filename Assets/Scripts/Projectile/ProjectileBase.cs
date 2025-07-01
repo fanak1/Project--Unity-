@@ -27,6 +27,8 @@ public abstract class ProjectileBase : MonoBehaviour
 
     private bool isStart = true;
 
+    public ParticlesType particles;
+
     public virtual void Start() {
         collided = false;
         animator = GetComponent<Animator>();
@@ -102,6 +104,10 @@ public abstract class ProjectileBase : MonoBehaviour
     }
 
     virtual protected void Hit() {
+        if ( particles != ParticlesType.None)
+        {
+            Registry.CreateParticle(particles, transform.position);
+        }
         Collided();
     }
 

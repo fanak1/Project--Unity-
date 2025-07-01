@@ -25,13 +25,14 @@ MonoBehaviour:
   cooldown: 0
   stat:
     manaSpend: 0
-    amount: 0
+    amount: 0.5
   description: Create a soul that rotate around character, deal damage to enemy hit
-  rarity: 0
+  rarity: 1
   skillType: SoulCircle
   skillTypeColor:
     serializedVersion: 2
     rgba: 4278190080
-  icon: {fileID: 0}
-  cost: 5
+  icon: {fileID: -1539825314418979764, guid: 42c2ac5319eb11f46b4c68bf7a967cfc, type: 3}
+  cost: 10
   characterCode: 0
+  isGenProjectile: 0

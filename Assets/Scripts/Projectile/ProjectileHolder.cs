@@ -26,6 +26,8 @@ public class ProjectileHolder : MonoBehaviour
         foreach(var p in projectiles) {
             p.Init(source);
         }
+
+        source.CanInitAbility();
     }
 
     private void Update() {

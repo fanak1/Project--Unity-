@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,7 +33,15 @@ public class HistoryCard : MonoBehaviour
             characterIcon.sprite = character.Icon;
 
         characterName.SetText(history.character.ToString());
-        dateTime.SetText(history.currentTime.ToString("dd/MM/yyyy"));
+        DateTime parsed;
+        if (DateTime.TryParse(history.currentTime, out parsed))
+        {
+            dateTime.SetText(parsed.ToString("dd/MM/yyyy"));
+        }
+        else
+        {
+            dateTime.SetText("Invalid date");
+        }
         level.SetText(history.highestLevel.ToString());
         score.SetText(history.stats.score.ToString());
 

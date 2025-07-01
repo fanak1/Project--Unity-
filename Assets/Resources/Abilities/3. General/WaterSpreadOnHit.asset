@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8f35cd76529ec4781f21813e51dd6a, type: 3}
+  m_Name: WaterSpreadOnHit
+  m_EditorClassIdentifier: 
+  ability: {fileID: 7127159242564819260, guid: ca53c882ebcf1194e98f80815d66e4b0, type: 3}
+  onEvent: 0
+  amountIncrease:
+    hp: 0
+    mp: 0
+    atk: 0
+    spd: 0
+    def: 0
+  button: 0
+  skillIconPrefabs: {fileID: 0}
+  cooldown: 1
+  stat:
+    manaSpend: 5
+    amount: 0.2
+  description: When hitting an enemy, fire projectiles toward its location
+  rarity: 1
+  skillType: WaterSpreadOnHit
+  skillTypeColor:
+    serializedVersion: 2
+    rgba: 4294963456
+  icon: {fileID: -5672380733964199088, guid: 42c2ac5319eb11f46b4c68bf7a967cfc, type: 3}
+  cost: 10
+  characterCode: 0
+  isGenProjectile: 1

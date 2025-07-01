@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Bat
   m_EditorClassIdentifier: 
   faction: 2
+  Icon: {fileID: 0}
   stats:
     hp: 100
     mp: 0
-    atk: 1
+    atk: 10
     spd: 5
     def: 100
   characterCode: 0

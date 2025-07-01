@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +13,10 @@ public class ProjectileHitBox : MonoBehaviour
     public float dmgInterval = 1f;
 
     private List<UnitBase> hitUnits = new();
+
+    public Action OnHit;
+
+    public ParticlesType particles;
 
     public void Init(UnitBase source) 
     {
@@ -50,6 +55,12 @@ public class ProjectileHitBox : MonoBehaviour
                 cUnit.damagePosition = cUnit.transform.position;
                 source.Hitting(cUnit, Damage());
                 SoundManager.Instance.PlaySFX(SoundManager.Instance.hitEnemy);
+                OnHit?.Invoke();
+                if (particles != ParticlesType.None)
+                {
+                    Registry.CreateParticle(particles, cUnit.transform.position);
+                }
+                
             }
         }
         else
@@ -72,7 +83,6 @@ public class ProjectileHitBox : MonoBehaviour
     { //Check if we hit opponent instead of wall...
         if (!source.CompareTag(collider.tag))
         {
-
             if (!collider.CompareTag("Player") && !collider.CompareTag("Enemy")) return false;
             return true;
         }

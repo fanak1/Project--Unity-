@@ -34,6 +34,7 @@ public enum EnemyCodeName {
     Bat,
     Orc,
     Stone_Boss,
+    GreenBat
 }
 
 

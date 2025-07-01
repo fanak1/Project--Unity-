@@ -18,6 +18,6 @@ MonoBehaviour:
   interactableObject: {fileID: 0}
   stageValue:
     stageValue: 0
-    stagePoint: 0
-    gold: 0
+    stagePoint: 5
+    gold: 5
   stageType: 0

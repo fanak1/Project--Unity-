@@ -19,6 +19,16 @@ public class ResourceSystem : PersistentSingleton<ResourceSystem>
     public List<ScriptableAlbilities> allAbilities;
     public Dictionary<Rarity, List<ScriptableAlbilities>> allAbilitiesByRarity = new();
     public Dictionary<string, ScriptableAlbilities> allAbilitiesDict;
+
+    public Dictionary<Rarity, float> RarityChance = new Dictionary<Rarity, float>
+    {
+        { Rarity.Normal, 10f },
+        { Rarity.Rare, 5f },
+        { Rarity.Epic, 2f },
+        { Rarity.Legendary, 1f }
+    };
+
+
     //Ability End ------
 
     //Stage ------
@@ -143,18 +153,23 @@ public class ResourceSystem : PersistentSingleton<ResourceSystem>
         foreach(var a1 in allAbilities)
         {
             bool addFlag = true;
-            foreach(var a2 in pa)
+            if (a1.skillType == "None")
             {
-                if(a1.skillType == a2.skillType)
-                {
-                    if (a1.rarity <= a2.rarity)
-                    {
-                        addFlag = false;
-                    } 
-                    break;
-                }
-                
+                addFlag = true;
             }
+            else 
+                foreach (var a2 in pa)
+                {
+                    if (a1.skillType == a2.skillType)
+                    {
+                        if (a1.rarity <= a2.rarity)
+                        {
+                            addFlag = false;
+                        }
+                        break;
+                    }
+
+                }
             if(addFlag) list.Add(a1);
         }
         return list;
@@ -177,5 +192,58 @@ public class ResourceSystem : PersistentSingleton<ResourceSystem>
         return Resources.Load<T>(path);
     }
 
+    public Rarity GenerateRandomRarity(List<Rarity> possibleRarity = null)
+    {
+        if(possibleRarity == null) {
+            float totalWeight = 0;
+            foreach (var weight in RarityChance.Values)
+            {
+                totalWeight += weight;
+            }
+
+            float roll = UnityEngine.Random.Range(0, totalWeight);
+            float current = 0;
+
+            foreach (var pair in RarityChance)
+            {
+                current += pair.Value;
+                if (roll <= current)
+                    return pair.Key;
+            }
+
+            return Rarity.Normal;
+        } else
+        {
+            Dictionary<Rarity, float> rarityChance = possibleRarity.ToDictionary(r => r, r => RarityChance[r]);
+            
+            float totalWeight = 0;
+            foreach (var weight in rarityChance.Values)
+            {
+                totalWeight += weight;
+            }
+
+            float roll = UnityEngine.Random.Range(0, totalWeight);
+            float current = 0;
+
+            foreach (var pair in rarityChance)
+            {
+                current += pair.Value;
+                if (roll <= current)
+                    return pair.Key;
+            }
+
+            return Rarity.Normal;
+        }
+        
+    }
+
     
+}
+
+public enum RarityChance
+{
+    Normal = 10,
+    Rare = 5,
+    Epic = 2,
+    Legendary = 1
 }

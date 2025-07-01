@@ -7,6 +7,10 @@ public class AbilityIcon : MonoBehaviour, ITooltip
 
     public Image image;
 
+    public Image filter;
+
+    private byte alphaFilter = 40;
+
     void Start()
     {
         if(ability != null)
@@ -27,10 +31,19 @@ public class AbilityIcon : MonoBehaviour, ITooltip
         {
             image.sprite = a.icon;
             image.color = Color.white;
+            
+            var colorFilter = Registry.AbilityRarityColor(a.rarity);
+            filter.color = new Color32(
+                (byte)(colorFilter.r * 255),
+                (byte)(colorFilter.g * 255),
+                (byte)(colorFilter.b * 255),
+                alphaFilter
+            );
         }
         else
         {
             image.color = Color.gray;
+            filter.color = new Color32(0, 0, 0, alphaFilter);
         }
     }
 

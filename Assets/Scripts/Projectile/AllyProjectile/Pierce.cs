@@ -6,7 +6,7 @@ public class Pierce : ProjectileBase
 {
     private Queue<GameObject> hitQueue = new Queue<GameObject>();
     public override float Damage() {
-        return _projectileAttribute.scale * source.stats.atk;
+        return _projectileAttribute.scale * source.stats.atk * (float)_projectileAttribute.numberOfBullet / 3f;
     }
 
     public override void Trajectory() {
@@ -14,13 +14,13 @@ public class Pierce : ProjectileBase
     }
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
         Initialize();
         base.Start();
     }
 
-    private void OnEnable() {
+    public override void OnEnable() {
         Initialize();
         base.OnEnable();
     }

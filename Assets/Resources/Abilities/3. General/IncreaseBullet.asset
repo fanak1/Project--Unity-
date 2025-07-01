@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8f35cd76529ec4781f21813e51dd6a, type: 3}
+  m_Name: IncreaseBullet
+  m_EditorClassIdentifier: 
+  ability: {fileID: 572634413065668357, guid: d8fe47631118df441814b51b284b6e60, type: 3}
+  onEvent: 5
+  amountIncrease:
+    hp: 0
+    mp: 0
+    atk: 0
+    spd: 0
+    def: 0
+  button: 0
+  skillIconPrefabs: {fileID: 0}
+  cooldown: 0
+  stat:
+    manaSpend: 0
+    amount: 1
+  description: Increase +1 bullet
+  rarity: 1
+  skillType: None
+  skillTypeColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  icon: {fileID: 21300000, guid: 490c2c82799109544ba82ba5182ab034, type: 3}
+  cost: 10
+  characterCode: 0
+  isGenProjectile: 0

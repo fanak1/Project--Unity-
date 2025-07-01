@@ -14,3 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateList: ffffffff02000000
   roundList: []
+  interactableObject: {fileID: 0}
+  stageValue:
+    stageValue: 0
+    stagePoint: 0
+    gold: 0
+  stageType: 2

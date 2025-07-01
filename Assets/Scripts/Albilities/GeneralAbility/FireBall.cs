@@ -11,11 +11,15 @@ public class FireBall : Abilities
 
     private bool usable = true;
 
-    private void Start() {
+    public override void Init(UnitBase unitBase)
+    {
+        base.Init(unitBase);
+        if (projectiles == null) return;
         projectile = projectiles.Create();
         projectile.SetScaleForProjectile(this.stat.amount);
-        projectile.Init(this.source);
+        projectile.Init(this.source);    
     }
+
     public override void Action(UnitBase target, float amount) {
         if (usable)
         {

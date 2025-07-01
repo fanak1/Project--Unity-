@@ -31,6 +31,9 @@ public class Abilities : MonoBehaviour {
     public void AttachTo(UnitBase target) {
         Init(target);
         switch (onEvent) {
+            case Event.OnProjectileShoot:
+                target.OnProjectileShoot += Action;
+                break;
             case Event.OnHitting:
                 target.OnHitting += Action;
                 break;
@@ -59,6 +62,9 @@ public class Abilities : MonoBehaviour {
 
     public void Detach(UnitBase target) {
         switch (onEvent) {
+            case Event.OnProjectileShoot:
+                target.OnProjectileShoot -= Action;
+                break;
             case Event.OnHitting:
                 target.OnHitting -= Action;
                 break;
@@ -129,6 +135,11 @@ public class Abilities : MonoBehaviour {
     }
 
     virtual public void Action() {
+
+    }
+
+    virtual public void Action(Projectiles projectiles, Vector3 position, Vector3 destination)
+    {
 
     }
 

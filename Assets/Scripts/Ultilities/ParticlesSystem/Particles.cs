@@ -74,3 +74,14 @@ public abstract class Particles<T> : MonoBehaviour where T : MonoBehaviour
         return particles;
     }
 }
+
+public enum ParticlesType
+{
+    None,
+    BlueBloom,
+    FireballExplosion,
+    DieParticles,
+    RedOrangeCircleExplode,
+    ElectricExplode,
+    Normal
+}

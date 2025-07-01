@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectiles : MonoBehaviour
 {
     public GameObject source;
-    [SerializeField] private ProjectileAttribute projectileAttribute;//For custiomize projectile
+    public ProjectileAttribute projectileAttribute;//For custiomize projectile
     public ProjectileBase prefabs; //Monobehaviour 
 
     private Queue<ProjectileBase> bulletPooling = new Queue<ProjectileBase>();
@@ -40,11 +40,12 @@ public class Projectiles : MonoBehaviour
         bulletPooling.Enqueue(p);
     }
 
-    public void Shoot(UnitBase source, Vector3 position, Vector3 destination) { //Function to fire projectile
+    public void Shoot(UnitBase source, Vector3 position, Vector3 destination, bool isTriggerShootingEvent = true) { //Function to fire projectile
         SoundManager.Instance.PlaySFX(SoundManager.Instance.projectileOut);
         for (int i = 0; i < projectileAttribute.numberOfBullet; i++) {
             var p = ShootProjectile(source, i, position, destination);
         }
+        if(isTriggerShootingEvent) source.TriggerShootedProjectiles(this, position, destination); //Trigger event when shooted projectiles
     }
 
     public void SetStatForProjectile(ProjectileAttribute projectileAttribute) { //Function to set stat of projectile manually

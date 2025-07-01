@@ -56,7 +56,11 @@ MonoBehaviour:
   cooldown: 0
   onEvent: 0
   description: 
-  rarity: 0
+  rarity: 3
   stat:
     manaSpend: 0
     amount: 0
+  skillType: 
+  skillTypeColor:
+    serializedVersion: 2
+    rgba: 0

@@ -161,7 +161,22 @@ public class GameManager : PersistentSingleton<GameManager>
     public LevelData LoadRandomLevel()
     {
         LevelData data = new LevelData();
-        data.levelName = "Level_Sand";
+        if(level == 1)
+        {
+            int rad = UnityEngine.Random.Range(1, 2);
+            if (rad == 1)
+            {
+                data.levelName = "Level_Sand";
+            }
+            else if (rad == 2)
+            {
+                data.levelName = "Level_Sand_2_WIP";
+            }
+        } else
+        {
+            data.levelName = "Level_Sand";
+        }
+
         return data;
     }
 
@@ -234,6 +249,7 @@ public class GameManager : PersistentSingleton<GameManager>
     {
         LoadScene("GamePlayScene", () =>
         {
+            level = 1;
             LevelData data = new LevelData();
             data.levelName = "Training_Level";
             data.isTraining = true;
@@ -259,6 +275,7 @@ public class GameManager : PersistentSingleton<GameManager>
 
         // -- Trigger Point cut
         SaveGame();
+        history.stats = currentStatistics;
         AppendToHistoryJson(history);
         // End Trigger Pointcut --
 
@@ -319,7 +336,7 @@ public class GameManager : PersistentSingleton<GameManager>
     public void CreateNewHistory()
     {
         history = new();
-        history.currentTime = DateTime.Now;
+        history.currentTime = DateTime.Now.ToString("o");
     }
 
     public void SetCharacterToHistory(CharacterCode character)
@@ -394,7 +411,6 @@ public class GameManager : PersistentSingleton<GameManager>
 
     public void QuitGame()
     {
-        AppendToHistoryJson(history);
         Application.Quit();
     }
 }
@@ -418,13 +434,13 @@ public struct Statistics
 }
 
 [Serializable]
-public struct History
+public class History
 {
-    public CharacterCode character; //
-    public DateTime currentTime; //
-    public int highestLevel; //
-    public int enemyKill; //
-    public List<string> bossName; //
-    public Statistics stats; //
-    public float time; //
+    public CharacterCode character;
+    public string currentTime; // store as string
+    public int highestLevel;
+    public int enemyKill;
+    public List<string> bossName;
+    public Statistics stats;
+    public float time;
 }

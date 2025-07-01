@@ -20,7 +20,9 @@ public class AlbilitiesHolder : MonoBehaviour
         source = GetComponent<UnitBase>();
         abilityKey = new Dictionary<KeyCode, Abilities>();
 
-        foreach(ScriptableAlbilities a in list) {
+        list.Sort((a, b) => a.isGenProjectile.CompareTo(b.isGenProjectile));
+
+        foreach (ScriptableAlbilities a in list) {
             var ability = a.Create();
             if(a.onEvent != Event.OnButtonClick) {
                 passive.Add(ability);

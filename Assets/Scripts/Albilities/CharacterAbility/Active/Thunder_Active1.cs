@@ -34,10 +34,10 @@ public class Thunder_Active1 : Abilities
     public void EffectHit(UnitBase enemy) {
 
         if (enemy == null) return;
-        source.DealDamage(enemy, this.stat.amount);
+        source.DealDamage(enemy, this.stat.amount * source.stats.atk);
         var debuff = new GameObject("thunder debuff");
         var d = debuff.AddComponent<Thunder_Debuff1>();
-        var value = this.stat.amount / 2;
+        var value = this.stat.amount * source.stats.atk / 2;
         d.Init(cooldown, enemy, source, value);
     }
 }

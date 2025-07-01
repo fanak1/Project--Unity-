@@ -15,9 +15,9 @@ MonoBehaviour:
   faction: 2
   Icon: {fileID: 0}
   stats:
-    hp: 555
+    hp: 5555
     mp: 0
-    atk: 10
+    atk: 20
     spd: 5
     def: 100
   characterCode: 0

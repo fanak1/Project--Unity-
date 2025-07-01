@@ -33,6 +33,7 @@ public class InstantiateAbility : Abilities
                 obj.follow = source.transform;
         }
         obj.Init(source);
+        obj.scale = this.stat.amount;
         current = obj.gameObject;
     }
 

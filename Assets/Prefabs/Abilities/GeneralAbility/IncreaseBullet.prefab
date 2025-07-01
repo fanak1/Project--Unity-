@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &562976050101654545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6430965404735696318}
+  - component: {fileID: 572634413065668357}
+  m_Layer: 0
+  m_Name: IncreaseBullet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6430965404735696318
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562976050101654545}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.0653305, y: -1.8212466, z: -0.0427535}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &572634413065668357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562976050101654545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6a0d9a7e276e6f42ba8cab3fbc2a383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  amountIncrease:
+    hp: 0
+    mp: 0
+    atk: 0
+    spd: 0
+    def: 0
+  button: 0
+  skillIconPrefabs: {fileID: 0}
+  cooldown: 0
+  onEvent: 0
+  description: 
+  rarity: 0
+  stat:
+    manaSpend: 0
+    amount: 1
+  skillType: 
+  skillTypeColor:
+    serializedVersion: 2
+    rgba: 0
+  attribute:
+    speed: 0
+    accel: 0
+    numberOfBullet: 1
+    manaSpend: 0
+    deviation: 0
+    interval: 0
+    scale: 0

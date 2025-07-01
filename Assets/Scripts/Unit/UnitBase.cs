@@ -63,6 +63,10 @@ public abstract class UnitBase : MonoBehaviour {
 
     public event Action<UnitBase> OnFinishInit; //Use when finish init projectile holder, abilities holder ... for unitbase
 
+    public event Action<UnitBase> OnFinishInitProjectile; //Use when finish init projectile holder for unitbase, so that we can init abilities after init projectile holder
+
+    public event Action<Projectiles, Vector3, Vector3> OnProjectileShoot; //Use when shoot a projectile, so that we can do something at the position of this event
+
     public event Action<UnitBase, float> OnDealDamage; //Use when succesfully deal damage to an object
 
     public event Action<UnitBase, float> OnHitting; // Use when successfully hitting an object
@@ -70,6 +74,8 @@ public abstract class UnitBase : MonoBehaviour {
     public event Action<UnitBase, float> OnTakeDamage; // Use when take damage
 
     public event Action OnDead;
+
+    public event Action<UnitBase> OnKill; // Use when kill an object
 
     public event Action<Stats> OnBaseStatsIncrease;
 
@@ -79,7 +85,7 @@ public abstract class UnitBase : MonoBehaviour {
 
     public bool dead = false;
 
-
+    public bool onKilledTrigger = false; //Use when this unitbase is killed, so that we can trigger some event like spawn item, gold, exp... when this unitbase is killed
 
     //public event Action OnAbilityKeyPressed;
 
@@ -117,6 +123,11 @@ public abstract class UnitBase : MonoBehaviour {
         InitializeMP();
 
         OnFinishInit?.Invoke(this);
+    }
+
+    public void CanInitAbility()
+    {
+        OnFinishInitProjectile?.Invoke(this); //Invoke when finish init projectile holder, so that we can init abilities after init projectile holder
     }
 
 
@@ -218,6 +229,11 @@ public abstract class UnitBase : MonoBehaviour {
 
     // Battle event like TakeDamage, Heal, ReduceDef, Increase atk...
 
+    internal virtual void TriggerShootedProjectiles(Projectiles projectile, Vector3 position, Vector3 destination)
+    {
+        OnProjectileShoot?.Invoke(projectile, position, destination);
+    }
+
     internal virtual void TakeDamage(UnitBase source, float dmg, bool crit) { //Function to take damage
         float damageTaken = ReduceDamage(dmg);
 
@@ -225,6 +241,12 @@ public abstract class UnitBase : MonoBehaviour {
         DamagePopUps(damageTaken, crit);
 
         OnTakeDamage?.Invoke(source, damageTaken);
+
+        if(nowHP <= 0 && !onKilledTrigger)
+        {
+            source.OnKill?.Invoke(this);
+            onKilledTrigger = true;
+        }
 
     }
 

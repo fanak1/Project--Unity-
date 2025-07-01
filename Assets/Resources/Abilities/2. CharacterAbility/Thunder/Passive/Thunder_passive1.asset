@@ -32,6 +32,7 @@ MonoBehaviour:
   skillTypeColor:
     serializedVersion: 2
     rgba: 4294927360
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4ed45e2f1d199db429dde0e0ec02e579, type: 3}
   cost: 0
   characterCode: 1
+  isGenProjectile: 0

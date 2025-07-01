@@ -19,7 +19,7 @@ MonoBehaviour:
     manaSpend: 0
     deviation: 0
     interval: 0
-    scale: 2
+    scale: 1
   projectileCodeName: 0
   prefabs: {fileID: 5669365608606652481, guid: 01b6afef25f4e54448b7a5908a74a873, type: 3}
   projectiles: {fileID: 0}

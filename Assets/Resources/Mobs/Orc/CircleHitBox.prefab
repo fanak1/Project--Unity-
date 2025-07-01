@@ -48,6 +48,7 @@ MonoBehaviour:
   scale: 1
   source: {fileID: 0}
   dmgInterval: 1
+  particles: 6
 --- !u!61 &649030067258359100
 BoxCollider2D:
   m_ObjectHideFlags: 0
